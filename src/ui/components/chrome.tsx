@@ -115,7 +115,10 @@ export function TimerPill() {
         : `TIMER · ${fmtCountdown(remainingMs(timer, nowMs))}`;
   return (
     <button
-      onClick={() => store.navigate({ name: 'timer' })}
+      onClick={() => {
+        primeAudio();
+        store.navigate({ name: 'timer' });
+      }}
       style={{
         display: 'flex',
         justifyContent: 'space-between',

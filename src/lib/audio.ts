@@ -9,12 +9,23 @@ export function primeAudio(): void {
     if (!ctx) {
       ctx = new AudioContext();
     }
-    if (ctx.state === 'suspended') {
+    // Not just 'suspended': iOS WebKit parks a backgrounded context in a
+    // non-standard 'interrupted' state that also needs an explicit resume.
+    if (ctx.state !== 'running') {
       void ctx.resume();
     }
   } catch {
     /* audio unavailable — visual alert still shows */
   }
+}
+
+// Re-prime as early as possible: any first tap after a relaunch, and the
+// moment the app returns to the foreground with an interrupted context.
+if (typeof window !== 'undefined') {
+  window.addEventListener('pointerdown', () => primeAudio(), { capture: true, passive: true });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && ctx) primeAudio();
+  });
 }
 
 function note(at: number, freq: number, dur: number, gainPeak: number): void {

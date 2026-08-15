@@ -1,7 +1,10 @@
 // Screen wake lock while a timer runs in the foreground. Re-acquired on
 // visibility change (the platform releases it when the page hides).
 
-type WakeLockSentinel = { release(): Promise<void>; addEventListener?: unknown };
+type WakeLockSentinel = {
+  release(): Promise<void>;
+  addEventListener(type: 'release', fn: () => void): void;
+};
 
 let sentinel: WakeLockSentinel | undefined;
 let wanted = false;
@@ -10,7 +13,21 @@ async function acquire(): Promise<void> {
   try {
     const wl = (navigator as unknown as { wakeLock?: { request(type: 'screen'): Promise<WakeLockSentinel> } }).wakeLock;
     if (!wl || sentinel) return;
-    sentinel = await wl.request('screen');
+    const s = await wl.request('screen');
+    sentinel = s;
+    // The platform may release the lock while the page stays visible
+    // (battery saver, thermal policy). Clear the stale sentinel and retry
+    // once shortly after, so a transient release doesn't block forever.
+    s.addEventListener('release', () => {
+      if (sentinel === s) {
+        sentinel = undefined;
+        if (wanted && document.visibilityState === 'visible') {
+          window.setTimeout(() => {
+            if (wanted && !sentinel && document.visibilityState === 'visible') void acquire();
+          }, 3000);
+        }
+      }
+    });
   } catch {
     sentinel = undefined; // not fatal — the timer itself is clock-derived
   }
