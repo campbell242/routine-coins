@@ -106,8 +106,10 @@ export function SubHeader({
       <span className="px" style={{ fontSize: 23, color: titleColor }}>
         {title}
       </span>
-      <span className="px" style={{ marginLeft: 'auto', fontSize: 20, color: dark ? '#8a8578' : '#6b675c' }}>
-        {clock.time} {clock.period}
+      {/* Design v3: 24px, no AM/PM; ink on light headers, light gray on the
+          dark timer screen. (Home keeps its big 74px clock with AM/PM.) */}
+      <span className="px" style={{ marginLeft: 'auto', fontSize: 24, color: dark ? '#8a8578' : '#2b2b24' }}>
+        {clock.time}
       </span>
     </div>
   );
