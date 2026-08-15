@@ -253,6 +253,18 @@ describe('streaks (schedule-aware, keyed to start date)', () => {
   });
 });
 
+describe('task icons', () => {
+  it('resolves known names and degrades gracefully for unknown/missing ones', async () => {
+    const { iconSrc, TASK_ICONS } = await import('../../config/icons');
+    expect(Object.keys(TASK_ICONS)).toHaveLength(37);
+    expect(iconSrc('toothbrush')).toBe('assets/icons/toothbrush.png');
+    expect(iconSrc('lantern')).toBe('assets/icons/lantern.png');
+    expect(iconSrc('creeper-tnt')).toBeUndefined(); // invented name → no icon
+    expect(iconSrc(undefined)).toBeUndefined();
+    expect(iconSrc('')).toBeUndefined();
+  });
+});
+
 describe('coin ledger', () => {
   it('award / adjust / redeem with clamps and limits', () => {
     expect(award(100, 55)).toBe(155);

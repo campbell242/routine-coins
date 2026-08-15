@@ -28,6 +28,12 @@ export interface ItemConfig {
   /** Coin value for bonus items. */
   bonus?: number;
   attestation: Attestation;
+  /**
+   * Optional task icon by bare name from the design's icon pack — see
+   * src/config/icons.ts (TASK_ICONS) for the full list of valid names.
+   * Decorative only; unknown or missing names render no icon (never an error).
+   */
+  icon?: string;
 }
 
 export interface PlanConfig {

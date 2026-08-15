@@ -58,3 +58,45 @@ scripts/screenshots.mjs  # drives every screen/state for visual comparison
 
 Adding a routine (e.g. a Saturday plan) is a configuration change in
 `src/config/plans.ts` — the engine and UI pick it up automatically.
+
+## Authoring checklists
+
+Checklist items live in `src/config/plans.ts` (`ItemConfig`): stable `id`,
+`label`, optional `hint`, `kind` (`required` | `bonus`), `bonus` coins,
+`attestation` (`child` | `parent-morning`), and an optional **`icon`**.
+
+### Task icons
+
+`icon` takes a bare name from the design's task icon pack
+(`src/config/icons.ts`, PNGs in `public/assets/icons/`). Icons render at
+28px to the left of the task text, pixelated, and are decorative only — the
+task text always remains. An unknown or missing name simply renders no icon.
+
+**When authoring a new checklist item — especially with an AI tool — pick the
+best-fitting icon for every item from the list below. Do not leave items
+icon-less when a reasonable fit exists, and never invent icon names that
+aren't in this list.**
+
+| Name | Meaning | | Name | Meaning |
+|---|---|---|---|---|
+| `toothbrush` | brush teeth | | `bottle` | water |
+| `shower` | shower / bath | | `drumstick` | protein |
+| `towel` | towel | | `carrot` | vegetables |
+| `comb` | hairbrush | | `clock` | clock |
+| `bed` | bed | | `hourglass` | timer |
+| `shirt` | clothes | | `sun` | morning |
+| `basket` | laundry | | `moon` | night |
+| `lantern` | lights out | | `star` | streak |
+| `door` | door / leave | | `bell` | reminder |
+| `backpack` | backpack | | `heart` | kindness |
+| `pencil` | homework | | `sword` | screen time |
+| `paper` | worksheet | | `pickaxe` | big chore |
+| `book` | reading | | `shield` | bonus quest |
+| `broom` | tidy up | | `chest` | reward chest |
+| `trash` | trash | | `key` | special unlock |
+| `flower` | water plants | | `orb` | XP / bonus |
+| `cookie` | snack | | `apple` | fruit |
+| `bowl` | breakfast | | `cup` | milk / drink |
+
+Tip: avoid repeating the same icon twice within one routine's list when a
+distinct alternative fits.

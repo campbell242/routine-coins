@@ -125,6 +125,23 @@ design README and mockup annotations.
   same convention as the gold button). Accent text ≥ 4.5 on parchment and
   card in every variant. `scripts/contrast-audit.mjs` verifies all pairs.
 
+## Task icons (design v2)
+
+- The 37-icon pack lives in `public/assets/icons/`; the canonical
+  name→meaning manifest is `src/config/icons.ts` (`TASK_ICONS`), mirrored in
+  README.md's authoring table and enforced-by-instruction in `CLAUDE.md`.
+- `ItemConfig.icon` is an optional bare name. Rendering (child checklist row
+  only, per the README's "left of the task name"): 28px, pixelated,
+  `alt=""`/`aria-hidden` (decorative — the task text is always present),
+  between the checkbox and the text. Unknown/missing names render nothing;
+  a broken image hides itself (`onError`). Parent review rows and the
+  verify block stay icon-less to preserve 1k/1l fidelity.
+- Existing occurrence snapshots predate icons and simply render no icon —
+  snapshots stay frozen; new occurrences pick icons up automatically.
+- Assignments: morning — toothbrush, shirt, bed, backpack, book (bonus),
+  broom (bonus); nighttime — toothbrush, shirt, broom, basket, book (bonus),
+  lantern (overnight), bed (overnight). No icon repeats within a single list.
+
 ## Review hardening
 
 An adversarial multi-agent review (engine correctness, UX flows, pixel

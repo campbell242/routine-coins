@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { iconSrc } from '../../config/icons';
 import type { ItemConfig } from '../../config/types';
 import {
   isChecked,
@@ -26,6 +27,8 @@ function ChecklistRow({
   const isBonus = item.kind === 'bonus';
   const parentLater = item.attestation === 'parent-morning';
 
+  const icon = iconSrc(item.icon);
+
   const row = (
     <div
       style={{
@@ -41,6 +44,19 @@ function ChecklistRow({
       }}
     >
       <SlotCheck checked={checked} size={46} />
+      {icon && (
+        // Decorative task icon (design README: 24–34px, left of the task
+        // text, never the only signal of meaning).
+        <img
+          src={icon}
+          alt=""
+          aria-hidden="true"
+          style={{ width: 28, height: 28, flex: 'none' }}
+          onError={(e) => {
+            (e.target as HTMLImageElement).style.display = 'none';
+          }}
+        />
+      )}
       <div style={{ flex: 1 }}>
         <div className="px" style={{ fontSize: 18, color: '#2b2b24' }}>
           {item.label}
