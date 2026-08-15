@@ -140,7 +140,7 @@ export function SlotCheck({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontFamily: "'Pixelify Sans', monospace",
+        fontFamily: "'Jersey 25', monospace",
         fontSize: size * 0.57,
         color: checkColor,
       }}

@@ -175,6 +175,17 @@ await shot(page, '1e-routine-ready');
 await page.getByText('Ask a parent to check!').click();
 await shot(page, '1f-routine-waiting');
 
+// ---------- parent-review shortcut: PIN → straight to this routine's review ----------
+await page.getByText('I’m the parent — review now').click();
+await shot(page, 'shortcut-parent-pin');
+for (const k of ['1', '2', '3', '4']) await page.getByText(k, { exact: true }).click();
+await page.waitForTimeout(300);
+await shot(page, 'shortcut-parent-review');
+// LOCK goes back to Haley's routine screen, not the parent area
+await page.getByText('LOCK ▪').click();
+await page.waitForTimeout(200);
+await shot(page, 'shortcut-back-to-routine');
+
 // ---------- 1j parent pin ----------
 await page.getByText('‹').click();
 await page.getByText('PARENTS').click();

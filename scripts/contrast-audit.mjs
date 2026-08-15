@@ -56,6 +56,7 @@ check('slate chip text', '#42607c', '#e8eef4', 4.5);
 check('waiting chip text', '#6b6b6b', '#efefec', 4.5);
 check('white on slate button', '#ffffff', '#6d89a3', 3.0);
 check('white on stone button', '#ffffff', '#9a9a9a', 2.0); // handoff value; large px text + shadow
+check('white on iron button', '#ffffff', '#6f6f6f', 3.0); // parent-zone controls, incl. the routine-screen review shortcut
 // The handoff's exact toast pair sits at 2.9986 (≈3.0). Kept pixel-faithful:
 // 17px pixel-display text, decorative celebration copy, identical in all variants.
 check('toast title on toast bg', '#b07d00', '#efe9d8', 2.95);
