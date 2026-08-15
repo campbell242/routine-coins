@@ -1,22 +1,9 @@
-// App-level configuration (single household, single child, single device).
-
-/**
- * The child's name — the single place to change it. Used in every greeting
- * and parent-area string, the browser-tab title, and the PWA install name
- * (vite.config.ts templates index.html and generates the manifest from it).
- */
-export const CHILD_NAME = 'Haley';
-
-/** App display names derived from the child's name. */
-export const APP_NAME = `${CHILD_NAME}'s Routine & Coins`;
-export const APP_SHORT_NAME = CHILD_NAME;
-export const APP_DESCRIPTION = `Routines, timers and Minecoin rewards for ${CHILD_NAME}.`;
-
-/** Coin goal / redemption threshold. The XP bar is full at this value. */
-export const REDEMPTION_THRESHOLD = 1720;
-
-/** Out-of-the-box parent PIN; changeable in Parent → Settings. */
-export const DEFAULT_PIN = '1234';
+// App-wide configuration — identical for every child on every phone.
+//
+// Anything specific to one child (name, coin goal, PIN, starting avatar,
+// storage identity) lives in `profile.ts`; the routines themselves live in
+// `plans.ts`. Keep this file free of per-child values so a second profile
+// never has to touch it.
 
 /** Parent session ends after this much inactivity (Amendment 2). */
 export const PARENT_SESSION_IDLE_MS = 3 * 60 * 1000;
@@ -34,6 +21,7 @@ export interface AvatarDef {
   src: string;
 }
 
+/** The avatar catalog — every profile picks its starting one by `id`. */
 export const AVATARS: AvatarDef[] = [
   { id: 'steve', name: 'Steve', src: 'assets/av-steve.png' },
   { id: 'alex', name: 'Alex', src: 'assets/av-alex.png' },
@@ -44,5 +32,3 @@ export const AVATARS: AvatarDef[] = [
   { id: 'fox', name: 'Fox', src: 'assets/av-fox.png' },
   { id: 'bee', name: 'Bee', src: 'assets/av-bee.png' },
 ];
-
-export const DEFAULT_AVATAR = 'axolotl';

@@ -3,7 +3,7 @@
 // useSyncExternalStore (see hooks.ts).
 
 import { allPlans, getPlanConfig } from '../config/plans';
-import { DEFAULT_AVATAR, DEFAULT_PIN } from '../config/app';
+import { DEFAULT_AVATAR, DEFAULT_PIN } from '../config/profile';
 import { DEFAULT_THEME } from '../config/themes';
 import type { PlanOverride, PlanResolved } from '../config/types';
 import {

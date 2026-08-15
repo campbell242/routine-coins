@@ -5,7 +5,7 @@
 import type { CSSProperties, ReactNode } from 'react';
 import type { StripStyle, ThemeVariant } from '../../config/themes';
 import { getTheme } from '../../config/themes';
-import { REDEMPTION_THRESHOLD } from '../../config/app';
+import { REDEMPTION_THRESHOLD } from '../../config/profile';
 import { fmtCoins } from '../../lib/dates';
 import { useAppState } from '../../store/hooks';
 
