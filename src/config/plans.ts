@@ -26,7 +26,7 @@ export const nighttimeRoutine: PlanConfig = {
   name: 'Nighttime Routine',
   enabled: true,
   schedule: { days: [0, 1, 2, 3, 4, 5, 6] }, // every day
-  windowStart: '20:00',
+  windowStart: '19:00',
   baseAward: 40,
   items: [
     { id: 'n-teeth', label: 'Brush teeth', hint: 'Two whole minutes!', kind: 'required', attestation: 'child', icon: 'toothbrush' },

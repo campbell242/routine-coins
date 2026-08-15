@@ -17,8 +17,12 @@ design README and mockup annotations.
   instead of Workbox: precaches the whole build output, cache-first with a
   cached-index navigation fallback, content-hash-versioned cache. ~50 lines,
   fully auditable, fully offline.
-- **Fonts self-hosted** (Pixelify Sans + Nunito Sans latin woff2) so the app
+- **Fonts self-hosted** (Jersey 25 + Nunito Sans latin woff2) so the app
   works offline; declared in `index.html` with document-relative URLs.
+  Jersey 25 replaced Pixelify Sans per design v4 (Pixelify's digits were
+  ambiguous — 5 read as S). It has **one weight**: the `@font-face` declares
+  `font-weight: 400`, and no pixel-font element sets a weight, so the browser
+  never synthesizes a bold. Nunito Sans (sentence text) is unchanged.
 
 ## Configuration & engine
 
@@ -80,6 +84,18 @@ design README and mockup annotations.
   "Dad says" was sample copy).
 - Multiple pending reviews render as a picker row; review-queue order:
   review-requested first, then oldest.
+- **Routine-screen review shortcut**: while an occurrence is waiting, the
+  child's routine screen shows an iron "I'm the parent — review now" button
+  under the waiting banner, so the parent doesn't have to back out to Home
+  for the PARENTS chip. It goes to the same PIN pad (no bypass); a correct
+  PIN then lands on *that* occurrence's review instead of the usual
+  queue/settings landing. The shortcut also records a **return route**: LOCK,
+  send-back, and ✕-on-the-PIN-pad hand the phone back to Haley's routine
+  screen rather than Home, so she sees the result (approval instead shows the
+  award screen, which already hands the phone back). Entering through the
+  PARENTS chip is unchanged in every respect. The shortcut is deliberately
+  iron — the parent area's own material, never green or gold — so it never
+  reads as one of Haley's actions.
 
 ## Child UX
 

@@ -132,6 +132,38 @@ function StatusBanner({ occ }: { occ: Occurrence }) {
   return null;
 }
 
+/**
+ * Parent-zone shortcut, shown under the waiting banner: the grown-up standing
+ * next to Haley reviews from here instead of backing out to Home for the
+ * PARENTS chip. Iron — the parent area's own material, never green or gold —
+ * so it never reads as one of Haley's actions. The PIN pad still gates it.
+ */
+function ParentReviewShortcut({ occ }: { occ: Occurrence }) {
+  return (
+    <div>
+      <PixelButton
+        variant="iron"
+        style={{
+          fontSize: 18,
+          padding: 14,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 10,
+        }}
+        onClick={() => store.parentReviewShortcut(occ.id)}
+      >
+        {/* the iron-door handle from the Home PARENTS chip */}
+        <span style={{ width: 9, height: 9, background: '#4a4a44', flex: 'none' }} />
+        I’m the parent — review now
+      </PixelButton>
+      <div style={{ textAlign: 'center', fontSize: 12, color: '#8a8578', fontWeight: 700, marginTop: 6 }}>
+        Opens the parent PIN pad
+      </div>
+    </div>
+  );
+}
+
 export function RoutineScreen({ planId }: { planId: string }) {
   useAppState(); // re-render on ticks and occurrence changes
   const occ = store.activeOccurrence(planId);
@@ -177,6 +209,7 @@ export function RoutineScreen({ planId }: { planId: string }) {
       <div className="screen-scroll">
         <div style={{ flex: 1, padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 10 }}>
           <StatusBanner occ={occ} />
+          {waiting && <ParentReviewShortcut occ={occ} />}
           {required.map((item) => (
             <ChecklistRow key={item.id} occ={occ} item={item} showCoin={false} />
           ))}

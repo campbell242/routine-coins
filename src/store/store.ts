@@ -56,6 +56,18 @@ export type Route =
   | { name: 'parent'; view: 'review' | 'settings'; reviewOccId?: string }
   | { name: 'award' };
 
+/**
+ * Set when a parent enters the PIN pad from the routine screen's
+ * "I'm the parent — review now" shortcut instead of Home's PARENTS chip.
+ * The PIN is still required; the shortcut only changes where the unlocked
+ * session lands (this occurrence's review) and where it hands the phone back
+ * to (Haley's routine screen, not the parent area or Home).
+ */
+interface ParentShortcut {
+  reviewOccId: string;
+  returnRoute: Route;
+}
+
 export interface AwardInfo {
   planName: string;
   amount: number;
@@ -128,6 +140,7 @@ class Store {
 
   private listeners = new Set<Listener>();
   private pinHash = '';
+  private parentShortcut: ParentShortcut | undefined;
   private toastSeq = 0;
   private tickHandle: number | undefined;
 
@@ -257,6 +270,28 @@ class Store {
     });
   }
 
+  /**
+   * Routine-screen shortcut: a parent standing next to Haley goes straight to
+   * the PIN pad and, once unlocked, straight to this occurrence's review —
+   * no trip back to Home for the PARENTS chip. Not a bypass: the PIN pad is
+   * the same one, and the session still starts only on a correct PIN.
+   */
+  parentReviewShortcut(occId: string): void {
+    this.parentShortcut = { reviewOccId: occId, returnRoute: this.state.route };
+    this.navigate({ name: 'pin' });
+  }
+
+  /** ✕ on the PIN pad — back where the parent came from, shortcut abandoned. */
+  cancelPin(): void {
+    this.navigate(this.takeShortcut()?.returnRoute ?? { name: 'home' });
+  }
+
+  private takeShortcut(): ParentShortcut | undefined {
+    const shortcut = this.parentShortcut;
+    this.parentShortcut = undefined;
+    return shortcut;
+  }
+
   // ---------- toasts ----------
 
   toast(title: string, subtitle?: string): void {
@@ -328,16 +363,26 @@ class Store {
   async verifyPin(pin: string): Promise<boolean> {
     const ok = (await hashPin(pin)) === this.pinHash;
     if (ok) {
-      const pending = this.reviewQueue();
       this.set({ parentUnlocked: true });
-      this.navigate({ name: 'parent', view: pending.length > 0 ? 'review' : 'settings' });
+      // The shortcut lands on its own routine's review; the PARENTS chip keeps
+      // its usual landing (oldest pending review, else settings). A shortcut
+      // whose occurrence vanished meanwhile falls back to that same landing.
+      const shortcutOccId = this.parentShortcut?.reviewOccId;
+      const direct = shortcutOccId ? this.state.occurrences[shortcutOccId] : undefined;
+      if (direct && !isResolved(direct)) {
+        this.navigate({ name: 'parent', view: 'review', reviewOccId: direct.id });
+      } else {
+        const pending = this.reviewQueue();
+        this.navigate({ name: 'parent', view: pending.length > 0 ? 'review' : 'settings' });
+      }
     }
     return ok;
   }
 
+  /** LOCK — ends the session and hands the phone back where it came from. */
   lock(): void {
     this.set({ parentUnlocked: false });
-    this.navigate({ name: 'home' });
+    this.navigate(this.takeShortcut()?.returnRoute ?? { name: 'home' });
   }
 
   async setPin(pin: string): Promise<void> {
@@ -377,7 +422,10 @@ class Store {
         streak,
       },
     });
-    // Showing the child-facing award screen leaves the parent area (ends session).
+    // Showing the child-facing award screen leaves the parent area (ends
+    // session) — and it already hands the phone back, so the shortcut's
+    // return route is spent rather than followed.
+    this.takeShortcut();
     this.navigate({ name: 'award' });
     if (streak > 0 && streak % 7 === 0) {
       // Let the award moment's own "Routine complete!" card land first.
@@ -387,7 +435,10 @@ class Store {
 
   parentSendBack(occId: string, note: string | undefined): void {
     this.mutateOccurrence(occId, (occ) => sendBack(occ, note, this.state.nowMs));
-    this.navigate({ name: 'home' }); // hand the phone back
+    // Hand the phone back: to Haley's routine screen (now showing the
+    // sent-back banner) when the parent came in through the shortcut,
+    // otherwise Home as before.
+    this.navigate(this.takeShortcut()?.returnRoute ?? { name: 'home' });
   }
 
   parentCloseToday(occId: string): void {
