@@ -28,6 +28,7 @@ The files in this bundle are **design references created in HTML** — static mo
 | 1l | Parent settings | Next-morning verification checkboxes, routine times, rewards, balance adjust, redemption, LOCK |
 | 1m | Coin award | Toast + coin burst + XP bar advancing |
 | 1n | Customization | Avatar slot grid + theme variant list |
+| 2a | Icon brainstorm | Task icon pack — the final 37 checklist icons, grouped by category |
 
 Small gray caption lines inside some screens (e.g. "New segment flashes bright…", "Wrong PIN just shakes the dots") are **designer annotations describing intended behavior** — implement them, don't render them.
 
@@ -93,11 +94,23 @@ Screen padding 16–18px; card padding 12–16px; gaps 8–14px; checklist row g
 ## Theme Variants
 Overworld (default, shown throughout), Nether, End, Ocean, Cherry Grove — accent swatches in 1a and 1n. A variant changes ONLY: accent colors, header strip treatment, small decorative touches. It never changes layout, text/background contrast, coin gold, or XP-bar green. No free-form color picker, no unlockables.
 
+## Task Icon Pack (assets/icons/)
+37 hand-drawn pixel PNGs for attaching to checklist/task items (screen 2a shows all with labels). Render with `image-rendering: pixelated`, sized 24–34px inside a checklist row (e.g. left of the task name) or 44px in a slot. Filename → intended meaning:
+- Hygiene & bathroom: `toothbrush`, `shower` (shower/bath), `towel`, `comb` (hairbrush)
+- Bedroom & clothes: `bed`, `shirt` (clothes), `basket` (laundry), `lantern` (lights out), `door` (door/leave)
+- School & chores: `backpack`, `pencil` (homework), `paper` (worksheet), `book` (reading), `broom` (tidy up), `trash`, `flower` (water plants), `bone` (feed pet)
+- Food & drink: `cookie` (snack), `apple` (golden apple/fruit), `bowl` (breakfast), `cup` (milk/drink), `bottle` (water), `drumstick` (protein), `carrot` (vegetables)
+- Time & day: `clock`, `hourglass` (timer), `sun` (morning), `moon` (night), `star` (streak), `bell` (reminder)
+- Fun & rewards: `heart` (kindness), `sword` (screen time), `pickaxe` (big chore), `shield` (bonus quest), `chest` (reward chest), `key` (special unlock), `orb` (XP/bonus)
+
+Usage rules: icons are decorative labels, not buttons; never the only signal of meaning (task text is always present); no red icons exist by design (protein is a cooked drumstick, fruit is a golden apple, bed blanket is teal).
+
 ## Assets (production-ready, copy as-is)
 All in `assets/`, hand-drawn pixel art, render with `image-rendering: pixelated`:
 - `av-steve/alex/creeper/axolotl/cat/panda/fox/bee.png` — 32×32 avatar faces
 - `coin.png` — 16×16 gold Minecoin-style coin (the coin motif everywhere)
 - `tx-grass/dirt/stone/planks/iron/nether.png` — 8×8 tileable texture strips
+- `icons/*.png` — 37 task icons (see Task Icon Pack above)
 - Fonts via Google Fonts: Pixelify Sans, Nunito Sans.
 
 ## Files

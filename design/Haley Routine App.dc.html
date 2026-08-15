@@ -28,6 +28,29 @@ img{image-rendering:pixelated}
 .dv-next{margin:26px 0 0;font:12px/1.5 'Nunito Sans',sans-serif;color:rgba(0,0,0,.5)}
 </style>
 </helmet>
+<section class="dv-turn" id="t2">
+<div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">Task icon pack — brainstorm (37 icons)</span></div>
+<div class="dv-opts">
+<div class="dv-opt" id="2a"><div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a>Icon brainstorm — pick the keepers</div>
+<div class="dv-card" data-screen-label="Icon brainstorm" style="width:780px;background:#f3eee1;padding:22px 24px;display:flex;flex-direction:column;gap:18px">
+  <div style="font-size:13px;color:#4a463a;line-height:1.5;max-width:640px">Hand-drawn pixel PNGs, same style as the avatars — attach one to any checklist item, sized 24–34px in a row. Tell me which to cut (or keep) by name; the survivors get added to the design system (1a) and the handoff package. Rougher ones can be redrawn on request.</div>
+  <sc-for list="{{ iconGroups }}" as="g" hint-placeholder-count="6">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'Pixelify Sans',monospace;font-size:15px;color:#8a8578">{{ g.name }}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px">
+        <sc-for list="{{ g.items }}" as="ic" hint-placeholder-count="6">
+          <div style="width:78px;display:flex;flex-direction:column;align-items:center;gap:5px">
+            <div style="width:60px;height:60px;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f;display:flex;align-items:center;justify-content:center"><div role="img" aria-label="{{ ic.name }}" style="width:44px;height:44px;image-rendering:pixelated;background-repeat:no-repeat;background-position:center;background-size:contain;background-image:{{ ic.bg }}"></div></div>
+            <div style="font-size:11px;font-weight:700;color:#4a463a;text-align:center;line-height:1.2">{{ ic.name }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-for>
+</div>
+</div>
+</div>
+</section>
 <section class="dv-turn" id="t1">
 <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Haley's Routine &amp; Minecoin App — design system + all screens</span></div>
 <div style="max-width:760px;background:#fffdf4;border:3px solid #2b2b24;padding:16px 20px;margin:0 0 26px;font-size:13px;line-height:1.55;color:#4a463a">
@@ -701,7 +724,17 @@ class Component extends DCLogic {
   renderVals() {
     const b = this.props.coinBalance ?? 1240;
     const pct = Math.min(100, Math.round((b / 1720) * 1000) / 10);
+    const rawGroups = [
+      {name:'HYGIENE & BATHROOM', items:[{id:'toothbrush',name:'Toothbrush'},{id:'shower',name:'Shower / bath'},{id:'towel',name:'Towel'},{id:'comb',name:'Hairbrush'}]},
+      {name:'BEDROOM & CLOTHES', items:[{id:'bed',name:'Bed'},{id:'shirt',name:'Clothes'},{id:'basket',name:'Laundry'},{id:'lantern',name:'Lights out'},{id:'door',name:'Door / leave'}]},
+      {name:'SCHOOL & CHORES', items:[{id:'backpack',name:'Backpack'},{id:'pencil',name:'Homework'},{id:'paper',name:'Worksheet'},{id:'book',name:'Reading'},{id:'broom',name:'Tidy up'},{id:'trash',name:'Trash'},{id:'flower',name:'Water plants'},{id:'bone',name:'Feed pet'}]},
+      {name:'FOOD & DRINK', items:[{id:'cookie',name:'Snack'},{id:'apple',name:'Golden apple (fruit)'},{id:'bowl',name:'Breakfast'},{id:'cup',name:'Milk / drink'},{id:'bottle',name:'Water bottle'},{id:'drumstick',name:'Protein'},{id:'carrot',name:'Vegetables'}]},
+      {name:'TIME & DAY', items:[{id:'clock',name:'Clock'},{id:'hourglass',name:'Timer'},{id:'sun',name:'Morning'},{id:'moon',name:'Night'},{id:'star',name:'Streak / star'},{id:'bell',name:'Reminder'}]},
+      {name:'FUN & REWARDS', items:[{id:'heart',name:'Kindness'},{id:'sword',name:'Screen time'},{id:'pickaxe',name:'Big chore'},{id:'shield',name:'Bonus quest'},{id:'chest',name:'Reward chest'},{id:'key',name:'Special unlock'},{id:'orb',name:'XP / bonus'}]}
+    ];
+    const iconGroups = rawGroups.map(g => ({name: g.name, items: g.items.map(it => ({...it, bg: "url('assets/icons/" + it.id + ".png')"}))}));
     return {
+      iconGroups,
       balanceText: b.toLocaleString('en-US'),
       xpWidth: pct + '%',
       toGo: Math.max(0, 1720 - b).toLocaleString('en-US'),
