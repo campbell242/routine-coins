@@ -1,0 +1,45 @@
+# Haley's Routine & Minecoin PWA — guidance for AI-assisted changes
+
+Offline-first PWA (React + Vite + TS, IndexedDB). The visual source of truth
+is `design/` — recreate it exactly, never restyle or substitute fonts/colors.
+Behavioral decisions and their rationale are in `DECISIONS.md`; read it
+before changing engine behavior.
+
+## Architecture in one breath
+
+Plans are configuration (`src/config/plans.ts`) consumed by a generic engine
+(`src/engine/` — the occurrence state machine lives ONLY in
+`src/engine/machine.ts`). Persistence is IndexedDB (`src/persistence/db.ts`).
+UI subscribes through one store (`src/store/store.ts`). Adding a routine is a
+config change only.
+
+## Authoring or editing checklists (plans)
+
+- Give every item a **stable, never-reused `id`** — checks are keyed to it.
+- `attestation: 'child'` for things Haley checks herself;
+  `'parent-morning'` for after-lights-out items a parent verifies next
+  morning. Time-conditioned items are never auto-evaluated or auto-failed.
+- **Set an `icon` on every new item**, chosen from the fixed task icon pack
+  in `src/config/icons.ts` (`TASK_ICONS`, 37 names — the same list is
+  documented in README.md "Authoring checklists"). Pick the best semantic
+  fit (e.g. brush teeth → `toothbrush`, reading → `book`, lights out →
+  `lantern`). Do not leave items icon-less when a reasonable fit exists,
+  and **never invent icon names** — only names in `TASK_ICONS` render;
+  unknown names silently show no icon. Prefer not to repeat an icon within
+  one routine's list when a distinct alternative fits.
+- Icons are decorative labels only: never a button, never the only signal
+  of meaning — the task text always remains.
+
+## Hard tone rules (from the design handoff)
+
+No red anywhere; no creepers/TNT/damage imagery in failure-adjacent states;
+"sent back" is calm slate `#6d89a3`; broken streaks show nothing rather than
+negative messaging; closed-for-today is neutral gray.
+
+## Checks before pushing
+
+`npm test` (vitest), `npm run build` (typecheck + build + service-worker
+generation). For visual changes, `node scripts/screenshots.mjs <outDir>`
+drives every screen against a seeded IndexedDB, and
+`node scripts/contrast-audit.mjs` must stay green for all five theme
+variants.
