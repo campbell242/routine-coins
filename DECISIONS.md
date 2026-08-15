@@ -125,6 +125,37 @@ design README and mockup annotations.
   same convention as the gold button). Accent text ≥ 4.5 on parchment and
   card in every variant. `scripts/contrast-audit.mjs` verifies all pairs.
 
+## Review hardening
+
+An adversarial multi-agent review (engine correctness, UX flows, pixel
+fidelity, PWA/platform) ran against the finished build; every confirmed
+finding was fixed:
+
+- Approval writes the occurrence and balance in **one IndexedDB
+  transaction** (a kill mid-approval can't award without resolving or vice
+  versa).
+- A Pause tap landing in the sub-second window after the timer's real end
+  resolves to the expired state (alarm + TIME'S UP) instead of stranding a
+  "paused at 00:00" timer.
+- Service worker stores **Vary-stripped responses** and matches with
+  `ignoreVary` — hosts sending `Vary: Origin` (vite preview does) would
+  otherwise make crossorigin font/module requests miss the cache on a cold
+  offline start.
+- `primeAudio` resumes any non-`running` AudioContext (iOS WebKit's
+  non-standard `interrupted` state), with a capture-phase first-tap primer
+  and a visibilitychange re-prime, so the expiry alarm survives
+  backgrounding and relaunch.
+- Wake lock re-acquires after a platform-initiated release and releases
+  immediately if the timer was cancelled while the request was in flight.
+- Parent modals disable Save on invalid/empty input; manual award edits are
+  remembered per occurrence; the exact-amount modal can't set 0 from an
+  empty field.
+- XP "new segment" is a bright overlay that fades to reveal the green fill
+  (settles into the bar, never disappears); verify-last-night unchecked
+  slots use the light #fffdf6 fill per 1l; small bevel buttons keep
+  per-variant inset strengths; back/close/✎ affordances have ≥44px hit
+  areas.
+
 ## Testing
 
 - 20 vitest unit tests over the engine and persistence: state machine,
