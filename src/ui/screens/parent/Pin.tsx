@@ -67,8 +67,16 @@ export function PinScreen() {
         </div>
         <button
           onClick={() => store.navigate({ name: 'home' })}
-          style={{ marginLeft: 'auto', width: 'auto', padding: 6 }}
           aria-label="Close"
+          style={{
+            marginLeft: 'auto',
+            width: 'auto',
+            minHeight: 44,
+            display: 'flex',
+            alignItems: 'center',
+            padding: '0 8px',
+            margin: '-8px -8px -8px auto',
+          }}
         >
           <span className="px" style={{ fontSize: 16, color: '#8a8578' }}>
             ✕ close

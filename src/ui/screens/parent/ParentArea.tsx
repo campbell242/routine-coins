@@ -20,7 +20,7 @@ import { GreenButton, PixelButton, SlotCheck } from '../../components/core';
 
 // ---------- shared chrome ----------
 
-function ParentHeader({ title }: { title: string }) {
+function ParentHeader({ title, titleSize = 21 }: { title: string; titleSize?: number }) {
   return (
     <>
       <div
@@ -33,7 +33,7 @@ function ParentHeader({ title }: { title: string }) {
         }}
       />
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 16px', flex: 'none' }}>
-        <div className="px" style={{ fontSize: 21 }}>
+        <div className="px" style={{ fontSize: titleSize }}>
           {title}
         </div>
         <button
@@ -425,7 +425,7 @@ function VerifyLastNight() {
             textAlign: 'left',
           }}
         >
-          <SlotCheck checked={isChecked(occ, item.id)} size={30} themed={false} />
+          <SlotCheck checked={isChecked(occ, item.id)} size={30} themed={false} lightUnchecked />
           {item.label}
         </button>
       ))}
@@ -475,6 +475,17 @@ function SettingsView() {
     borderBottom: '2px solid #efe9d8',
   } as const;
 
+  // ✎ edit affordances keep the design's row look but get a ≥44px hit area.
+  const editBtnStyle = {
+    marginLeft: 'auto',
+    width: 'auto',
+    minHeight: 44,
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0 4px',
+    margin: '-9px -4px -9px auto',
+  } as const;
+
   return (
     <>
       <div className="screen-scroll">
@@ -505,7 +516,7 @@ function SettingsView() {
                     setField2(plan.windowEnd ?? '');
                     setModal({ kind: 'time', planId: plan.id });
                   }}
-                  style={{ marginLeft: 'auto', width: 'auto' }}
+                  style={editBtnStyle}
                 >
                   <span className="px" style={{ color: '#3d7a22' }}>
                     {plan.windowEnd
@@ -528,7 +539,7 @@ function SettingsView() {
                   setField1(String(baseShared));
                   setModal({ kind: 'base' });
                 }}
-                style={{ marginLeft: 'auto', width: 'auto' }}
+                style={editBtnStyle}
               >
                 <span className="px" style={{ color: '#3d7a22' }}>
                   {baseShared} ✎
@@ -545,7 +556,7 @@ function SettingsView() {
                     setField1('');
                     setModal({ kind: 'adjust' });
                   }}
-                  style={{ width: 'auto' }}
+                  style={{ width: 'auto', minHeight: 44, display: 'flex', alignItems: 'center', margin: '-9px 0' }}
                 >
                   <span className="px" style={{ color: '#3d7a22' }}>
                     ＋/− adjust
@@ -588,7 +599,7 @@ function SettingsView() {
                   setField1('');
                   setModal({ kind: 'pin' });
                 }}
-                style={{ marginLeft: 'auto', width: 'auto' }}
+                style={editBtnStyle}
               >
                 <span className="px" style={{ color: '#3d7a22' }}>
                   ···· ✎
@@ -867,7 +878,7 @@ export function ParentArea({ view, reviewOccId }: { view: 'review' | 'settings';
 
   return (
     <div className="screen" style={{ background: '#e8e6e0', color: '#2b2b24' }}>
-      <ParentHeader title={view === 'review' ? reviewTitle : 'Settings'} />
+      <ParentHeader title={view === 'review' ? reviewTitle : 'Settings'} titleSize={view === 'review' ? 21 : 22} />
       {view === 'review' && queue.length > 0 && (
         <div style={{ padding: '0 16px 4px', flex: 'none' }}>
           <button onClick={() => store.navigate({ name: 'parent', view: 'settings' })} style={{ width: 'auto' }}>

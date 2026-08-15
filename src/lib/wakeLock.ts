@@ -14,6 +14,12 @@ async function acquire(): Promise<void> {
     const wl = (navigator as unknown as { wakeLock?: { request(type: 'screen'): Promise<WakeLockSentinel> } }).wakeLock;
     if (!wl || sentinel) return;
     const s = await wl.request('screen');
+    // The timer may have been cancelled while the request was in flight —
+    // don't hold a lock nobody wants.
+    if (!wanted) {
+      void s.release();
+      return;
+    }
     sentinel = s;
     // The platform may release the lock while the page stays visible
     // (battery saver, thermal policy). Clear the stale sentinel and retry

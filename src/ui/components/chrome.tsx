@@ -84,7 +84,20 @@ export function SubHeader({
       }}
     >
       {onBack && (
-        <button onClick={onBack} style={{ width: 'auto', padding: '0 6px', margin: '0 -6px' }} aria-label="Back">
+        <button
+          onClick={onBack}
+          aria-label="Back"
+          style={{
+            width: 'auto',
+            minWidth: 44,
+            minHeight: 44,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0 6px',
+            margin: '-10px -6px', // ≥44px hit area without changing the layout
+          }}
+        >
           <span className="px" style={{ fontSize: 20, color: '#8a8578' }}>
             ‹
           </span>

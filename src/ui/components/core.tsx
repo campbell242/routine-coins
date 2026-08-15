@@ -58,7 +58,9 @@ export function PixelButton({
         extra.background = theme.primary;
         extra.color = theme.primaryText;
         extra.textShadow = theme.primaryTextShadow;
-        extra.boxShadow = `inset 0 4px 0 ${theme.primaryInsetTop}, inset 0 -6px 0 ${theme.primaryInsetBottom}`;
+        extra.boxShadow = small
+          ? `inset 0 3px 0 ${theme.primaryInsetTop}, inset 0 -4px 0 ${theme.primaryInsetBottom}`
+          : `inset 0 4px 0 ${theme.primaryInsetTop}, inset 0 -6px 0 ${theme.primaryInsetBottom}`;
         break;
       case 'gold':
         cls.push('bevel-gold');
@@ -110,12 +112,15 @@ export function SlotCheck({
   checked,
   size,
   themed = true,
+  lightUnchecked = false,
   onClick,
 }: {
   checked: boolean;
   size: number;
   /** Parent-area checkboxes keep classic green regardless of theme. */
   themed?: boolean;
+  /** Light unchecked fill (#fffdf6) — the verify-last-night treatment (1l). */
+  lightUnchecked?: boolean;
   onClick?: () => void;
 }) {
   const theme = useTheme();
@@ -143,7 +148,7 @@ export function SlotCheck({
       ✔
     </span>
   ) : (
-    <span className="slot" style={{ width: size, height: size, flex: 'none' }} />
+    <span className={lightUnchecked ? 'slot slot-light' : 'slot'} style={{ width: size, height: size, flex: 'none' }} />
   );
   if (!onClick) return box;
   return (
