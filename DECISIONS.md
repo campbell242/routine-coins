@@ -113,6 +113,18 @@ design README and mockup annotations.
   a `‹` back affordance was added to the running screen header so a child
   can reach her checklist mid-timer without cancelling (deviation, documented;
   the timer pill keeps the countdown visible everywhere).
+- **The running screen's exit hierarchy was inverted, and was corrected.**
+  That `‹` is the only way off the screen that keeps the timer alive, yet it
+  was the dimmest thing on it (muted `#8a8578`, 4.30:1) while the *destructive*
+  exit was a full-width button reading just "Cancel" — which a 10-year-old
+  reads as "cancel out of this screen", not "destroy my timer". Two copy/color
+  changes (deviations from mockup 1h, deliberate): the back reads **`‹ Home`**
+  in light parchment `#cfc8b2` (9.45:1 — bright enough to find, neutral so it
+  never merges with the accent-green title beside it), and the stone button
+  reads **"Cancel Timer"**, naming what it ends. Both stay in the mockup's
+  positions; no third button competes with Pause/Cancel. The labelled back is
+  opt-in per screen (`SubHeader`'s `backLabel`), so the light sub-screens keep
+  their bare `‹`.
 - Pause is allowed (mockup shows Pause ⏸); pausing freezes remaining time,
   resuming re-anchors the absolute end timestamp. A *running* timer can never
   be extended; "+5 more min" exists only from the expired state and starts a
