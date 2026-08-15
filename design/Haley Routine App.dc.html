@@ -10,7 +10,7 @@
 <helmet data-dc-atomics>
 <meta name="design_doc_mode" content="canvas">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Nunito+Sans:wght@400;600;700;800&family=Jersey+25&family=Jersey+10&family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet">
 <style>
 body{margin:0;background:#e9e4d6;font-family:'Nunito Sans',system-ui,sans-serif}
 a{color:#3d7a22;text-decoration:none}a:hover{color:#57a636;text-decoration:underline}
@@ -36,7 +36,7 @@ img{image-rendering:pixelated}
   <div style="font-size:13px;color:#4a463a;line-height:1.5;max-width:640px">Hand-drawn pixel PNGs, same style as the avatars — attach one to any checklist item, sized 24–34px in a row. Tell me which to cut (or keep) by name; the survivors get added to the design system (1a) and the handoff package. Rougher ones can be redrawn on request.</div>
   <sc-for list="{{ iconGroups }}" as="g" hint-placeholder-count="6">
     <div style="display:flex;flex-direction:column;gap:10px">
-      <div style="font-family:'Pixelify Sans',monospace;font-size:15px;color:#8a8578">{{ g.name }}</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578">{{ g.name }}</div>
       <div style="display:flex;flex-wrap:wrap;gap:10px">
         <sc-for list="{{ g.items }}" as="ic" hint-placeholder-count="6">
           <div style="width:78px;display:flex;flex-direction:column;align-items:center;gap:5px">
@@ -54,7 +54,7 @@ img{image-rendering:pixelated}
 <section class="dv-turn" id="t1">
 <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Haley's Routine &amp; Minecoin App — design system + all screens</span></div>
 <div style="max-width:760px;background:#fffdf4;border:3px solid #2b2b24;padding:16px 20px;margin:0 0 26px;font-size:13px;line-height:1.55;color:#4a463a">
-<div style="font-family:'Pixelify Sans',monospace;font-size:18px;color:#2b2b24;margin-bottom:6px">Design notes</div>
+<div style="font-family:'Jersey 25',monospace;font-size:18px;color:#2b2b24;margin-bottom:6px">Design notes</div>
 <b>Navigation:</b> three big bottom tabs — HOME, TIMER, ME (customization). The clock lives in every screen's header; a running timer pins a dark pill above the content on every child screen. The parent area hides behind a small iron-door chip in the Home footer. <b>Theming:</b> pixel bevels + block textures as trim only; content sits on calm parchment. Pixelify Sans for headings/numbers/buttons, Nunito Sans for instructions. No red anywhere — "sent back" is calm slate blue. Tweaks panel: coin balance drives the XP bar; toggle the running-timer pill.
 </div>
 <div class="dv-opts">
@@ -64,7 +64,7 @@ img{image-rendering:pixelated}
 <div class="dv-card" data-screen-label="Design system" style="width:780px;background:#f3eee1;padding:22px 24px;display:flex;flex-direction:column;gap:20px">
   <div style="display:flex;gap:18px;flex-wrap:wrap">
     <div style="flex:1;min-width:220px">
-      <div style="font-family:'Pixelify Sans',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">PALETTE</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">PALETTE</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <div style="width:64px"><div style="height:40px;background:#f3eee1;border:2px solid #2b2b24"></div><div style="font-size:10px;margin-top:3px">Parchment bg</div></div>
         <div style="width:64px"><div style="height:40px;background:#fffdf6;border:2px solid #2b2b24"></div><div style="font-size:10px;margin-top:3px">Card</div></div>
@@ -77,28 +77,28 @@ img{image-rendering:pixelated}
       </div>
     </div>
     <div style="flex:1;min-width:260px">
-      <div style="font-family:'Pixelify Sans',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">TYPE</div>
-      <div style="font-family:'Pixelify Sans',monospace;font-size:30px;color:#2b2b24">Pixelify Sans 700</div>
-      <div style="font-family:'Pixelify Sans',monospace;font-size:15px;color:#5c584c;margin:2px 0 8px">headings · numbers · clock · buttons · coins</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">TYPE</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:30px;color:#2b2b24">Jersey 25</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#5c584c;margin:2px 0 8px">headings · numbers · clock · buttons · coins (Jersey 25)</div>
       <div style="font-size:15px;color:#2b2b24;font-weight:600">Nunito Sans — instructions and any sentence-length text stays in a clean sans, sized 14px+.</div>
     </div>
   </div>
   <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start">
     <div style="min-width:300px;flex:1">
-      <div style="font-family:'Pixelify Sans',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">BUTTONS</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">BUTTONS</div>
       <div style="display:flex;flex-direction:column;gap:10px">
-        <div style="font-family:'Pixelify Sans',monospace;font-size:21px;color:#fff;text-align:center;padding:14px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Primary action</div>
-        <div style="font-family:'Pixelify Sans',monospace;font-size:21px;color:#3d2c00;text-align:center;padding:14px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.5),inset 0 -6px 0 rgba(0,0,0,.18);text-shadow:0 1px 0 rgba(255,255,255,.4)">Coin / reward action</div>
-        <div style="font-family:'Pixelify Sans',monospace;font-size:21px;color:#fff;text-align:center;padding:14px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Secondary (stone)</div>
-        <div style="font-family:'Pixelify Sans',monospace;font-size:21px;color:#d5d2c9;text-align:center;padding:14px;background:#7d7d7d;border:3px solid #4a4a44;box-shadow:inset 0 4px 0 rgba(255,255,255,.12),inset 0 -6px 0 rgba(0,0,0,.18)">Disabled</div>
+        <div style="font-family:'Jersey 25',monospace;font-size:21px;color:#fff;text-align:center;padding:14px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Primary action</div>
+        <div style="font-family:'Jersey 25',monospace;font-size:21px;color:#3d2c00;text-align:center;padding:14px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.5),inset 0 -6px 0 rgba(0,0,0,.18);text-shadow:0 1px 0 rgba(255,255,255,.4)">Coin / reward action</div>
+        <div style="font-family:'Jersey 25',monospace;font-size:21px;color:#fff;text-align:center;padding:14px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Secondary (stone)</div>
+        <div style="font-family:'Jersey 25',monospace;font-size:21px;color:#d5d2c9;text-align:center;padding:14px;background:#7d7d7d;border:3px solid #4a4a44;box-shadow:inset 0 4px 0 rgba(255,255,255,.12),inset 0 -6px 0 rgba(0,0,0,.18)">Disabled</div>
       </div>
     </div>
     <div style="min-width:300px;flex:1;display:flex;flex-direction:column;gap:14px">
       <div>
-        <div style="font-family:'Pixelify Sans',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">COINS + XP BAR</div>
+        <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">COINS + XP BAR</div>
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
           <img src="assets/coin.png" alt="coin" style="width:30px;height:30px">
-          <span style="font-family:'Pixelify Sans',monospace;font-size:26px;color:#2b2b24">1,240 <span style="font-size:16px;color:#8a8578">/ 1,720</span></span>
+          <span style="font-family:'Jersey 25',monospace;font-size:26px;color:#2b2b24">1,240 <span style="font-size:16px;color:#8a8578">/ 1,720</span></span>
         </div>
         <div style="height:22px;border:3px solid #20241a;background:#2f2f28;padding:2px">
           <div style="height:100%;width:72%;background:repeating-linear-gradient(90deg,transparent 0 16px,rgba(0,0,0,.25) 16px 19px),linear-gradient(#b4f06a,#7fe237 45%,#59c01c)"></div>
@@ -106,17 +106,17 @@ img{image-rendering:pixelated}
         <div style="font-size:11px;color:#8a8578;margin-top:4px">Bar stays full past 1,720; the number keeps climbing.</div>
       </div>
       <div>
-        <div style="font-family:'Pixelify Sans',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">SLOTS + CHECKS</div>
+        <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">SLOTS + CHECKS</div>
         <div style="display:flex;gap:10px;align-items:center">
           <div style="width:48px;height:48px;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f"></div>
-          <div style="width:48px;height:48px;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Pixelify Sans',monospace;font-size:28px;color:#fff">✔</div>
+          <div style="width:48px;height:48px;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Jersey 25',monospace;font-size:28px;color:#fff">✔</div>
           <div style="width:48px;height:48px;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f;display:flex;align-items:center;justify-content:center"><img src="assets/av-axolotl.png" alt="" style="width:34px;height:34px"></div>
           <div style="font-size:12px;color:#5c584c">inventory slot ·<br>checked · avatar slot</div>
         </div>
       </div>
       <div>
-        <div style="font-family:'Pixelify Sans',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">STATUS CHIPS</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;font-family:'Pixelify Sans',monospace;font-size:14px">
+        <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">STATUS CHIPS</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;font-family:'Jersey 25',monospace;font-size:14px">
           <span style="padding:4px 10px;border:2px solid #57a636;color:#3d7a22;background:#eaf5df">IN PROGRESS</span>
           <span style="padding:4px 10px;border:2px solid #c8961e;color:#8a6200;background:#fdf3d4">READY</span>
           <span style="padding:4px 10px;border:2px solid #6d89a3;color:#42607c;background:#e8eef4">SENT BACK</span>
@@ -127,18 +127,18 @@ img{image-rendering:pixelated}
   </div>
   <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start">
     <div style="min-width:320px;flex:1">
-      <div style="font-family:'Pixelify Sans',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">ADVANCEMENT TOAST</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">ADVANCEMENT TOAST</div>
       <div style="display:flex;gap:12px;align-items:center;background:#efe9d8;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.7),inset 0 -4px 0 rgba(0,0,0,.1),0 5px 0 rgba(32,36,26,.15);padding:12px 16px;max-width:340px">
         <img src="assets/coin.png" alt="" style="width:34px;height:34px">
         <div>
-          <div style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#b07d00">Routine complete!</div>
+          <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#b07d00">Routine complete!</div>
           <div style="font-size:13px;color:#4a463a">Morning Routine · +55 coins</div>
         </div>
       </div>
       <div style="font-size:11px;color:#8a8578;margin-top:5px">Slides in top, self-dismisses ~3s. Never blocks taps.</div>
     </div>
     <div style="min-width:200px">
-      <div style="font-family:'Pixelify Sans',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">TEXTURE TRIM (accents only)</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">TEXTURE TRIM (accents only)</div>
       <div style="display:flex;gap:8px">
         <div style="text-align:center"><div style="width:44px;height:44px;background:url('assets/tx-grass.png');background-size:16px;border:2px solid #2b2b24"></div><div style="font-size:10px;margin-top:3px">grass</div></div>
         <div style="text-align:center"><div style="width:44px;height:44px;background:url('assets/tx-dirt.png');background-size:16px;border:2px solid #2b2b24"></div><div style="font-size:10px;margin-top:3px">dirt</div></div>
@@ -148,20 +148,20 @@ img{image-rendering:pixelated}
       </div>
     </div>
     <div style="min-width:220px">
-      <div style="font-family:'Pixelify Sans',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">AVATARS</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">AVATARS</div>
       <div style="display:flex;gap:6px;flex-wrap:wrap">
         <img src="assets/av-steve.png" alt="Steve" style="width:40px;height:40px"><img src="assets/av-alex.png" alt="Alex" style="width:40px;height:40px"><img src="assets/av-creeper.png" alt="Creeper" style="width:40px;height:40px"><img src="assets/av-axolotl.png" alt="Axolotl" style="width:40px;height:40px"><img src="assets/av-cat.png" alt="Cat" style="width:40px;height:40px"><img src="assets/av-panda.png" alt="Panda" style="width:40px;height:40px"><img src="assets/av-fox.png" alt="Fox" style="width:40px;height:40px"><img src="assets/av-bee.png" alt="Bee" style="width:40px;height:40px">
       </div>
     </div>
   </div>
   <div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">THEME VARIANTS — accents + header trim only; layout, gold, and XP bar never change</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">THEME VARIANTS — accents + header trim only; layout, gold, and XP bar never change</div>
     <div style="display:flex;gap:10px;flex-wrap:wrap">
-      <div style="width:128px;border:3px solid #c8961e;background:#fffdf6"><div style="height:12px;background:url('assets/tx-grass.png');background-size:12px"></div><div style="padding:8px"><div style="font-family:'Pixelify Sans',monospace;font-size:14px">Overworld ✔</div><div style="display:flex;gap:4px;margin-top:5px"><span style="width:14px;height:14px;background:#57a636"></span><span style="width:14px;height:14px;background:#7a5233"></span><span style="width:14px;height:14px;background:#7fe237"></span></div></div></div>
-      <div style="width:128px;border:3px solid #2b2b24;background:#fffdf6"><div style="height:12px;background:url('assets/tx-nether.png');background-size:12px"></div><div style="padding:8px"><div style="font-family:'Pixelify Sans',monospace;font-size:14px">Nether</div><div style="display:flex;gap:4px;margin-top:5px"><span style="width:14px;height:14px;background:#d96e2e"></span><span style="width:14px;height:14px;background:#8a4545"></span><span style="width:14px;height:14px;background:#f2a23e"></span></div></div></div>
-      <div style="width:128px;border:3px solid #2b2b24;background:#fffdf6"><div style="height:12px;background:#3a2e4a"></div><div style="padding:8px"><div style="font-family:'Pixelify Sans',monospace;font-size:14px">End</div><div style="display:flex;gap:4px;margin-top:5px"><span style="width:14px;height:14px;background:#a06fd6"></span><span style="width:14px;height:14px;background:#d8c7ee"></span><span style="width:14px;height:14px;background:#e5e8a0"></span></div></div></div>
-      <div style="width:128px;border:3px solid #2b2b24;background:#fffdf6"><div style="height:12px;background:#2e6e8f"></div><div style="padding:8px"><div style="font-family:'Pixelify Sans',monospace;font-size:14px">Ocean</div><div style="display:flex;gap:4px;margin-top:5px"><span style="width:14px;height:14px;background:#3aa6b9"></span><span style="width:14px;height:14px;background:#2e6e8f"></span><span style="width:14px;height:14px;background:#8fd8c9"></span></div></div></div>
-      <div style="width:128px;border:3px solid #2b2b24;background:#fffdf6"><div style="height:12px;background:#e8a9c6"></div><div style="padding:8px"><div style="font-family:'Pixelify Sans',monospace;font-size:14px">Cherry Grove</div><div style="display:flex;gap:4px;margin-top:5px"><span style="width:14px;height:14px;background:#e58bb4"></span><span style="width:14px;height:14px;background:#8f5a44"></span><span style="width:14px;height:14px;background:#f5cede"></span></div></div></div>
+      <div style="width:128px;border:3px solid #c8961e;background:#fffdf6"><div style="height:12px;background:url('assets/tx-grass.png');background-size:12px"></div><div style="padding:8px"><div style="font-family:'Jersey 25',monospace;font-size:14px">Overworld ✔</div><div style="display:flex;gap:4px;margin-top:5px"><span style="width:14px;height:14px;background:#57a636"></span><span style="width:14px;height:14px;background:#7a5233"></span><span style="width:14px;height:14px;background:#7fe237"></span></div></div></div>
+      <div style="width:128px;border:3px solid #2b2b24;background:#fffdf6"><div style="height:12px;background:url('assets/tx-nether.png');background-size:12px"></div><div style="padding:8px"><div style="font-family:'Jersey 25',monospace;font-size:14px">Nether</div><div style="display:flex;gap:4px;margin-top:5px"><span style="width:14px;height:14px;background:#d96e2e"></span><span style="width:14px;height:14px;background:#8a4545"></span><span style="width:14px;height:14px;background:#f2a23e"></span></div></div></div>
+      <div style="width:128px;border:3px solid #2b2b24;background:#fffdf6"><div style="height:12px;background:#3a2e4a"></div><div style="padding:8px"><div style="font-family:'Jersey 25',monospace;font-size:14px">End</div><div style="display:flex;gap:4px;margin-top:5px"><span style="width:14px;height:14px;background:#a06fd6"></span><span style="width:14px;height:14px;background:#d8c7ee"></span><span style="width:14px;height:14px;background:#e5e8a0"></span></div></div></div>
+      <div style="width:128px;border:3px solid #2b2b24;background:#fffdf6"><div style="height:12px;background:#2e6e8f"></div><div style="padding:8px"><div style="font-family:'Jersey 25',monospace;font-size:14px">Ocean</div><div style="display:flex;gap:4px;margin-top:5px"><span style="width:14px;height:14px;background:#3aa6b9"></span><span style="width:14px;height:14px;background:#2e6e8f"></span><span style="width:14px;height:14px;background:#8fd8c9"></span></div></div></div>
+      <div style="width:128px;border:3px solid #2b2b24;background:#fffdf6"><div style="height:12px;background:#e8a9c6"></div><div style="padding:8px"><div style="font-family:'Jersey 25',monospace;font-size:14px">Cherry Grove</div><div style="display:flex;gap:4px;margin-top:5px"><span style="width:14px;height:14px;background:#e58bb4"></span><span style="width:14px;height:14px;background:#8f5a44"></span><span style="width:14px;height:14px;background:#f5cede"></span></div></div></div>
     </div>
   </div>
 </div>
@@ -173,20 +173,20 @@ img{image-rendering:pixelated}
   <div style="height:12px;background:url('assets/tx-grass.png');background-size:16px"></div>
   <div style="height:8px;background:url('assets/tx-dirt.png');background-size:16px"></div>
   <sc-if value="{{ timerRunning }}" hint-placeholder-val="{{ true }}">
-    <div style="display:flex;justify-content:space-between;align-items:center;background:#20241a;color:#fff;padding:9px 16px;font-family:'Pixelify Sans',monospace;font-size:17px"><span>TIMER · 08:42</span><span style="color:#a8e07f;font-size:14px">tap to open ›</span></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;background:#20241a;color:#fff;padding:9px 16px;font-family:'Jersey 25',monospace;font-size:17px"><span>TIMER · 08:42</span><span style="color:#a8e07f;font-size:14px">tap to open ›</span></div>
   </sc-if>
   <div style="display:flex;align-items:center;gap:12px;padding:16px 18px 6px">
     <div style="width:56px;height:56px;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f;display:flex;align-items:center;justify-content:center"><img src="assets/av-axolotl.png" alt="avatar" style="width:42px;height:42px"></div>
     <div style="flex:1">
-      <div style="font-family:'Pixelify Sans',monospace;font-size:22px">Hi, Haley!</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:22px">Hi, Haley!</div>
       <div style="font-size:13px;color:#6b675c;font-weight:600">Tuesday, Aug 15</div>
     </div>
   </div>
-  <div style="text-align:center;font-family:'Pixelify Sans',monospace;font-size:74px;line-height:1;padding:8px 0 2px">7:42<span style="font-size:26px;color:#8a8578"> AM</span></div>
+  <div style="text-align:center;font-family:'Jersey 25',monospace;font-size:74px;line-height:1;padding:8px 0 2px">7:42<span style="font-size:26px;color:#8a8578"> AM</span></div>
   <div style="padding:12px 18px 4px">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
       <img src="assets/coin.png" alt="coins" style="width:28px;height:28px">
-      <span style="font-family:'Pixelify Sans',monospace;font-size:24px">{{ balanceText }} <span style="font-size:15px;color:#8a8578">/ 1,720</span></span>
+      <span style="font-family:'Jersey 25',monospace;font-size:24px">{{ balanceText }} <span style="font-size:15px;color:#8a8578">/ 1,720</span></span>
       <span style="margin-left:auto;font-size:12px;color:#8a8578;font-weight:700">{{ toGo }} to go!</span>
     </div>
     <div style="height:20px;border:3px solid #20241a;background:#2f2f28;padding:2px">
@@ -198,8 +198,8 @@ img{image-rendering:pixelated}
       <div style="height:8px;background:url('assets/tx-grass.png');background-size:16px"></div>
       <div style="padding:16px">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-          <span style="font-family:'Pixelify Sans',monospace;font-size:24px">Morning Routine</span>
-          <span style="margin-left:auto;font-family:'Pixelify Sans',monospace;font-size:13px;padding:4px 9px;border:2px solid #57a636;color:#3d7a22;background:#eaf5df">IN PROGRESS</span>
+          <span style="font-family:'Jersey 25',monospace;font-size:24px">Morning Routine</span>
+          <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:13px;padding:4px 9px;border:2px solid #57a636;color:#3d7a22;background:#eaf5df">IN PROGRESS</span>
         </div>
         <div style="font-size:14px;color:#6b675c;font-weight:600;margin-bottom:12px">2 of 4 done · finish by 8:30 · worth <b style="color:#8a6200">40+ coins</b></div>
         <div style="display:flex;gap:5px;margin-bottom:16px">
@@ -208,24 +208,24 @@ img{image-rendering:pixelated}
           <div style="flex:1;height:12px;background:#d9d3c2;border:2px solid #20241a"></div>
           <div style="flex:1;height:12px;background:#d9d3c2;border:2px solid #20241a"></div>
         </div>
-        <div style="font-family:'Pixelify Sans',monospace;font-size:23px;color:#fff;text-align:center;padding:16px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Keep going ›</div>
+        <div style="font-family:'Jersey 25',monospace;font-size:23px;color:#fff;text-align:center;padding:16px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Keep going ›</div>
       </div>
     </div>
     <div style="display:flex;align-items:center;gap:10px;margin-top:14px;padding:10px 12px;background:#efe9d8;border:3px solid #cfc8b2">
-      <span style="font-family:'Pixelify Sans',monospace;font-size:16px;color:#8a8578">★ 6 day streak</span>
+      <span style="font-family:'Jersey 25',monospace;font-size:16px;color:#8a8578">★ 6 day streak</span>
       <span style="margin-left:auto;font-size:12px;color:#8a8578;font-weight:700">Nighttime Routine at 8:00 PM</span>
     </div>
   </div>
   <div style="display:flex;justify-content:flex-end;padding:0 18px 10px">
     <div style="display:flex;align-items:center;gap:8px;padding:7px 12px;background:url('assets/tx-iron.png');background-size:12px;border:3px solid #6b6b6b;box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -3px 0 rgba(0,0,0,.15)">
       <span style="width:8px;height:8px;background:#4a4a44"></span>
-      <span style="font-family:'Pixelify Sans',monospace;font-size:13px;color:#4a4a44">PARENTS</span>
+      <span style="font-family:'Jersey 25',monospace;font-size:13px;color:#4a4a44">PARENTS</span>
     </div>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:10px 12px;background:#e7e0cd;border-top:3px solid #2b2b24">
-    <div style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#3d2c00;text-align:center;padding:15px 4px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.5),inset 0 -5px 0 rgba(0,0,0,.18)">HOME</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">TIMER</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">ME</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#3d2c00;text-align:center;padding:15px 4px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.5),inset 0 -5px 0 rgba(0,0,0,.18)">HOME</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">TIMER</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">ME</div>
   </div>
 </div>
 </div>
@@ -238,15 +238,15 @@ img{image-rendering:pixelated}
   <div style="display:flex;align-items:center;gap:12px;padding:16px 18px 6px">
     <div style="width:56px;height:56px;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f;display:flex;align-items:center;justify-content:center"><img src="assets/av-axolotl.png" alt="avatar" style="width:42px;height:42px"></div>
     <div style="flex:1">
-      <div style="font-family:'Pixelify Sans',monospace;font-size:22px">All done, Haley!</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:22px">All done, Haley!</div>
       <div style="font-size:13px;color:#6b675c;font-weight:600">Tuesday, Aug 15</div>
     </div>
   </div>
-  <div style="text-align:center;font-family:'Pixelify Sans',monospace;font-size:74px;line-height:1;padding:8px 0 2px">3:15<span style="font-size:26px;color:#8a8578"> PM</span></div>
+  <div style="text-align:center;font-family:'Jersey 25',monospace;font-size:74px;line-height:1;padding:8px 0 2px">3:15<span style="font-size:26px;color:#8a8578"> PM</span></div>
   <div style="padding:12px 18px 4px">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
       <img src="assets/coin.png" alt="coins" style="width:28px;height:28px">
-      <span style="font-family:'Pixelify Sans',monospace;font-size:24px">1,295 <span style="font-size:15px;color:#8a8578">/ 1,720</span></span>
+      <span style="font-family:'Jersey 25',monospace;font-size:24px">1,295 <span style="font-size:15px;color:#8a8578">/ 1,720</span></span>
       <span style="margin-left:auto;font-size:12px;color:#8a8578;font-weight:700">425 to go!</span>
     </div>
     <div style="height:20px;border:3px solid #20241a;background:#2f2f28;padding:2px">
@@ -256,28 +256,28 @@ img{image-rendering:pixelated}
   <div style="flex:1;padding:16px 18px;display:flex;flex-direction:column;gap:14px">
     <div style="background:#fffdf6;border:3px solid #2b2b24;padding:22px 16px;text-align:center;box-shadow:0 5px 0 rgba(43,43,36,.14)">
       <img src="assets/av-bee.png" alt="" style="width:52px;height:52px;margin-bottom:8px">
-      <div style="font-family:'Pixelify Sans',monospace;font-size:24px;margin-bottom:4px">Nothing to do right now</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:24px;margin-bottom:4px">Nothing to do right now</div>
       <div style="font-size:14px;color:#6b675c;font-weight:600">Nighttime Routine unlocks at 8:00 PM.<br>Enjoy your afternoon!</div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-      <div style="font-family:'Pixelify Sans',monospace;font-size:18px;color:#fff;text-align:center;padding:14px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Set a timer</div>
-      <div style="font-family:'Pixelify Sans',monospace;font-size:18px;color:#fff;text-align:center;padding:14px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Change my look</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:18px;color:#fff;text-align:center;padding:14px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Set a timer</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:18px;color:#fff;text-align:center;padding:14px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Change my look</div>
     </div>
     <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#efe9d8;border:3px solid #cfc8b2">
-      <span style="font-family:'Pixelify Sans',monospace;font-size:16px;color:#8a8578">★ 6 day streak</span>
+      <span style="font-family:'Jersey 25',monospace;font-size:16px;color:#8a8578">★ 6 day streak</span>
       <span style="margin-left:auto;font-size:12px;color:#8a8578;font-weight:700">Keep it up tonight!</span>
     </div>
   </div>
   <div style="display:flex;justify-content:flex-end;padding:0 18px 10px">
     <div style="display:flex;align-items:center;gap:8px;padding:7px 12px;background:url('assets/tx-iron.png');background-size:12px;border:3px solid #6b6b6b;box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -3px 0 rgba(0,0,0,.15)">
       <span style="width:8px;height:8px;background:#4a4a44"></span>
-      <span style="font-family:'Pixelify Sans',monospace;font-size:13px;color:#4a4a44">PARENTS</span>
+      <span style="font-family:'Jersey 25',monospace;font-size:13px;color:#4a4a44">PARENTS</span>
     </div>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:10px 12px;background:#e7e0cd;border-top:3px solid #2b2b24">
-    <div style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#3d2c00;text-align:center;padding:15px 4px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.5),inset 0 -5px 0 rgba(0,0,0,.18)">HOME</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">TIMER</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">ME</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#3d2c00;text-align:center;padding:15px 4px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.5),inset 0 -5px 0 rgba(0,0,0,.18)">HOME</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">TIMER</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">ME</div>
   </div>
 </div>
 </div>
@@ -287,49 +287,49 @@ img{image-rendering:pixelated}
 <div class="dv-card" data-screen-label="Routine in progress" style="width:390px;background:#f3eee1;color:#2b2b24;display:flex;flex-direction:column;min-height:780px">
   <div style="height:12px;background:url('assets/tx-grass.png');background-size:16px"></div>
   <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:3px solid #2b2b24;background:#fffdf6">
-    <span style="font-family:'Pixelify Sans',monospace;font-size:20px;color:#8a8578">‹</span>
-    <span style="font-family:'Pixelify Sans',monospace;font-size:23px">Morning Routine</span>
-    <span style="margin-left:auto;font-family:'Pixelify Sans',monospace;font-size:24px;color:#2b2b24">7:46</span>
+    <span style="font-family:'Jersey 25',monospace;font-size:20px;color:#8a8578">‹</span>
+    <span style="font-family:'Jersey 25',monospace;font-size:23px">Morning Routine</span>
+    <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:24px;color:#2b2b24">7:46</span>
   </div>
   <div style="display:flex;align-items:center;gap:10px;padding:12px 16px 4px">
-    <span style="font-family:'Pixelify Sans',monospace;font-size:14px;padding:4px 9px;border:2px solid #57a636;color:#3d7a22;background:#eaf5df">IN PROGRESS</span>
+    <span style="font-family:'Jersey 25',monospace;font-size:14px;padding:4px 9px;border:2px solid #57a636;color:#3d7a22;background:#eaf5df">IN PROGRESS</span>
     <span style="font-size:13px;color:#6b675c;font-weight:700">2 of 4 required done</span>
   </div>
   <div style="flex:1;padding:12px 16px;display:flex;flex-direction:column;gap:10px">
     <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24;opacity:.62">
-      <div style="width:46px;height:46px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Pixelify Sans',monospace;font-size:26px;color:#fff">✔</div>
-      <div style="flex:1"><div style="font-family:'Pixelify Sans',monospace;font-size:18px">Brush teeth</div><div style="font-size:13px;color:#6b675c;font-weight:600">Two whole minutes!</div></div>
+      <div style="width:46px;height:46px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Jersey 25',monospace;font-size:26px;color:#fff">✔</div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Brush teeth</div><div style="font-size:13px;color:#6b675c;font-weight:600">Two whole minutes!</div></div>
     </div>
     <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24;opacity:.62">
-      <div style="width:46px;height:46px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Pixelify Sans',monospace;font-size:26px;color:#fff">✔</div>
-      <div style="flex:1"><div style="font-family:'Pixelify Sans',monospace;font-size:18px">Get dressed</div><div style="font-size:13px;color:#6b675c;font-weight:600">Clothes are on your chair</div></div>
+      <div style="width:46px;height:46px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Jersey 25',monospace;font-size:26px;color:#fff">✔</div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Get dressed</div><div style="font-size:13px;color:#6b675c;font-weight:600">Clothes are on your chair</div></div>
     </div>
     <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24">
       <div style="width:46px;height:46px;flex:none;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f"></div>
-      <div style="flex:1"><div style="font-family:'Pixelify Sans',monospace;font-size:18px">Make your bed</div><div style="font-size:13px;color:#6b675c;font-weight:600">Covers up, pillow on top</div></div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Make your bed</div><div style="font-size:13px;color:#6b675c;font-weight:600">Covers up, pillow on top</div></div>
     </div>
     <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24">
       <div style="width:46px;height:46px;flex:none;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f"></div>
-      <div style="flex:1"><div style="font-family:'Pixelify Sans',monospace;font-size:18px">Pack backpack</div><div style="font-size:13px;color:#6b675c;font-weight:600">Homework folder + water bottle</div></div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Pack backpack</div><div style="font-size:13px;color:#6b675c;font-weight:600">Homework folder + water bottle</div></div>
     </div>
     <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
       <div style="flex:1;height:3px;background:#cfc8b2"></div>
-      <span style="font-family:'Pixelify Sans',monospace;font-size:15px;color:#8a6200">BONUS COINS</span>
+      <span style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a6200">BONUS COINS</span>
       <div style="flex:1;height:3px;background:#cfc8b2"></div>
     </div>
     <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fdf8e8;border:3px solid #c8961e">
       <div style="width:46px;height:46px;flex:none;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f"></div>
-      <div style="flex:1"><div style="font-family:'Pixelify Sans',monospace;font-size:18px">Read 10 minutes</div><div style="font-size:13px;color:#6b675c;font-weight:600">Any book you like</div></div>
-      <div style="display:flex;align-items:center;gap:4px"><img src="assets/coin.png" alt="" style="width:18px;height:18px"><span style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#8a6200">+15</span></div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Read 10 minutes</div><div style="font-size:13px;color:#6b675c;font-weight:600">Any book you like</div></div>
+      <div style="display:flex;align-items:center;gap:4px"><img src="assets/coin.png" alt="" style="width:18px;height:18px"><span style="font-family:'Jersey 25',monospace;font-size:17px;color:#8a6200">+15</span></div>
     </div>
     <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fdf8e8;border:3px solid #c8961e">
       <div style="width:46px;height:46px;flex:none;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f"></div>
-      <div style="flex:1"><div style="font-family:'Pixelify Sans',monospace;font-size:18px">Tidy your desk</div><div style="font-size:13px;color:#6b675c;font-weight:600">Clear surface, pencils in the cup</div></div>
-      <div style="display:flex;align-items:center;gap:4px"><img src="assets/coin.png" alt="" style="width:18px;height:18px"><span style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#8a6200">+10</span></div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Tidy your desk</div><div style="font-size:13px;color:#6b675c;font-weight:600">Clear surface, pencils in the cup</div></div>
+      <div style="display:flex;align-items:center;gap:4px"><img src="assets/coin.png" alt="" style="width:18px;height:18px"><span style="font-family:'Jersey 25',monospace;font-size:17px;color:#8a6200">+10</span></div>
     </div>
   </div>
   <div style="padding:12px 16px 16px">
-    <div style="font-family:'Pixelify Sans',monospace;font-size:20px;color:#d5d2c9;text-align:center;padding:15px;background:#7d7d7d;border:3px solid #4a4a44;box-shadow:inset 0 4px 0 rgba(255,255,255,.12),inset 0 -6px 0 rgba(0,0,0,.18)">Ask a parent to check</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:20px;color:#d5d2c9;text-align:center;padding:15px;background:#7d7d7d;border:3px solid #4a4a44;box-shadow:inset 0 4px 0 rgba(255,255,255,.12),inset 0 -6px 0 rgba(0,0,0,.18)">Ask a parent to check</div>
     <div style="text-align:center;font-size:12px;color:#8a8578;font-weight:700;margin-top:6px">Finish 2 more to unlock</div>
   </div>
 </div>
@@ -340,49 +340,49 @@ img{image-rendering:pixelated}
 <div class="dv-card" data-screen-label="Routine ready" style="width:390px;background:#f3eee1;color:#2b2b24;display:flex;flex-direction:column;min-height:780px">
   <div style="height:12px;background:url('assets/tx-grass.png');background-size:16px"></div>
   <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:3px solid #2b2b24;background:#fffdf6">
-    <span style="font-family:'Pixelify Sans',monospace;font-size:20px;color:#8a8578">‹</span>
-    <span style="font-family:'Pixelify Sans',monospace;font-size:23px">Morning Routine</span>
-    <span style="margin-left:auto;font-family:'Pixelify Sans',monospace;font-size:24px;color:#2b2b24">8:05</span>
+    <span style="font-family:'Jersey 25',monospace;font-size:20px;color:#8a8578">‹</span>
+    <span style="font-family:'Jersey 25',monospace;font-size:23px">Morning Routine</span>
+    <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:24px;color:#2b2b24">8:05</span>
   </div>
   <div style="display:flex;align-items:center;gap:10px;padding:12px 16px 4px">
-    <span style="font-family:'Pixelify Sans',monospace;font-size:14px;padding:4px 9px;border:2px solid #c8961e;color:#8a6200;background:#fdf3d4">READY FOR REVIEW</span>
+    <span style="font-family:'Jersey 25',monospace;font-size:14px;padding:4px 9px;border:2px solid #c8961e;color:#8a6200;background:#fdf3d4">READY FOR REVIEW</span>
     <span style="font-size:13px;color:#6b675c;font-weight:700">All 4 required done!</span>
   </div>
   <div style="flex:1;padding:12px 16px;display:flex;flex-direction:column;gap:10px">
     <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24;opacity:.62">
-      <div style="width:46px;height:46px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Pixelify Sans',monospace;font-size:26px;color:#fff">✔</div>
-      <div style="flex:1"><div style="font-family:'Pixelify Sans',monospace;font-size:18px">Brush teeth</div></div>
+      <div style="width:46px;height:46px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Jersey 25',monospace;font-size:26px;color:#fff">✔</div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Brush teeth</div></div>
     </div>
     <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24;opacity:.62">
-      <div style="width:46px;height:46px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Pixelify Sans',monospace;font-size:26px;color:#fff">✔</div>
-      <div style="flex:1"><div style="font-family:'Pixelify Sans',monospace;font-size:18px">Get dressed</div></div>
+      <div style="width:46px;height:46px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Jersey 25',monospace;font-size:26px;color:#fff">✔</div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Get dressed</div></div>
     </div>
     <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24;opacity:.62">
-      <div style="width:46px;height:46px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Pixelify Sans',monospace;font-size:26px;color:#fff">✔</div>
-      <div style="flex:1"><div style="font-family:'Pixelify Sans',monospace;font-size:18px">Make your bed</div></div>
+      <div style="width:46px;height:46px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Jersey 25',monospace;font-size:26px;color:#fff">✔</div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Make your bed</div></div>
     </div>
     <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24;opacity:.62">
-      <div style="width:46px;height:46px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Pixelify Sans',monospace;font-size:26px;color:#fff">✔</div>
-      <div style="flex:1"><div style="font-family:'Pixelify Sans',monospace;font-size:18px">Pack backpack</div></div>
+      <div style="width:46px;height:46px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Jersey 25',monospace;font-size:26px;color:#fff">✔</div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Pack backpack</div></div>
     </div>
     <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
       <div style="flex:1;height:3px;background:#cfc8b2"></div>
-      <span style="font-family:'Pixelify Sans',monospace;font-size:15px;color:#8a6200">BONUS COINS</span>
+      <span style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a6200">BONUS COINS</span>
       <div style="flex:1;height:3px;background:#cfc8b2"></div>
     </div>
     <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fdf8e8;border:3px solid #c8961e">
-      <div style="width:46px;height:46px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Pixelify Sans',monospace;font-size:26px;color:#fff">✔</div>
-      <div style="flex:1"><div style="font-family:'Pixelify Sans',monospace;font-size:18px">Read 10 minutes</div></div>
-      <div style="display:flex;align-items:center;gap:4px"><img src="assets/coin.png" alt="" style="width:18px;height:18px"><span style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#8a6200">+15</span></div>
+      <div style="width:46px;height:46px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Jersey 25',monospace;font-size:26px;color:#fff">✔</div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Read 10 minutes</div></div>
+      <div style="display:flex;align-items:center;gap:4px"><img src="assets/coin.png" alt="" style="width:18px;height:18px"><span style="font-family:'Jersey 25',monospace;font-size:17px;color:#8a6200">+15</span></div>
     </div>
     <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fdf8e8;border:3px solid #c8961e">
       <div style="width:46px;height:46px;flex:none;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f"></div>
-      <div style="flex:1"><div style="font-family:'Pixelify Sans',monospace;font-size:18px">Tidy your desk</div><div style="font-size:13px;color:#6b675c;font-weight:600">Still time to grab this one!</div></div>
-      <div style="display:flex;align-items:center;gap:4px"><img src="assets/coin.png" alt="" style="width:18px;height:18px"><span style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#8a6200">+10</span></div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Tidy your desk</div><div style="font-size:13px;color:#6b675c;font-weight:600">Still time to grab this one!</div></div>
+      <div style="display:flex;align-items:center;gap:4px"><img src="assets/coin.png" alt="" style="width:18px;height:18px"><span style="font-family:'Jersey 25',monospace;font-size:17px;color:#8a6200">+10</span></div>
     </div>
   </div>
   <div style="padding:12px 16px 16px">
-    <div style="display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Pixelify Sans',monospace;font-size:22px;color:#3d2c00;text-align:center;padding:17px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.5),inset 0 -6px 0 rgba(0,0,0,.18)"><img src="assets/coin.png" alt="" style="width:24px;height:24px">Ask a parent to check!</div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Jersey 25',monospace;font-size:22px;color:#3d2c00;text-align:center;padding:17px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.5),inset 0 -6px 0 rgba(0,0,0,.18)"><img src="assets/coin.png" alt="" style="width:24px;height:24px">Ask a parent to check!</div>
   </div>
 </div>
 </div>
@@ -390,32 +390,32 @@ img{image-rendering:pixelated}
 <!-- ============ 1f STATUS TREATMENTS ============ -->
 <div class="dv-opt" id="1f"><div class="dv-olabel"><a class="dv-oid" href="#1f">1f</a>Routine status treatments</div>
 <div class="dv-card" data-screen-label="Status treatments" style="width:390px;background:#f3eee1;color:#2b2b24;padding:16px;display:flex;flex-direction:column;gap:14px">
-  <div style="font-family:'Pixelify Sans',monospace;font-size:16px;color:#8a8578">Banner shown at the top of the checklist</div>
+  <div style="font-family:'Jersey 25',monospace;font-size:16px;color:#8a8578">Banner shown at the top of the checklist</div>
   <div style="background:#eaf5df;border:3px solid #57a636;padding:12px 14px">
-    <div style="font-family:'Pixelify Sans',monospace;font-size:18px;color:#3d7a22">In progress</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:18px;color:#3d7a22">In progress</div>
     <div style="font-size:13px;font-weight:600;color:#4a463a">2 of 4 done — you've got this!</div>
   </div>
   <div style="background:#fdf3d4;border:3px solid #c8961e;padding:12px 14px">
-    <div style="font-family:'Pixelify Sans',monospace;font-size:18px;color:#8a6200">Ready for review</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:18px;color:#8a6200">Ready for review</div>
     <div style="font-size:13px;font-weight:600;color:#4a463a">Everything's done. Ask a parent to check!</div>
   </div>
   <div style="background:#efefec;border:3px solid #9a9a9a;padding:12px 14px">
     <div style="display:flex;align-items:center;gap:8px">
-      <div style="font-family:'Pixelify Sans',monospace;font-size:18px;color:#6b6b6b">Waiting for a parent…</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:18px;color:#6b6b6b">Waiting for a parent…</div>
       <span style="margin-left:auto;display:flex;gap:4px"><span style="width:8px;height:8px;background:#9a9a9a"></span><span style="width:8px;height:8px;background:#bdbdbd"></span><span style="width:8px;height:8px;background:#d9d9d9"></span></span>
     </div>
     <div style="font-size:13px;font-weight:600;color:#4a463a">Hand the phone to a grown-up when they're ready.</div>
   </div>
   <div style="background:#e8eef4;border:3px solid #6d89a3;padding:12px 14px">
-    <div style="font-family:'Pixelify Sans',monospace;font-size:18px;color:#42607c">Sent back</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:18px;color:#42607c">Sent back</div>
     <div style="font-size:13px;font-weight:600;color:#4a463a">Dad says: "Bed needs one more try — pillow on top!"</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:16px;color:#fff;text-align:center;padding:11px;background:#6d89a3;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.3),inset 0 -4px 0 rgba(0,0,0,.22);text-shadow:0 1px 0 rgba(0,0,0,.3);margin-top:10px">Fix it and ask again</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:16px;color:#fff;text-align:center;padding:11px;background:#6d89a3;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.3),inset 0 -4px 0 rgba(0,0,0,.22);text-shadow:0 1px 0 rgba(0,0,0,.3);margin-top:10px">Fix it and ask again</div>
   </div>
   <div style="background:#eaf5df;border:3px solid #57a636;padding:12px 14px">
     <div style="display:flex;align-items:center;gap:8px">
-      <div style="font-family:'Pixelify Sans',monospace;font-size:18px;color:#3d7a22">Approved!</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:18px;color:#3d7a22">Approved!</div>
       <img src="assets/coin.png" alt="" style="width:20px;height:20px;margin-left:auto">
-      <span style="font-family:'Pixelify Sans',monospace;font-size:18px;color:#8a6200">+55</span>
+      <span style="font-family:'Jersey 25',monospace;font-size:18px;color:#8a6200">+55</span>
     </div>
     <div style="font-size:13px;font-weight:600;color:#4a463a">Coins added. See you tonight at 8:00!</div>
   </div>
@@ -428,38 +428,38 @@ img{image-rendering:pixelated}
 <div class="dv-card" data-screen-label="Timer idle" style="width:390px;background:#f3eee1;color:#2b2b24;display:flex;flex-direction:column;min-height:780px">
   <div style="height:12px;background:url('assets/tx-grass.png');background-size:16px"></div>
   <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:3px solid #2b2b24;background:#fffdf6">
-    <span style="font-family:'Pixelify Sans',monospace;font-size:23px">Timer</span>
-    <span style="margin-left:auto;font-family:'Pixelify Sans',monospace;font-size:24px;color:#2b2b24">4:20</span>
+    <span style="font-family:'Jersey 25',monospace;font-size:23px">Timer</span>
+    <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:24px;color:#2b2b24">4:20</span>
   </div>
   <div style="flex:1;padding:20px 18px;display:flex;flex-direction:column;gap:16px">
-    <div style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#8a8578">HOW LONG?</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#8a8578">HOW LONG?</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-      <div style="font-family:'Pixelify Sans',monospace;font-size:30px;color:#fff;text-align:center;padding:24px 8px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">5<div style="font-size:14px;margin-top:2px">MIN</div></div>
-      <div style="font-family:'Pixelify Sans',monospace;font-size:30px;color:#fff;text-align:center;padding:24px 8px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">10<div style="font-size:14px;margin-top:2px">MIN</div></div>
-      <div style="font-family:'Pixelify Sans',monospace;font-size:30px;color:#fff;text-align:center;padding:24px 8px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">15<div style="font-size:14px;margin-top:2px">MIN</div></div>
-      <div style="font-family:'Pixelify Sans',monospace;font-size:30px;color:#fff;text-align:center;padding:24px 8px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">30<div style="font-size:14px;margin-top:2px">MIN</div></div>
+      <div style="font-family:'Jersey 25',monospace;font-size:30px;color:#fff;text-align:center;padding:24px 8px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">5<div style="font-size:14px;margin-top:2px">MIN</div></div>
+      <div style="font-family:'Jersey 25',monospace;font-size:30px;color:#fff;text-align:center;padding:24px 8px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">10<div style="font-size:14px;margin-top:2px">MIN</div></div>
+      <div style="font-family:'Jersey 25',monospace;font-size:30px;color:#fff;text-align:center;padding:24px 8px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">15<div style="font-size:14px;margin-top:2px">MIN</div></div>
+      <div style="font-family:'Jersey 25',monospace;font-size:30px;color:#fff;text-align:center;padding:24px 8px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">30<div style="font-size:14px;margin-top:2px">MIN</div></div>
     </div>
     <div style="display:flex;align-items:center;gap:8px;margin-top:4px">
       <div style="flex:1;height:3px;background:#cfc8b2"></div>
-      <span style="font-family:'Pixelify Sans',monospace;font-size:15px;color:#8a8578">OR PICK YOUR OWN</span>
+      <span style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578">OR PICK YOUR OWN</span>
       <div style="flex:1;height:3px;background:#cfc8b2"></div>
     </div>
     <div style="display:flex;gap:10px;align-items:stretch">
       <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:#fffdf6;border:3px solid #2b2b24;padding:12px">
-        <span style="font-family:'Pixelify Sans',monospace;font-size:34px">12</span>
+        <span style="font-family:'Jersey 25',monospace;font-size:34px">12</span>
         <span style="font-size:14px;font-weight:700;color:#6b675c">minutes</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px">
-        <div style="width:56px;font-family:'Pixelify Sans',monospace;font-size:22px;color:#fff;text-align:center;padding:6px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -4px 0 rgba(0,0,0,.28)">+</div>
-        <div style="width:56px;font-family:'Pixelify Sans',monospace;font-size:22px;color:#fff;text-align:center;padding:6px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -4px 0 rgba(0,0,0,.28)">−</div>
+        <div style="width:56px;font-family:'Jersey 25',monospace;font-size:22px;color:#fff;text-align:center;padding:6px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -4px 0 rgba(0,0,0,.28)">+</div>
+        <div style="width:56px;font-family:'Jersey 25',monospace;font-size:22px;color:#fff;text-align:center;padding:6px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -4px 0 rgba(0,0,0,.28)">−</div>
       </div>
     </div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:24px;color:#fff;text-align:center;padding:17px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Start ▶</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:24px;color:#fff;text-align:center;padding:17px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Start ▶</div>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:10px 12px;background:#e7e0cd;border-top:3px solid #2b2b24">
-    <div style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">HOME</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#3d2c00;text-align:center;padding:15px 4px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.5),inset 0 -5px 0 rgba(0,0,0,.18)">TIMER</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">ME</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">HOME</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#3d2c00;text-align:center;padding:15px 4px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.5),inset 0 -5px 0 rgba(0,0,0,.18)">TIMER</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">ME</div>
   </div>
 </div>
 </div>
@@ -469,19 +469,19 @@ img{image-rendering:pixelated}
 <div class="dv-card" data-screen-label="Timer running" style="width:390px;background:#20241a;color:#fff;display:flex;flex-direction:column;min-height:780px">
   <div style="height:12px;background:url('assets/tx-grass.png');background-size:16px"></div>
   <div style="display:flex;align-items:center;gap:10px;padding:12px 16px">
-    <span style="font-family:'Pixelify Sans',monospace;font-size:23px;color:#a8e07f">Timer</span>
-    <span style="margin-left:auto;font-family:'Pixelify Sans',monospace;font-size:24px;color:#8a8578">4:22</span>
+    <span style="font-family:'Jersey 25',monospace;font-size:23px;color:#a8e07f">Timer</span>
+    <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:24px;color:#8a8578">4:22</span>
   </div>
   <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:20px">
-    <div style="font-family:'Pixelify Sans',monospace;font-size:15px;color:#8a8578;letter-spacing:2px">12 MINUTE TIMER</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:110px;line-height:1">08:42</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;letter-spacing:2px">12 MINUTE TIMER</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:110px;line-height:1">08:42</div>
     <div style="width:100%;height:16px;border:3px solid #4a4f3e;background:#14170f;padding:2px">
       <div style="height:100%;width:72%;background:repeating-linear-gradient(90deg,transparent 0 16px,rgba(0,0,0,.25) 16px 19px),linear-gradient(#b4f06a,#7fe237 45%,#59c01c)"></div>
     </div>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 18px 22px">
-    <div style="font-family:'Pixelify Sans',monospace;font-size:22px;color:#3d2c00;text-align:center;padding:17px;background:#f8c53a;border:3px solid #0d0f0a;box-shadow:inset 0 4px 0 rgba(255,255,255,.5),inset 0 -6px 0 rgba(0,0,0,.18)">Pause ⏸</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:22px;color:#fff;text-align:center;padding:17px;background:#9a9a9a;border:3px solid #0d0f0a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Cancel</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:22px;color:#3d2c00;text-align:center;padding:17px;background:#f8c53a;border:3px solid #0d0f0a;box-shadow:inset 0 4px 0 rgba(255,255,255,.5),inset 0 -6px 0 rgba(0,0,0,.18)">Pause ⏸</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:22px;color:#fff;text-align:center;padding:17px;background:#9a9a9a;border:3px solid #0d0f0a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Cancel</div>
   </div>
   <div style="text-align:center;font-size:12px;color:#8a8578;font-weight:600;padding-bottom:14px">Dark screen = easy on the eyes at bedtime.<br>The pill on other screens keeps the countdown visible.</div>
 </div>
@@ -493,13 +493,13 @@ img{image-rendering:pixelated}
   <div style="height:12px;background:#f8c53a"></div>
   <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:20px">
     <img src="assets/coin.png" alt="" style="width:56px;height:56px">
-    <div style="font-family:'Pixelify Sans',monospace;font-size:52px;color:#f8c53a;text-align:center;line-height:1.1">TIME'S<br>UP!</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:40px;color:#8a8578">00:00</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:52px;color:#f8c53a;text-align:center;line-height:1.1">TIME'S<br>UP!</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:40px;color:#8a8578">00:00</div>
     <div style="font-size:14px;color:#cfc8b2;font-weight:600">Your 12 minute timer is done.</div>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 18px 26px">
-    <div style="font-family:'Pixelify Sans',monospace;font-size:22px;color:#fff;text-align:center;padding:17px;background:#57a636;border:3px solid #0d0f0a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Done!</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:22px;color:#fff;text-align:center;padding:17px;background:#9a9a9a;border:3px solid #0d0f0a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">+5 more min</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:22px;color:#fff;text-align:center;padding:17px;background:#57a636;border:3px solid #0d0f0a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Done!</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:22px;color:#fff;text-align:center;padding:17px;background:#9a9a9a;border:3px solid #0d0f0a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">+5 more min</div>
   </div>
   <div style="text-align:center;font-size:12px;color:#8a8578;font-weight:600;padding-bottom:14px">Gentle chime + screen flash in gold. Never red.</div>
 </div>
@@ -512,10 +512,10 @@ img{image-rendering:pixelated}
   <div style="display:flex;align-items:center;gap:10px;padding:14px 16px">
     <div style="width:26px;height:38px;background:url('assets/tx-iron.png');background-size:10px;border:2px solid #6b6b6b;position:relative"><span style="position:absolute;right:3px;top:16px;width:4px;height:4px;background:#4a4a44"></span></div>
     <div>
-      <div style="font-family:'Pixelify Sans',monospace;font-size:22px">Parent area</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:22px">Parent area</div>
       <div style="font-size:12px;color:#6b675c;font-weight:600">Enter your 4-digit PIN</div>
     </div>
-    <span style="margin-left:auto;font-family:'Pixelify Sans',monospace;font-size:16px;color:#8a8578">✕ close</span>
+    <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:16px;color:#8a8578">✕ close</span>
   </div>
   <div style="display:flex;justify-content:center;gap:14px;padding:22px 0 10px">
     <div style="width:20px;height:20px;background:#2b2b24;border:3px solid #2b2b24"></div>
@@ -524,18 +524,18 @@ img{image-rendering:pixelated}
     <div style="width:20px;height:20px;background:#fff;border:3px solid #2b2b24"></div>
   </div>
   <div style="flex:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;padding:18px 26px 26px;align-content:center">
-    <div style="font-family:'Pixelify Sans',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">1</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">2</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">3</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">4</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">5</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">6</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">7</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">8</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">9</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">1</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">2</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">3</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">4</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">5</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">6</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">7</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">8</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">9</div>
     <div></div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">0</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:26px;text-align:center;padding:22px 0;background:#d9d6cd;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.6),inset 0 -5px 0 rgba(0,0,0,.12);color:#6b675c">⌫</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">0</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:26px;text-align:center;padding:22px 0;background:#d9d6cd;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.6),inset 0 -5px 0 rgba(0,0,0,.12);color:#6b675c">⌫</div>
   </div>
   <div style="text-align:center;font-size:12px;color:#8a8578;font-weight:600;padding-bottom:16px">Iron/stone palette signals "grown-up zone" — calm, not scary.<br>Wrong PIN just shakes the dots. No lockout messaging shown to Haley.</div>
 </div>
@@ -546,31 +546,31 @@ img{image-rendering:pixelated}
 <div class="dv-card" data-screen-label="Parent approval" style="width:390px;background:#e8e6e0;color:#2b2b24;display:flex;flex-direction:column;min-height:780px">
   <div style="height:14px;background:url('assets/tx-iron.png');background-size:16px;border-bottom:3px solid #6b6b6b"></div>
   <div style="display:flex;align-items:center;gap:10px;padding:12px 16px">
-    <div style="font-family:'Pixelify Sans',monospace;font-size:21px">Review: Morning Routine</div>
-    <span style="margin-left:auto;font-family:'Pixelify Sans',monospace;font-size:14px;color:#fff;padding:6px 10px;background:#6f6f6f;border:3px solid #20241a;box-shadow:inset 0 2px 0 rgba(255,255,255,.3),inset 0 -3px 0 rgba(0,0,0,.25)">LOCK ▪</span>
+    <div style="font-family:'Jersey 25',monospace;font-size:21px">Review: Morning Routine</div>
+    <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:14px;color:#fff;padding:6px 10px;background:#6f6f6f;border:3px solid #20241a;box-shadow:inset 0 2px 0 rgba(255,255,255,.3),inset 0 -3px 0 rgba(0,0,0,.25)">LOCK ▪</span>
   </div>
   <div style="padding:0 16px;font-size:13px;color:#6b675c;font-weight:600">Finished 8:05 AM · asked for review 8:05 AM</div>
   <div style="flex:1;padding:12px 16px;display:flex;flex-direction:column;gap:8px">
-    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fffdf6;border:2px solid #cfc8b2;font-size:14px;font-weight:600"><span style="color:#3d7a22;font-family:'Pixelify Sans',monospace">✔</span> Brush teeth</div>
-    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fffdf6;border:2px solid #cfc8b2;font-size:14px;font-weight:600"><span style="color:#3d7a22;font-family:'Pixelify Sans',monospace">✔</span> Get dressed</div>
-    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fffdf6;border:2px solid #cfc8b2;font-size:14px;font-weight:600"><span style="color:#3d7a22;font-family:'Pixelify Sans',monospace">✔</span> Make your bed</div>
-    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fffdf6;border:2px solid #cfc8b2;font-size:14px;font-weight:600"><span style="color:#3d7a22;font-family:'Pixelify Sans',monospace">✔</span> Pack backpack</div>
-    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fdf8e8;border:2px solid #c8961e;font-size:14px;font-weight:600"><span style="color:#3d7a22;font-family:'Pixelify Sans',monospace">✔</span> Bonus: Read 10 minutes<span style="margin-left:auto;font-family:'Pixelify Sans',monospace;color:#8a6200">+15</span></div>
+    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fffdf6;border:2px solid #cfc8b2;font-size:14px;font-weight:600"><span style="color:#3d7a22;font-family:'Jersey 25',monospace">✔</span> Brush teeth</div>
+    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fffdf6;border:2px solid #cfc8b2;font-size:14px;font-weight:600"><span style="color:#3d7a22;font-family:'Jersey 25',monospace">✔</span> Get dressed</div>
+    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fffdf6;border:2px solid #cfc8b2;font-size:14px;font-weight:600"><span style="color:#3d7a22;font-family:'Jersey 25',monospace">✔</span> Make your bed</div>
+    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fffdf6;border:2px solid #cfc8b2;font-size:14px;font-weight:600"><span style="color:#3d7a22;font-family:'Jersey 25',monospace">✔</span> Pack backpack</div>
+    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fdf8e8;border:2px solid #c8961e;font-size:14px;font-weight:600"><span style="color:#3d7a22;font-family:'Jersey 25',monospace">✔</span> Bonus: Read 10 minutes<span style="margin-left:auto;font-family:'Jersey 25',monospace;color:#8a6200">+15</span></div>
     <div style="margin-top:10px;background:#fffdf6;border:3px solid #2b2b24;padding:14px;text-align:center">
       <div style="font-size:12px;color:#6b675c;font-weight:700;letter-spacing:1px;margin-bottom:6px">AWARD · base 40 + bonus 15</div>
       <div style="display:flex;align-items:center;justify-content:center;gap:16px">
-        <div style="width:52px;font-family:'Pixelify Sans',monospace;font-size:24px;color:#fff;padding:10px 0;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -4px 0 rgba(0,0,0,.28)">−5</div>
-        <div style="display:flex;align-items:center;gap:8px"><img src="assets/coin.png" alt="" style="width:32px;height:32px"><span style="font-family:'Pixelify Sans',monospace;font-size:46px">55</span></div>
-        <div style="width:52px;font-family:'Pixelify Sans',monospace;font-size:24px;color:#fff;padding:10px 0;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -4px 0 rgba(0,0,0,.28)">+5</div>
+        <div style="width:52px;font-family:'Jersey 25',monospace;font-size:24px;color:#fff;padding:10px 0;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -4px 0 rgba(0,0,0,.28)">−5</div>
+        <div style="display:flex;align-items:center;gap:8px"><img src="assets/coin.png" alt="" style="width:32px;height:32px"><span style="font-family:'Jersey 25',monospace;font-size:46px">55</span></div>
+        <div style="width:52px;font-family:'Jersey 25',monospace;font-size:24px;color:#fff;padding:10px 0;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -4px 0 rgba(0,0,0,.28)">+5</div>
       </div>
       <div style="font-size:11px;color:#8a8578;font-weight:600;margin-top:4px">tap the number to type an exact amount</div>
     </div>
   </div>
   <div style="padding:0 16px 18px;display:flex;flex-direction:column;gap:10px">
-    <div style="font-family:'Pixelify Sans',monospace;font-size:22px;color:#fff;text-align:center;padding:16px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Approve &amp; award 55</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:22px;color:#fff;text-align:center;padding:16px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Approve &amp; award 55</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-      <div style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#fff;text-align:center;padding:13px;background:#6d89a3;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.3),inset 0 -5px 0 rgba(0,0,0,.22);text-shadow:0 1px 0 rgba(0,0,0,.3)">Send back</div>
-      <div style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#fff;text-align:center;padding:13px;background:#6f6f6f;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.3),inset 0 -5px 0 rgba(0,0,0,.25);text-shadow:0 1px 0 rgba(0,0,0,.3)">Close for today</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#fff;text-align:center;padding:13px;background:#6d89a3;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.3),inset 0 -5px 0 rgba(0,0,0,.22);text-shadow:0 1px 0 rgba(0,0,0,.3)">Send back</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#fff;text-align:center;padding:13px;background:#6f6f6f;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.3),inset 0 -5px 0 rgba(0,0,0,.25);text-shadow:0 1px 0 rgba(0,0,0,.3)">Close for today</div>
     </div>
   </div>
 </div>
@@ -581,32 +581,32 @@ img{image-rendering:pixelated}
 <div class="dv-card" data-screen-label="Parent settings" style="width:390px;background:#e8e6e0;color:#2b2b24;display:flex;flex-direction:column;min-height:780px">
   <div style="height:14px;background:url('assets/tx-iron.png');background-size:16px;border-bottom:3px solid #6b6b6b"></div>
   <div style="display:flex;align-items:center;gap:10px;padding:12px 16px">
-    <div style="font-family:'Pixelify Sans',monospace;font-size:22px">Settings</div>
-    <span style="margin-left:auto;font-family:'Pixelify Sans',monospace;font-size:14px;color:#fff;padding:6px 10px;background:#6f6f6f;border:3px solid #20241a;box-shadow:inset 0 2px 0 rgba(255,255,255,.3),inset 0 -3px 0 rgba(0,0,0,.25)">LOCK ▪</span>
+    <div style="font-family:'Jersey 25',monospace;font-size:22px">Settings</div>
+    <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:14px;color:#fff;padding:6px 10px;background:#6f6f6f;border:3px solid #20241a;box-shadow:inset 0 2px 0 rgba(255,255,255,.3),inset 0 -3px 0 rgba(0,0,0,.25)">LOCK ▪</span>
   </div>
   <div style="flex:1;padding:4px 16px 16px;display:flex;flex-direction:column;gap:14px;overflow:hidden">
     <div style="background:#fdf8e8;border:3px solid #c8961e;padding:12px">
-      <div style="font-family:'Pixelify Sans',monospace;font-size:16px;color:#8a6200;margin-bottom:8px">VERIFY LAST NIGHT · Aug 14</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:16px;color:#8a6200;margin-bottom:8px">VERIFY LAST NIGHT · Aug 14</div>
       <div style="font-size:12px;color:#6b675c;font-weight:600;margin-bottom:8px">Items Haley couldn't check after the phone left her room:</div>
       <div style="display:flex;align-items:center;gap:10px;padding:7px 0;font-size:14px;font-weight:600">
-        <div style="width:30px;height:30px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Pixelify Sans',monospace;font-size:17px;color:#fff">✔</div>Lights out by 8:45
+        <div style="width:30px;height:30px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Jersey 25',monospace;font-size:17px;color:#fff">✔</div>Lights out by 8:45
       </div>
       <div style="display:flex;align-items:center;gap:10px;padding:7px 0;font-size:14px;font-weight:600">
         <div style="width:30px;height:30px;flex:none;background:#fffdf6;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f"></div>Stayed in bed after lights out
       </div>
-      <div style="font-family:'Pixelify Sans',monospace;font-size:15px;color:#3d2c00;text-align:center;padding:10px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.5),inset 0 -4px 0 rgba(0,0,0,.18);margin-top:8px">Confirm &amp; award night coins</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#3d2c00;text-align:center;padding:10px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.5),inset 0 -4px 0 rgba(0,0,0,.18);margin-top:8px">Confirm &amp; award night coins</div>
     </div>
     <div style="background:#fffdf6;border:3px solid #2b2b24;padding:12px">
-      <div style="font-family:'Pixelify Sans',monospace;font-size:16px;color:#8a8578;margin-bottom:8px">ROUTINES</div>
-      <div style="display:flex;align-items:center;font-size:14px;font-weight:600;padding:6px 0;border-bottom:2px solid #efe9d8">Morning · weekdays<span style="margin-left:auto;font-family:'Pixelify Sans',monospace;color:#3d7a22">6:30–8:30 ✎</span></div>
-      <div style="display:flex;align-items:center;font-size:14px;font-weight:600;padding:6px 0">Nighttime · every day<span style="margin-left:auto;font-family:'Pixelify Sans',monospace;color:#3d7a22">8:00 PM ✎</span></div>
+      <div style="font-family:'Jersey 25',monospace;font-size:16px;color:#8a8578;margin-bottom:8px">ROUTINES</div>
+      <div style="display:flex;align-items:center;font-size:14px;font-weight:600;padding:6px 0;border-bottom:2px solid #efe9d8">Morning · weekdays<span style="margin-left:auto;font-family:'Jersey 25',monospace;color:#3d7a22">6:30–8:30 ✎</span></div>
+      <div style="display:flex;align-items:center;font-size:14px;font-weight:600;padding:6px 0">Nighttime · every day<span style="margin-left:auto;font-family:'Jersey 25',monospace;color:#3d7a22">8:00 PM ✎</span></div>
     </div>
     <div style="background:#fffdf6;border:3px solid #2b2b24;padding:12px">
-      <div style="font-family:'Pixelify Sans',monospace;font-size:16px;color:#8a8578;margin-bottom:8px">REWARDS + COINS</div>
-      <div style="display:flex;align-items:center;font-size:14px;font-weight:600;padding:6px 0;border-bottom:2px solid #efe9d8">Base award (each routine)<span style="margin-left:auto;font-family:'Pixelify Sans',monospace;color:#3d7a22">40 ✎</span></div>
-      <div style="display:flex;align-items:center;font-size:14px;font-weight:600;padding:6px 0;border-bottom:2px solid #efe9d8">Balance<span style="margin-left:auto;display:flex;align-items:center;gap:6px"><img src="assets/coin.png" alt="" style="width:18px;height:18px"><span style="font-family:'Pixelify Sans',monospace">1,240</span><span style="font-family:'Pixelify Sans',monospace;color:#3d7a22">＋/− adjust</span></span></div>
+      <div style="font-family:'Jersey 25',monospace;font-size:16px;color:#8a8578;margin-bottom:8px">REWARDS + COINS</div>
+      <div style="display:flex;align-items:center;font-size:14px;font-weight:600;padding:6px 0;border-bottom:2px solid #efe9d8">Base award (each routine)<span style="margin-left:auto;font-family:'Jersey 25',monospace;color:#3d7a22">40 ✎</span></div>
+      <div style="display:flex;align-items:center;font-size:14px;font-weight:600;padding:6px 0;border-bottom:2px solid #efe9d8">Balance<span style="margin-left:auto;display:flex;align-items:center;gap:6px"><img src="assets/coin.png" alt="" style="width:18px;height:18px"><span style="font-family:'Jersey 25',monospace">1,240</span><span style="font-family:'Jersey 25',monospace;color:#3d7a22">＋/− adjust</span></span></div>
       <div style="display:flex;align-items:center;font-size:14px;font-weight:600;padding:8px 0 2px">Redemption at 1,720
-        <span style="margin-left:auto;font-family:'Pixelify Sans',monospace;font-size:14px;color:#d5d2c9;padding:8px 12px;background:#7d7d7d;border:3px solid #4a4a44;box-shadow:inset 0 2px 0 rgba(255,255,255,.12),inset 0 -3px 0 rgba(0,0,0,.18)">Redeem · 480 to go</span>
+        <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:14px;color:#d5d2c9;padding:8px 12px;background:#7d7d7d;border:3px solid #4a4a44;box-shadow:inset 0 2px 0 rgba(255,255,255,.12),inset 0 -3px 0 rgba(0,0,0,.18)">Redeem · 480 to go</span>
       </div>
     </div>
   </div>
@@ -621,7 +621,7 @@ img{image-rendering:pixelated}
   <div style="position:absolute;left:16px;right:16px;top:34px;display:flex;gap:12px;align-items:center;background:#efe9d8;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.7),inset 0 -4px 0 rgba(0,0,0,.1),0 5px 0 rgba(32,36,26,.15);padding:12px 16px;z-index:2">
     <img src="assets/coin.png" alt="" style="width:34px;height:34px">
     <div>
-      <div style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#b07d00">Routine complete!</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#b07d00">Routine complete!</div>
       <div style="font-size:13px;color:#4a463a;font-weight:600">Morning Routine · approved by Dad</div>
     </div>
   </div>
@@ -631,15 +631,15 @@ img{image-rendering:pixelated}
     <img src="assets/coin.png" alt="" style="position:absolute;width:18px;height:18px;left:26%;bottom:26%;transform:rotate(8deg)">
     <img src="assets/coin.png" alt="" style="position:absolute;width:14px;height:14px;right:24%;bottom:30%;transform:rotate(-20deg)">
     <img src="assets/coin.png" alt="" style="width:72px;height:72px">
-    <div style="font-family:'Pixelify Sans',monospace;font-size:64px;color:#b07d00;line-height:1">+55</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:20px;color:#3d7a22">Great job, Haley!</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:64px;color:#b07d00;line-height:1">+55</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:20px;color:#3d7a22">Great job, Haley!</div>
     <div style="font-size:13px;color:#6b675c;font-weight:600">Streak: 7 days in a row!</div>
   </div>
   <div style="padding:0 18px 8px">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
       <img src="assets/coin.png" alt="" style="width:28px;height:28px">
-      <span style="font-family:'Pixelify Sans',monospace;font-size:24px">1,240 <span style="font-size:15px;color:#8a8578">/ 1,720</span></span>
-      <span style="margin-left:auto;font-family:'Pixelify Sans',monospace;font-size:15px;color:#3d7a22">+55 ▲</span>
+      <span style="font-family:'Jersey 25',monospace;font-size:24px">1,240 <span style="font-size:15px;color:#8a8578">/ 1,720</span></span>
+      <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:15px;color:#3d7a22">+55 ▲</span>
     </div>
     <div style="height:20px;border:3px solid #20241a;background:#2f2f28;padding:2px;display:flex">
       <div style="height:100%;width:69%;background:repeating-linear-gradient(90deg,transparent 0 16px,rgba(0,0,0,.25) 16px 19px),linear-gradient(#b4f06a,#7fe237 45%,#59c01c)"></div>
@@ -648,7 +648,7 @@ img{image-rendering:pixelated}
     <div style="font-size:11px;color:#8a8578;font-weight:600;margin-top:4px">New segment flashes bright, then settles into the bar (~1.5s). Coins arc into the counter.</div>
   </div>
   <div style="padding:10px 18px 18px">
-    <div style="font-family:'Pixelify Sans',monospace;font-size:22px;color:#fff;text-align:center;padding:16px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Back to Home</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:22px;color:#fff;text-align:center;padding:16px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Back to Home</div>
   </div>
 </div>
 </div>
@@ -658,12 +658,12 @@ img{image-rendering:pixelated}
 <div class="dv-card" data-screen-label="Customization" style="width:390px;background:#f3eee1;color:#2b2b24;display:flex;flex-direction:column;min-height:780px">
   <div style="height:12px;background:url('assets/tx-grass.png');background-size:16px"></div>
   <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:3px solid #2b2b24;background:#fffdf6">
-    <span style="font-family:'Pixelify Sans',monospace;font-size:23px">My look</span>
-    <span style="margin-left:auto;font-family:'Pixelify Sans',monospace;font-size:24px;color:#2b2b24">4:31</span>
+    <span style="font-family:'Jersey 25',monospace;font-size:23px">My look</span>
+    <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:24px;color:#2b2b24">4:31</span>
   </div>
   <div style="flex:1;padding:16px;display:flex;flex-direction:column;gap:16px">
     <div>
-      <div style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#8a8578;margin-bottom:10px">PICK YOUR AVATAR</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#8a8578;margin-bottom:10px">PICK YOUR AVATAR</div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
         <div style="aspect-ratio:1;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f;display:flex;align-items:center;justify-content:center"><img src="assets/av-steve.png" alt="Steve" style="width:48px;height:48px"></div>
         <div style="aspect-ratio:1;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f;display:flex;align-items:center;justify-content:center"><img src="assets/av-alex.png" alt="Alex" style="width:48px;height:48px"></div>
@@ -674,43 +674,43 @@ img{image-rendering:pixelated}
         <div style="aspect-ratio:1;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f;display:flex;align-items:center;justify-content:center"><img src="assets/av-fox.png" alt="Fox" style="width:48px;height:48px"></div>
         <div style="aspect-ratio:1;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f;display:flex;align-items:center;justify-content:center"><img src="assets/av-bee.png" alt="Bee" style="width:48px;height:48px"></div>
       </div>
-      <div style="text-align:center;font-family:'Pixelify Sans',monospace;font-size:16px;color:#8a6200;margin-top:8px">Axolotl — good choice!</div>
+      <div style="text-align:center;font-family:'Jersey 25',monospace;font-size:16px;color:#8a6200;margin-top:8px">Axolotl — good choice!</div>
     </div>
     <div>
-      <div style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#8a8578;margin-bottom:10px">PICK YOUR WORLD</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#8a8578;margin-bottom:10px">PICK YOUR WORLD</div>
       <div style="display:flex;flex-direction:column;gap:8px">
         <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fffdf6;border:4px solid #f8c53a;outline:3px solid #20241a">
           <div style="width:40px;height:26px;background:url('assets/tx-grass.png');background-size:12px;border:2px solid #20241a"></div>
-          <span style="font-family:'Pixelify Sans',monospace;font-size:18px">Overworld</span>
+          <span style="font-family:'Jersey 25',monospace;font-size:18px">Overworld</span>
           <span style="margin-left:auto;display:flex;gap:4px"><span style="width:13px;height:13px;background:#57a636"></span><span style="width:13px;height:13px;background:#7a5233"></span><span style="width:13px;height:13px;background:#7fe237"></span></span>
         </div>
         <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24">
           <div style="width:40px;height:26px;background:url('assets/tx-nether.png');background-size:12px;border:2px solid #20241a"></div>
-          <span style="font-family:'Pixelify Sans',monospace;font-size:18px">Nether</span>
+          <span style="font-family:'Jersey 25',monospace;font-size:18px">Nether</span>
           <span style="margin-left:auto;display:flex;gap:4px"><span style="width:13px;height:13px;background:#d96e2e"></span><span style="width:13px;height:13px;background:#8a4545"></span><span style="width:13px;height:13px;background:#f2a23e"></span></span>
         </div>
         <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24">
           <div style="width:40px;height:26px;background:#3a2e4a;border:2px solid #20241a"></div>
-          <span style="font-family:'Pixelify Sans',monospace;font-size:18px">End</span>
+          <span style="font-family:'Jersey 25',monospace;font-size:18px">End</span>
           <span style="margin-left:auto;display:flex;gap:4px"><span style="width:13px;height:13px;background:#a06fd6"></span><span style="width:13px;height:13px;background:#d8c7ee"></span><span style="width:13px;height:13px;background:#e5e8a0"></span></span>
         </div>
         <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24">
           <div style="width:40px;height:26px;background:#2e6e8f;border:2px solid #20241a"></div>
-          <span style="font-family:'Pixelify Sans',monospace;font-size:18px">Ocean</span>
+          <span style="font-family:'Jersey 25',monospace;font-size:18px">Ocean</span>
           <span style="margin-left:auto;display:flex;gap:4px"><span style="width:13px;height:13px;background:#3aa6b9"></span><span style="width:13px;height:13px;background:#2e6e8f"></span><span style="width:13px;height:13px;background:#8fd8c9"></span></span>
         </div>
         <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24">
           <div style="width:40px;height:26px;background:#e8a9c6;border:2px solid #20241a"></div>
-          <span style="font-family:'Pixelify Sans',monospace;font-size:18px">Cherry Grove</span>
+          <span style="font-family:'Jersey 25',monospace;font-size:18px">Cherry Grove</span>
           <span style="margin-left:auto;display:flex;gap:4px"><span style="width:13px;height:13px;background:#e58bb4"></span><span style="width:13px;height:13px;background:#8f5a44"></span><span style="width:13px;height:13px;background:#f5cede"></span></span>
         </div>
       </div>
     </div>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:10px 12px;background:#e7e0cd;border-top:3px solid #2b2b24">
-    <div style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">HOME</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">TIMER</div>
-    <div style="font-family:'Pixelify Sans',monospace;font-size:17px;color:#3d2c00;text-align:center;padding:15px 4px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.5),inset 0 -5px 0 rgba(0,0,0,.18)">ME</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">HOME</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">TIMER</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#3d2c00;text-align:center;padding:15px 4px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.5),inset 0 -5px 0 rgba(0,0,0,.18)">ME</div>
   </div>
 </div>
 </div>
@@ -724,6 +724,17 @@ class Component extends DCLogic {
   renderVals() {
     const b = this.props.coinBalance ?? 1240;
     const pct = Math.min(100, Math.round((b / 1720) * 1000) / 10);
+    const PX = "'Pixelify Sans',monospace", J25 = "'Jersey 25',monospace", J10 = "'Jersey 10',monospace", SLK = "'Silkscreen',monospace", VT = "'VT323',monospace", NS = "'Nunito Sans',sans-serif";
+    const fontRows = [
+      {name:'Pixelify Sans (current)', note:'the problem: 5 reads as S', digits:PX, words:PX},
+      {name:'Jersey 25', note:'rounded pixel, taller x-height', digits:J25, words:J25},
+      {name:'Jersey 10', note:'chunkier sibling of Jersey 25', digits:J10, words:J10},
+      {name:'Silkscreen', note:'strict grid, unambiguous digits, wide', digits:SLK, words:SLK},
+      {name:'Hybrid: Pixelify + VT323 digits', note:'words unchanged; terminal-style numerals', digits:VT, words:PX},
+      {name:'Hybrid: Pixelify + Nunito digits', note:'words unchanged; fully clean numerals', digits:"800 30px "+NS, words:PX}
+    ];
+    // font-family holes need plain family strings; fix hybrid Nunito entry
+    fontRows[5].digits = NS;
     const rawGroups = [
       {name:'HYGIENE & BATHROOM', items:[{id:'toothbrush',name:'Toothbrush'},{id:'shower',name:'Shower / bath'},{id:'towel',name:'Towel'},{id:'comb',name:'Hairbrush'}]},
       {name:'BEDROOM & CLOTHES', items:[{id:'bed',name:'Bed'},{id:'shirt',name:'Clothes'},{id:'basket',name:'Laundry'},{id:'lantern',name:'Lights out'},{id:'door',name:'Door / leave'}]},
@@ -734,6 +745,7 @@ class Component extends DCLogic {
     ];
     const iconGroups = rawGroups.map(g => ({name: g.name, items: g.items.map(it => ({...it, bg: "url('assets/icons/" + it.id + ".png')"}))}));
     return {
+      fontRows,
       iconGroups,
       balanceText: b.toLocaleString('en-US'),
       xpWidth: pct + '%',

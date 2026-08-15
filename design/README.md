@@ -64,17 +64,17 @@ Small gray caption lines inside some screens (e.g. "New segment flashes bright�
 | Divider | #cfc8b2 / #efe9d8 | Hairlines, section rules |
 
 ### Typography
-- **Pixelify Sans** (Google Fonts, 400–700): headings, numbers, clock, countdown, buttons, coin amounts, chips. Never below 13px.
+- **Jersey 25** (Google Fonts, single weight): headings, numbers, clock, countdown, buttons, coin amounts, chips. Never below 13px. (Replaced Pixelify Sans in v4 — its digits were ambiguous, e.g. 5 read as S.)
 - **Nunito Sans** (Google Fonts, 400–800): instructions and all sentence-length text, 12–15px, usually weight 600.
 - Clock on Home: 74px. Countdown running: 110px. Award "+55": 64px. Buttons: 17–24px.
 
 ### Bevel / pixel language (no border-radius anywhere)
 - **Button bevel**: 3px solid #20241a border + `inset 0 4px 0 rgba(255,255,255,.35), inset 0 -6px 0 rgba(0,0,0,.28)` box-shadow; white text with `text-shadow: 0 2px 0 rgba(0,0,0,.3)`. Gold buttons use lighter insets (.5 / .18) and dark text.
 - **Inventory slot** (unchecked box, avatar frames): fill #8b8b8b, 3px border, border-color `#3f3f3f #fff #fff #3f3f3f` (dark top/left, light bottom/right).
-- **Checked box**: fill #57a636, border-color `#2c5c1a #a8e07f #a8e07f #2c5c1a`, white ✔ in Pixelify.
+- **Checked box**: fill #57a636, border-color `#2c5c1a #a8e07f #a8e07f #2c5c1a`, white ✔ in Jersey 25.
 - **Selected slot** (avatar/theme pickers): 4px solid #f8c53a border + 3px #20241a outline.
 - **XP bar**: 3px #20241a border, track #2f2f28, 2px padding; fill = green gradient with segment lines `repeating-linear-gradient(90deg, transparent 0 16px, rgba(0,0,0,.25) 16px 19px)`. Width = balance/1720, clamped at 100% — bar stays full past 1,720 while the number climbs.
-- **Status chips**: Pixelify 13–14px, 2px border, tinted bg (see 1a).
+- **Status chips**: Jersey 25 13–14px, 2px border, tinted bg (see 1a).
 - **Texture trim**: tile PNGs at background-size 16px (12px for small chips), used ONLY as thin strips — grass+dirt top of child screens, grass strip on routine card, iron strips/chips on parent screens. Never behind text.
 
 ### Spacing
@@ -111,7 +111,7 @@ All in `assets/`, hand-drawn pixel art, render with `image-rendering: pixelated`
 - `coin.png` — 16×16 gold Minecoin-style coin (the coin motif everywhere)
 - `tx-grass/dirt/stone/planks/iron/nether.png` — 8×8 tileable texture strips
 - `icons/*.png` — 37 task icons (see Task Icon Pack above)
-- Fonts via Google Fonts: Pixelify Sans, Nunito Sans.
+- Fonts via Google Fonts: Jersey 25, Nunito Sans.
 
 ## Files
 - `Haley Routine App.dc.html` — all screens (open in a browser; every element's styles are inline)
