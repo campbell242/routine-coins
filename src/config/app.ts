@@ -1,6 +1,16 @@
 // App-level configuration (single household, single child, single device).
 
+/**
+ * The child's name — the single place to change it. Used in every greeting
+ * and parent-area string, the browser-tab title, and the PWA install name
+ * (vite.config.ts templates index.html and generates the manifest from it).
+ */
 export const CHILD_NAME = 'Haley';
+
+/** App display names derived from the child's name. */
+export const APP_NAME = `${CHILD_NAME}'s Routine & Coins`;
+export const APP_SHORT_NAME = CHILD_NAME;
+export const APP_DESCRIPTION = `Routines, timers and Minecoin rewards for ${CHILD_NAME}.`;
 
 /** Coin goal / redemption threshold. The XP bar is full at this value. */
 export const REDEMPTION_THRESHOLD = 1720;

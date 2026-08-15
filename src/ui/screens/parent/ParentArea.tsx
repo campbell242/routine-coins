@@ -5,7 +5,7 @@
 // occurrence). Approval and send-back are one tap — easy everyday use.
 
 import { useEffect, useRef, useState } from 'react';
-import { PARENT_SESSION_IDLE_MS, REDEMPTION_THRESHOLD } from '../../../config/app';
+import { CHILD_NAME, PARENT_SESSION_IDLE_MS, REDEMPTION_THRESHOLD } from '../../../config/app';
 import type { PlanResolved, Weekday } from '../../../config/types';
 import {
   isChecked,
@@ -107,7 +107,7 @@ function ReviewView({ occId }: { occId?: string }) {
             Nothing waiting for review
           </div>
           <div style={{ fontSize: 13, color: '#6b675c', fontWeight: 600 }}>
-            When Haley asks for a check, it shows up here.
+            When {CHILD_NAME} asks for a check, it shows up here.
           </div>
         </div>
         <PixelButton
@@ -408,7 +408,7 @@ function VerifyLastNight() {
         VERIFY LAST NIGHT · {fmtDateShort(fromDateKey(occ.dateKey))}
       </div>
       <div style={{ fontSize: 12, color: '#6b675c', fontWeight: 600, marginBottom: 8 }}>
-        Items Haley couldn’t check after the phone left her room:
+        Items {CHILD_NAME} couldn’t check after the phone left her room:
       </div>
       {items.map((item) => (
         <button
