@@ -296,4 +296,10 @@ describe('timer', () => {
   it('rejects sub-minute entry', () => {
     expect(() => startTimer(0, T0)).toThrow();
   });
+
+  it('pause tapped after the real end moment resolves to expired, not paused-at-zero', () => {
+    const t = startTimer(5, T0);
+    const p = pauseTimer(t, T0 + 5 * 60_000 + 300); // tap lands 300ms past the end
+    expect(p).toEqual({ phase: 'expired', totalMin: 5, expiredAt: T0 + 5 * 60_000 });
+  });
 });

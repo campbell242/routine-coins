@@ -21,6 +21,10 @@ export function startTimer(minutes: number, now: number): TimerState {
 
 export function pauseTimer(state: TimerState, now: number): TimerState {
   if (state.phase !== 'running') throw new TimerError('pause: not running');
+  // A tap that lands in the window between the real end moment and the next
+  // UI tick must not strand a "paused at 00:00" timer — the truth is expired.
+  const reconciled = reconcileTimer(state, now);
+  if (reconciled.phase === 'expired') return reconciled;
   return { phase: 'paused', remainingMs: Math.max(0, state.endAt - now), totalMin: state.totalMin };
 }
 

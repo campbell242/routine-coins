@@ -42,6 +42,7 @@ import {
   kvSet,
   loadOccurrences,
   requestPersistentStorage,
+  saveApproval,
   saveOccurrence,
   type Settings,
 } from '../persistence/db';
@@ -85,7 +86,10 @@ export interface AppState {
 
 type Listener = () => void;
 
-const CHILD_SCREENS = new Set(['home', 'routine', 'timer', 'me', 'award']);
+// Screens where timer expiry may yank navigation to the TIME'S UP screen.
+// The award celebration is deliberately excluded — the chime still sounds and
+// the timer pill takes over; the celebration isn't stolen mid-moment.
+const CHILD_SCREENS = new Set(['home', 'routine', 'timer', 'me']);
 
 function sanitizeOccurrences(list: Occurrence[]): OccurrenceMap {
   const map: OccurrenceMap = {};
@@ -197,20 +201,26 @@ class Store {
     const now = Date.now();
     const reconciled = reconcileTimer(this.state.timer, now);
     if (reconciled !== this.state.timer) {
-      // Expiry moment: persist, sound the alarm, and surface the expired
-      // screen if Haley is anywhere in the child area.
-      void kvSet('timer', reconciled);
-      const onChildScreen = CHILD_SCREENS.has(this.state.route.name);
-      this.set({
-        nowMs: now,
-        timer: reconciled,
-        route: onChildScreen ? { name: 'timer' } : this.state.route,
-      });
-      playAlarm();
-      this.syncWakeLock();
+      this.applyExpiry(reconciled, now);
       return;
     }
     this.set({ nowMs: now });
+  }
+
+  /**
+   * The expiry moment: persist, sound the alarm, and surface the expired
+   * screen if Haley is anywhere in the child area.
+   */
+  private applyExpiry(expired: TimerState, now: number): void {
+    void kvSet('timer', expired);
+    const onChildScreen = CHILD_SCREENS.has(this.state.route.name);
+    this.set({
+      nowMs: now,
+      timer: expired,
+      route: onChildScreen ? { name: 'timer' } : this.state.route,
+    });
+    playAlarm();
+    this.syncWakeLock();
   }
 
   private syncWakeLock(): void {
@@ -346,9 +356,12 @@ class Store {
     }
     const balanceBefore = this.state.balance;
     const balanceAfter = award(balanceBefore, approved.award ?? 0);
-    this.putOccurrence(approved);
-    this.set({ balance: balanceAfter });
-    void kvSet('balance', balanceAfter);
+    this.set({
+      occurrences: { ...this.state.occurrences, [approved.id]: approved },
+      balance: balanceAfter,
+    });
+    // One transaction: resolving and awarding can never be split by a kill.
+    void saveApproval(approved, balanceAfter);
 
     const plan = this.resolvedPlan(occ.planId);
     const streak = plan
@@ -446,8 +459,15 @@ class Store {
   }
 
   timerPause(): void {
+    const now = Date.now();
     try {
-      this.setTimer(pauseTimer(this.state.timer, Date.now()));
+      const next = pauseTimer(this.state.timer, now);
+      if (next.phase === 'expired') {
+        // The tap landed after the real end moment — deliver the alarm, not a pause.
+        this.applyExpiry(next, now);
+        return;
+      }
+      this.setTimer(next);
     } catch {
       /* stale tap */
     }

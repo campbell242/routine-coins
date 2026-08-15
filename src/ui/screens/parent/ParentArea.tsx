@@ -79,25 +79,18 @@ function ReviewView({ occId }: { occId?: string }) {
     | Occurrence
     | undefined;
 
-  const [awardValue, setAwardValue] = useState<number>(occ ? suggestedAward(occ) : 0);
-  const [edited, setEdited] = useState(false);
+  // Manual edits are remembered per occurrence (switching between queued
+  // reviews never silently discards an edited amount); an unedited award
+  // keeps tracking the suggestion (base + completed bonuses).
+  const [edits, setEdits] = useState<Record<string, number>>({});
   const [modal, setModal] = useState<'none' | 'amount' | 'sendback' | 'close'>('none');
   const [note, setNote] = useState('');
   const [amountText, setAmountText] = useState('');
-  const lastOccId = useRef<string | undefined>(occ?.id);
 
-  // Track the suggested award until the parent edits the number by hand.
-  useEffect(() => {
-    if (!occ) return;
-    if (occ.id !== lastOccId.current) {
-      lastOccId.current = occ.id;
-      setEdited(false);
-      setAwardValue(suggestedAward(occ));
-      setNote('');
-    } else if (!edited) {
-      setAwardValue(suggestedAward(occ));
-    }
-  }, [occ, edited]);
+  const awardValue = occ ? (edits[occ.id] ?? suggestedAward(occ)) : 0;
+  const setAward = (v: number) => {
+    if (occ) setEdits((e) => ({ ...e, [occ.id]: Math.max(0, Math.min(999, Math.round(v))) }));
+  };
 
   if (!occ) {
     return (
@@ -262,10 +255,7 @@ function ReviewView({ occId }: { occId?: string }) {
                 variant="stone"
                 small
                 style={{ width: 52, fontSize: 24, padding: '10px 0' }}
-                onClick={() => {
-                  setEdited(true);
-                  setAwardValue((v) => Math.max(0, v - 5));
-                }}
+                onClick={() => setAward(awardValue - 5)}
               >
                 −5
               </PixelButton>
@@ -285,10 +275,7 @@ function ReviewView({ occId }: { occId?: string }) {
                 variant="stone"
                 small
                 style={{ width: 52, fontSize: 24, padding: '10px 0' }}
-                onClick={() => {
-                  setEdited(true);
-                  setAwardValue((v) => Math.min(999, v + 5));
-                }}
+                onClick={() => setAward(awardValue + 5)}
               >
                 +5
               </PixelButton>
@@ -303,7 +290,15 @@ function ReviewView({ occId }: { occId?: string }) {
             Approve &amp; award {awardValue}
           </GreenButton>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-            <PixelButton variant="slate" small style={{ fontSize: 17, padding: 13 }} onClick={() => setModal('sendback')}>
+            <PixelButton
+              variant="slate"
+              small
+              style={{ fontSize: 17, padding: 13 }}
+              onClick={() => {
+                setNote('');
+                setModal('sendback');
+              }}
+            >
               Send back
             </PixelButton>
             <PixelButton variant="iron" small style={{ fontSize: 17, padding: 13 }} onClick={() => setModal('close')}>
@@ -327,19 +322,17 @@ function ReviewView({ occId }: { occId?: string }) {
             <PixelButton variant="stone" small style={{ fontSize: 17, padding: 13 }} onClick={() => setModal('none')}>
               Cancel
             </PixelButton>
-            <GreenButton
-              style={{ fontSize: 17, padding: 13 }}
+            <PixelButton
+              small
+              disabled={!/^\d+$/.test(amountText)}
+              style={{ fontSize: 17, padding: 13, ...(/^\d+$/.test(amountText) ? { background: '#57a636' } : {}) }}
               onClick={() => {
-                const n = Number(amountText);
-                if (Number.isFinite(n)) {
-                  setEdited(true);
-                  setAwardValue(Math.max(0, Math.min(999, Math.round(n))));
-                }
+                setAward(Number(amountText));
                 setModal('none');
               }}
             >
               Set
-            </GreenButton>
+            </PixelButton>
           </div>
         </Modal>
       )}
@@ -622,27 +615,32 @@ function SettingsView() {
                   <input className="pixel-input" type="time" value={field2} onChange={(e) => setField2(e.target.value)} />
                 </>
               )}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 14 }}>
-                <PixelButton variant="stone" small style={{ fontSize: 17, padding: 13 }} onClick={() => setModal({ kind: 'none' })}>
-                  Cancel
-                </PixelButton>
-                <GreenButton
-                  style={{ fontSize: 17, padding: 13 }}
-                  onClick={() => {
-                    if (/^\d{2}:\d{2}$/.test(field1)) {
-                      store.setOverride(plan.id, {
-                        windowStart: field1,
-                        ...(plan.windowEnd !== undefined && /^\d{2}:\d{2}$/.test(field2)
-                          ? { windowEnd: field2 }
-                          : {}),
-                      });
-                    }
-                    setModal({ kind: 'none' });
-                  }}
-                >
-                  Save
-                </GreenButton>
-              </div>
+              {(() => {
+                const valid =
+                  /^\d{2}:\d{2}$/.test(field1) &&
+                  (plan.windowEnd === undefined || /^\d{2}:\d{2}$/.test(field2));
+                return (
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 14 }}>
+                    <PixelButton variant="stone" small style={{ fontSize: 17, padding: 13 }} onClick={() => setModal({ kind: 'none' })}>
+                      Cancel
+                    </PixelButton>
+                    <PixelButton
+                      small
+                      disabled={!valid}
+                      style={{ fontSize: 17, padding: 13, ...(valid ? { background: '#57a636' } : {}) }}
+                      onClick={() => {
+                        store.setOverride(plan.id, {
+                          windowStart: field1,
+                          ...(plan.windowEnd !== undefined ? { windowEnd: field2 } : {}),
+                        });
+                        setModal({ kind: 'none' });
+                      }}
+                    >
+                      Save
+                    </PixelButton>
+                  </div>
+                );
+              })()}
             </Modal>
           );
         })()}
@@ -661,16 +659,17 @@ function SettingsView() {
             <PixelButton variant="stone" small style={{ fontSize: 17, padding: 13 }} onClick={() => setModal({ kind: 'none' })}>
               Cancel
             </PixelButton>
-            <GreenButton
-              style={{ fontSize: 17, padding: 13 }}
+            <PixelButton
+              small
+              disabled={!/^\d+$/.test(field1)}
+              style={{ fontSize: 17, padding: 13, ...(/^\d+$/.test(field1) ? { background: '#57a636' } : {}) }}
               onClick={() => {
-                const n = Number(field1);
-                if (Number.isFinite(n) && field1 !== '') store.setBaseAwardAll(Math.round(n));
+                store.setBaseAwardAll(Number(field1));
                 setModal({ kind: 'none' });
               }}
             >
               Save
-            </GreenButton>
+            </PixelButton>
           </div>
         </Modal>
       )}
@@ -804,19 +803,24 @@ function SettingsView() {
             onChange={(e) => setField1(e.target.value.replace(/[^0-9]/g, '').slice(0, 4))}
             autoFocus
           />
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 14 }}>
+          <div style={{ fontSize: 12, fontWeight: 700, marginTop: 6, color: '#6b675c' }}>
+            {field1.length === 4 ? 'Ready to save.' : 'Enter exactly 4 digits.'}
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 12 }}>
             <PixelButton variant="stone" small style={{ fontSize: 17, padding: 13 }} onClick={() => setModal({ kind: 'none' })}>
               Cancel
             </PixelButton>
-            <GreenButton
-              style={{ fontSize: 17, padding: 13 }}
+            <PixelButton
+              small
+              disabled={!/^\d{4}$/.test(field1)}
+              style={{ fontSize: 17, padding: 13, ...(/^\d{4}$/.test(field1) ? { background: '#57a636' } : {}) }}
               onClick={() => {
-                if (/^\d{4}$/.test(field1)) void store.setPin(field1);
+                void store.setPin(field1);
                 setModal({ kind: 'none' });
               }}
             >
               Save
-            </GreenButton>
+            </PixelButton>
           </div>
         </Modal>
       )}

@@ -74,6 +74,19 @@ export async function saveOccurrence(occ: Occurrence): Promise<void> {
 }
 
 /**
+ * Approval writes the resolved occurrence and the new balance in ONE
+ * transaction, so a kill mid-approval can never award coins without
+ * resolving (or resolve without awarding).
+ */
+export async function saveApproval(occ: Occurrence, balance: number): Promise<void> {
+  const d = await db();
+  const tx = d.transaction(['kv', 'occurrences'], 'readwrite');
+  void tx.objectStore('occurrences').put(occ);
+  void tx.objectStore('kv').put(balance, 'balance');
+  await tx.done;
+}
+
+/**
  * Ask the browser to make our storage persistent (not evictable under
  * pressure). Called on startup; failures are non-fatal.
  */

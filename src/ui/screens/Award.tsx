@@ -7,7 +7,7 @@ import { CHILD_NAME, REDEMPTION_THRESHOLD } from '../../config/app';
 import { fmtCoins } from '../../lib/dates';
 import { playAwardJingle } from '../../lib/audio';
 import { store, useAppState } from '../../store/hooks';
-import { ChildStrips } from '../components/chrome';
+import { ChildStrips, TimerPill } from '../components/chrome';
 import { CoinCount, PixelButton, XPBar, useTheme } from '../components/core';
 
 const FLYERS = [
@@ -38,6 +38,7 @@ export function Award() {
       style={{ background: '#f3eee1', color: '#2b2b24', position: 'relative', overflow: 'hidden' }}
     >
       <ChildStrips withUnder />
+      <TimerPill />
       <div
         style={{
           position: 'absolute',
