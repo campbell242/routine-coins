@@ -70,6 +70,9 @@ export interface NextUnlock {
 /** The next time this plan unlocks (today later, or a future scheduled day). */
 export function nextUnlock(plan: PlanResolved, occs: OccurrenceMap, now: Date): NextUnlock | undefined {
   if (!plan.enabled) return undefined;
+  // A blocked plan (unresolved occurrence pending parent resolution) has no
+  // honest unlock time — its card is the actionable thing, not a promise.
+  if (unresolvedOccurrence(plan, occs)) return undefined;
   for (let i = 0; i < 8; i++) {
     const d = addDays(now, i);
     if (!isScheduledOn(plan, d)) continue;
