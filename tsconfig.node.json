@@ -17,6 +17,6 @@
   },
   "include": [
     "vite.config.ts",
-    "src/config/app.ts"
+    "src/config/profile.ts"
   ]
 }

@@ -28,6 +28,17 @@ design README and mockup annotations.
 
 - Plans are typed TS config objects (`src/config/plans.ts`) consumed by a
   generic engine. Adding a Saturday routine = appending one `PlanConfig`.
+- **A child profile is exactly two files**: `src/config/profile.ts` (name,
+  coin goal, default PIN and avatar, storage identity) and
+  `src/config/plans.ts` (her routines). `app.ts` holds only app-wide
+  constants — timer presets, the avatar catalog, the parent-session timeout
+  — so a second profile never touches it. Config is compiled into the
+  bundle, not loaded at runtime, so a second child means a second build
+  deployed to its own URL; keeping the per-child surface to two files is
+  what makes that a copy-and-edit job rather than a refactor. Runtime-loaded
+  JSON was considered and rejected: it would give up the compile-time typing
+  that makes config edits safe, and require runtime validation the engine
+  deliberately doesn't do.
 - **Occurrence start = the child opens/starts the routine** (taps the Home
   card CTA). The configuration snapshot is taken at that moment. Before that,
   Home renders the card from live (override-resolved) config.

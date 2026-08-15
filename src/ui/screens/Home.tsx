@@ -1,4 +1,5 @@
-import { AVATARS, CHILD_NAME, REDEMPTION_THRESHOLD } from '../../config/app';
+import { AVATARS } from '../../config/app';
+import { CHILD_NAME, REDEMPTION_THRESHOLD } from '../../config/profile';
 import {
   bonusItems,
   isReadyForReview,

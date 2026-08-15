@@ -3,6 +3,7 @@
 // overrides, customization, timer state, parent PIN hash.
 
 import { openDB, type DBSchema, type IDBPDatabase } from 'idb';
+import { PROFILE_ID } from '../config/profile';
 import type { PlanOverride } from '../config/types';
 import type { Occurrence } from '../engine/machine';
 import type { TimerState } from '../engine/timer';
@@ -25,7 +26,14 @@ interface HaleyDB extends DBSchema {
   occurrences: { key: string; value: Occurrence };
 }
 
-const DB_NAME = 'haley-routine-coins';
+/**
+ * Named after the profile, because IndexedDB is scoped per ORIGIN, not per
+ * path: two children's apps served from one origin (e.g. two GitHub Pages
+ * projects under the same user) would otherwise share one database and one
+ * coin balance. Changing PROFILE_ID silently opens an empty database — see
+ * the warning on it, and the test pinning this exact string.
+ */
+export const DB_NAME = `${PROFILE_ID}-routine-coins`;
 const DB_VERSION = 1;
 
 let dbPromise: Promise<IDBPDatabase<HaleyDB>> | undefined;

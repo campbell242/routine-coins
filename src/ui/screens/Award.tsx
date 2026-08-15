@@ -3,7 +3,7 @@
 // settles. Short and non-blocking — one tap back to Home.
 
 import { useEffect } from 'react';
-import { CHILD_NAME, REDEMPTION_THRESHOLD } from '../../config/app';
+import { CHILD_NAME, REDEMPTION_THRESHOLD } from '../../config/profile';
 import { fmtCoins } from '../../lib/dates';
 import { playAwardJingle } from '../../lib/audio';
 import { store, useAppState } from '../../store/hooks';

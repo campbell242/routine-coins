@@ -48,7 +48,9 @@ so coins, routines, streaks and settings survive app kills and reboots.
 design/                  # design handoff (reference only)
 public/assets/           # pixel-art PNGs from the handoff (rendered pixelated)
 public/fonts/            # self-hosted Jersey 25 + Nunito Sans
-src/config/              # plan configurations, theme variant tokens, app constants
+src/config/profile.ts    #   ONE child: name, coin goal, PIN, storage identity
+src/config/plans.ts      #   ONE child: her routines
+src/config/              # theme variant tokens, icon manifest, app-wide constants
 src/engine/              # pure logic: occurrence state machine, scheduler,
                          #   streaks, coin ledger, timer
 src/persistence/         # IndexedDB (idb) storage
