@@ -7,28 +7,33 @@
 //  - cuesEnabled — the parent's global sound toggle. Off silences every cue.
 //  - alarmEnabled — separate alarm-only toggle, so the timer can stay
 //    audible with everything else off.
-//  - quietHours — auto-quiet during the Nighttime Routine window and after
-//    it (the phone is in her room): every cue plays at half gain. The alarm
-//    is the one exception and keeps its full gain.
+//  - quietScale — auto-quiet during the Nighttime Routine window and after
+//    it (the phone is in her room): reduced gain, never mute. ×0.5 from the
+//    window start, ×0.25 once the phone has been handed over for the night.
+//    The alarm is the one exception and keeps its full gain.
 
 let ctx: AudioContext | undefined;
 
 let cuesEnabled = true;
 let alarmEnabled = true;
-let quietHours = false;
+let quietScale = 1;
 
 export function setAudioPrefs(prefs: { cues: boolean; alarm: boolean }): void {
   cuesEnabled = prefs.cues;
   alarmEnabled = prefs.alarm;
 }
 
-export function setQuietHours(on: boolean): void {
-  quietHours = on;
+/**
+ * 1 = normal, 0.5 = inside the nighttime window, 0.25 = after the handoff.
+ * Never 0: auto-quiet is reduced gain, not mute (design addendum).
+ */
+export function setQuietScale(scale: number): void {
+  quietScale = scale;
 }
 
 /** Gain scale for ordinary cues under the current quiet state. */
 function cueGain(peak: number): number {
-  return quietHours ? peak * 0.5 : peak;
+  return peak * quietScale;
 }
 
 export function primeAudio(): void {

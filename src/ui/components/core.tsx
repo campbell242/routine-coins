@@ -242,15 +242,28 @@ export function CoinCount({
   coinSize = 28,
   fontSize = 24,
   subSize = 15,
+  landings = 0,
 }: {
   balance: number;
   coinSize?: number;
   fontSize?: number;
   subSize?: number;
+  /**
+   * Award screen only: bumped once per arriving coin. Each increment remounts
+   * the coin pip so its 120ms scale reaction replays — the counter answers
+   * every landing (spec §2).
+   */
+  landings?: number;
 }) {
   return (
     <span style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-      <img src="assets/coin.png" alt="coins" style={{ width: coinSize, height: coinSize }} />
+      <img
+        key={landings}
+        src="assets/coin.png"
+        alt="coins"
+        className={landings > 0 ? 'coin-land' : undefined}
+        style={{ width: coinSize, height: coinSize }}
+      />
       <span className="px" style={{ fontSize }}>
         {fmtCoins(balance)}{' '}
         <span style={{ fontSize: subSize, color: '#8a8578' }}>/ {fmtCoins(REDEMPTION_THRESHOLD)}</span>
