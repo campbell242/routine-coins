@@ -34,7 +34,7 @@ export function Handoff() {
           textAlign: 'center',
         }}
       >
-        <img src="assets/coin.png" alt="" style={{ width: 56, height: 56 }} />
+        <img src="assets/coin.png" alt="" className="pop-in" style={{ width: 56, height: 56 }} />
         <div className="px" style={{ fontSize: 30, lineHeight: 1.1 }}>
           {next.planName} approved!
         </div>

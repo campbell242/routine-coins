@@ -92,6 +92,8 @@ function RunningTimer() {
   const ms = remainingMs(timer, now);
   const frac = remainingFraction(timer, now);
   const paused = timer.phase === 'paused';
+  // Mounted within a second of starting → the fill snaps in (once).
+  const freshStart = timer.phase === 'running' && ms > timer.totalMin * 60_000 - 1000;
   return (
     <div className="screen" style={{ background: '#20241a', color: '#fff' }}>
       <ChildStrips />
@@ -116,11 +118,21 @@ function RunningTimer() {
         <div className="px" style={{ fontSize: 15, color: '#8a8578', letterSpacing: 2 }}>
           {timer.totalMin} MINUTE TIMER{paused ? ' · PAUSED' : ''}
         </div>
-        <div className="px" style={{ fontSize: 110, lineHeight: 1, opacity: paused ? 0.55 : 1 }}>
+        <div
+          className={
+            paused ? 'px breathe' : ms <= 10_000 ? 'px digit-pulse' : 'px'
+          }
+          style={{ fontSize: 110, lineHeight: 1 }}
+        >
           {fmtCountdown(ms)}
         </div>
-        <div style={{ width: '100%', height: 16, border: '3px solid #4a4f3e', background: '#14170f', padding: 2 }}>
+        <div
+          className={paused ? 'breathe' : undefined}
+          style={{ width: '100%', height: 16, border: '3px solid #4a4f3e', background: '#14170f', padding: 2 }}
+        >
+          {/* snaps to full over 200ms on a fresh start — "loaded" (spec §4) */}
           <div
+            className={freshStart ? 'bar-snap' : undefined}
             style={{
               height: '100%',
               width: `${frac * 100}%`,

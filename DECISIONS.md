@@ -208,10 +208,17 @@ design README and mockup annotations.
   retired). The replaced nighttime items got NEW stable IDs (n-snack,
   n-change, n-teethfloss, n-parentread, n-phone, n-sleep, n-stormy,
   n-lunch); the old ones (n-teeth … n-stayedinbed) are never reused.
-- The +100 sleep item is mandatory in spirit but modeled as a coin-valued
-  parent-verified item: a night she gets up costs exactly 100 automatically,
-  without wiping out credit for the rest of the evening. It renders in the
-  gold coins section by design.
+- The +100 sleep item started as a coin-valued bonus, then was promoted
+  (2026-08-16, "option A") to `kind: 'required'` while keeping its own
+  +100: it now sits in the required section of the checklist — mandatory in
+  placement — but its coins still only count toward the suggested award
+  when a parent checks it, so a night she gets up costs exactly 100
+  automatically, without wiping out credit for the rest of the evening.
+  `suggestedAward` therefore sums ALL checked coin-valued items regardless
+  of kind. Because it's parent-verified (`parent-morning`), it never gates
+  "Ask a parent" or the Home pips — those key off required+child items —
+  and the parent can toggle it in the review screen and the morning-verify
+  block alike. Its +100 chip shows on the row wherever it renders.
 - "Phone to Mom & Dad's room" is the built-in handoff: she checks it in
   their room and hands the phone over for review on the spot.
 - **Excused nights**: new `excused` occurrence status. A parent (PIN'd, in
@@ -220,6 +227,33 @@ design README and mockup annotations.
   sleepover-where-nobody-opened-the-app case. Excused nights award no
   coins; the streak SKIPS them exactly like a non-scheduled day. Already
   resolved dates can't be excused (button disabled, "already settled").
+
+## Motion & sound (design v5, MOTION_AND_SOUND.md)
+
+Built in three phases: reward release (8 coins into the counter, XP glow at
+1400ms, C6 on the arpeggio), check-off (380ms block place + pentatonic run,
+G5→C6 on the last required, silent unchecks), then streak/small moments/
+remaining cues/toggles/reduced-motion. Verified by instrumenting WebAudio —
+frequencies and gains logged in the built app match the cue table.
+
+Interpretations the spec left open (also reported back to design):
+- **Pip flip**: the spec's 200ms beat references the Home card's pip row,
+  which isn't on screen during check-off — newly-green pips flip (80ms
+  stagger) the first time the card is next seen, once, via a per-pip mask.
+- **Auto-quiet = half gain, not mute**: the whole routine happens inside
+  the nighttime window (opens 19:00), so muting would silence the app's
+  core sounds every night. All cues ×0.5 from windowStart (override-
+  resolved, never hardcoded) to midnight; the alarm keeps full gain.
+- **Preset cross-fade on timer start**: skipped — it conflicts with the
+  spec's own "no animation may delay a screen change / screen changes are
+  instant" rules (starting swaps the whole screen). The bar snap remains.
+- **Not commissioned by any phase** (spec §2 rows left unbuilt, flagged):
+  "+N rolls from 0", the counter coin's per-landing scale reaction, and
+  the 1600ms "Great job" fade-up.
+- Sound toggles live in parent settings (SOUND card): All sounds + a
+  separate Timer alarm switch; both persisted, parent toggles are silent.
+- Live-tap-only rule: nothing animates on mount or plain revisits (except
+  the sent-back banner's slide-in, which the spec specifies as arriving).
 
 ## Review hardening
 

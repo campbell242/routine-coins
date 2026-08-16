@@ -1,8 +1,35 @@
-// Timer alarm: a gentle synthesized chime (no audio assets needed, works
-// offline). The AudioContext is primed on the first user gesture so the
+// All app sound, synthesized (no audio assets, works offline): one sine
+// voice, 20ms exponential attack, exponential decay (spec: MOTION_AND_SOUND
+// part 2). The AudioContext is primed on the first user gesture so the
 // alarm can sound when the timer later expires.
+//
+// Gating (set by the store):
+//  - cuesEnabled — the parent's global sound toggle. Off silences every cue.
+//  - alarmEnabled — separate alarm-only toggle, so the timer can stay
+//    audible with everything else off.
+//  - quietHours — auto-quiet during the Nighttime Routine window and after
+//    it (the phone is in her room): every cue plays at half gain. The alarm
+//    is the one exception and keeps its full gain.
 
 let ctx: AudioContext | undefined;
+
+let cuesEnabled = true;
+let alarmEnabled = true;
+let quietHours = false;
+
+export function setAudioPrefs(prefs: { cues: boolean; alarm: boolean }): void {
+  cuesEnabled = prefs.cues;
+  alarmEnabled = prefs.alarm;
+}
+
+export function setQuietHours(on: boolean): void {
+  quietHours = on;
+}
+
+/** Gain scale for ordinary cues under the current quiet state. */
+function cueGain(peak: number): number {
+  return quietHours ? peak * 0.5 : peak;
+}
 
 export function primeAudio(): void {
   try {
@@ -45,6 +72,7 @@ function note(at: number, freq: number, dur: number, gainPeak: number): void {
 /** A soft, happy two-note chime, repeated three times. Never harsh. */
 export function playAlarm(): void {
   try {
+    if (!alarmEnabled) return; // its own toggle; exempt from quiet hours
     primeAudio();
     if (!ctx) return;
     const t0 = ctx.currentTime + 0.05;
@@ -72,9 +100,10 @@ export function checkBlipFreq(index: number): number {
 
 export function playCheckBlip(index: number): void {
   try {
+    if (!cuesEnabled) return;
     primeAudio();
     if (!ctx) return;
-    note(ctx.currentTime + 0.02, checkBlipFreq(index), 0.12, 0.1);
+    note(ctx.currentTime + 0.02, checkBlipFreq(index), 0.12, cueGain(0.1));
   } catch {
     /* ignore */
   }
@@ -86,28 +115,114 @@ export function playCheckBlip(index: number): void {
  */
 export function playLastRequired(): void {
   try {
+    if (!cuesEnabled) return;
     primeAudio();
     if (!ctx) return;
     const t0 = ctx.currentTime + 0.02;
-    note(t0, 783.99, 0.18, 0.14); // G5
-    note(t0 + 0.16, 1046.5, 0.3, 0.14); // C6
+    note(t0, 783.99, 0.18, cueGain(0.14)); // G5
+    note(t0 + 0.16, 1046.5, 0.3, cueGain(0.14)); // C6
   } catch {
     /* ignore */
   }
 }
 
-/** A tiny positive blip for the coin-award moment. */
+/** The coin-award arpeggio, optionally starting at `offset` seconds. */
+function awardArpeggio(t0: number, freqScale: number, gainScale: number): void {
+  note(t0, 523.25 * freqScale, 0.25, cueGain(0.16 * gainScale)); // C5
+  note(t0 + 0.12, 659.25 * freqScale, 0.25, cueGain(0.16 * gainScale)); // E5
+  note(t0 + 0.24, 783.99 * freqScale, 0.45, cueGain(0.18 * gainScale)); // G5
+  // Resolving on the octave, landing with the coins in the counter —
+  // what makes the moment feel finished rather than cut off (spec §Sound).
+  note(t0 + 0.36, 1046.5 * freqScale, 0.5, cueGain(0.18 * gainScale)); // C6
+}
+
 export function playAwardJingle(): void {
   try {
+    if (!cuesEnabled) return;
+    primeAudio();
+    if (!ctx) return;
+    awardArpeggio(ctx.currentTime + 0.02, 1, 1);
+  } catch {
+    /* ignore */
+  }
+}
+
+/**
+ * Redemption reached (1,720): the award arpeggio, then again an octave up at
+ * +0.90s (freqs ×2, gain ×0.8). The only big sound in the app, heard a few
+ * times a year — everything else stays small so this one lands.
+ */
+export function playRedemptionFanfare(): void {
+  try {
+    if (!cuesEnabled) return;
     primeAudio();
     if (!ctx) return;
     const t0 = ctx.currentTime + 0.02;
-    note(t0, 523.25, 0.25, 0.16); // C5
-    note(t0 + 0.12, 659.25, 0.25, 0.16); // E5
-    note(t0 + 0.24, 783.99, 0.45, 0.18); // G5
-    // Resolving on the octave, landing with the coins in the counter —
-    // what makes the moment feel finished rather than cut off (spec §Sound).
-    note(t0 + 0.36, 1046.5, 0.5, 0.18); // C6
+    awardArpeggio(t0, 1, 1);
+    awardArpeggio(t0 + 0.9, 2, 0.8);
+  } catch {
+    /* ignore */
+  }
+}
+
+/** Ask a parent to check: handing over, not celebrating — the app's only descending cue. */
+export function playAskParent(): void {
+  try {
+    if (!cuesEnabled) return;
+    primeAudio();
+    if (!ctx) return;
+    const t0 = ctx.currentTime + 0.02;
+    note(t0, 392.0, 0.25, cueGain(0.12)); // G4
+    note(t0 + 0.22, 293.66, 0.25, cueGain(0.12)); // D4
+  } catch {
+    /* ignore */
+  }
+}
+
+/** Streak milestone (7, 14, 30, then every 30) — never the daily extension. */
+export function playStreakMilestone(): void {
+  try {
+    if (!cuesEnabled) return;
+    primeAudio();
+    if (!ctx) return;
+    const t0 = ctx.currentTime + 0.02;
+    note(t0, 659.25, 0.2, cueGain(0.14)); // E5
+    note(t0 + 0.18, 987.77, 0.2, cueGain(0.14)); // B5
+  } catch {
+    /* ignore */
+  }
+}
+
+/** Timer start: confirmation that it took, nothing more. (Resume is silent.) */
+export function playTimerStart(): void {
+  try {
+    if (!cuesEnabled) return;
+    primeAudio();
+    if (!ctx) return;
+    note(ctx.currentTime + 0.02, 587.33, 0.1, cueGain(0.12)); // D5
+  } catch {
+    /* ignore */
+  }
+}
+
+export function playTimerPause(): void {
+  try {
+    if (!cuesEnabled) return;
+    primeAudio();
+    if (!ctx) return;
+    note(ctx.currentTime + 0.02, 440.0, 0.12, cueGain(0.1)); // A4
+  } catch {
+    /* ignore */
+  }
+}
+
+/** Avatar / theme change — the quietest cue; she'll tap these dozens of times. */
+export function playPickBlip(): void {
+  try {
+    if (!cuesEnabled) return;
+    primeAudio();
+    if (!ctx) return;
+    note(ctx.currentTime + 0.02, 880.0, 0.1, cueGain(0.08)); // A5
   } catch {
     /* ignore */
   }

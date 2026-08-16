@@ -108,16 +108,23 @@ export function parentVerifyItems(occ: Occurrence): ItemConfig[] {
   return occ.snapshot.items.filter((i) => i.attestation === 'parent-morning');
 }
 
-export function bonusItems(occ: Occurrence): ItemConfig[] {
-  return occ.snapshot.items.filter((i) => i.kind === 'bonus');
+/** Items carrying a coin value — bonuses AND the coin-valued required sleep item. */
+export function valuedItems(occ: Occurrence): ItemConfig[] {
+  return occ.snapshot.items.filter((i) => i.bonus !== undefined);
 }
 
-/** Suggested award = base + completed bonuses (parent may edit before approving). */
+/**
+ * Suggested award = base + the coin values of completed VALUED items —
+ * bonus items, plus any required item that carries its own value (e.g. the
+ * parent-verified sleep item): mandatory in placement, self-enforcing in
+ * math — leaving it unchecked docks exactly its value, no parent editing
+ * needed. Parent may still edit before approving.
+ */
 export function suggestedAward(occ: Occurrence): number {
-  const bonus = bonusItems(occ)
-    .filter((i) => isChecked(occ, i.id))
+  const valued = occ.snapshot.items
+    .filter((i) => i.bonus !== undefined && isChecked(occ, i.id))
     .reduce((sum, i) => sum + (i.bonus ?? 0), 0);
-  return occ.snapshot.baseAward + bonus;
+  return occ.snapshot.baseAward + valued;
 }
 
 /** In progress with every required item done → the gold "ask a parent" CTA. */

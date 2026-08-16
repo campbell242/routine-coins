@@ -37,7 +37,18 @@ import {
   type TimerState,
 } from '../engine/timer';
 import { dateKey } from '../lib/dates';
-import { playAlarm, playCheckBlip, playLastRequired } from '../lib/audio';
+import {
+  playAlarm,
+  playAskParent,
+  playCheckBlip,
+  playLastRequired,
+  playStreakMilestone,
+  playTimerPause,
+  playTimerStart,
+  playPickBlip,
+  setAudioPrefs,
+  setQuietHours,
+} from '../lib/audio';
 import { setWakeLockWanted } from '../lib/wakeLock';
 import {
   hashPin,
@@ -104,6 +115,11 @@ type Listener = () => void;
 // The award celebration is deliberately excluded — the chime still sounds and
 // the timer pill takes over; the celebration isn't stolen mid-moment.
 const CHILD_SCREENS = new Set(['home', 'routine', 'timer', 'me']);
+
+/** Streak milestones: 7, 14, 30, then every 30 (spec §3). */
+export function isStreakMilestone(streak: number): boolean {
+  return streak === 7 || streak === 14 || (streak >= 30 && streak % 30 === 0);
+}
 
 function sanitizeOccurrences(list: Occurrence[]): OccurrenceMap {
   const map: OccurrenceMap = {};
@@ -205,6 +221,27 @@ class Store {
 
     this.startTicking();
     this.syncWakeLock();
+    this.syncAudio();
+  }
+
+  /**
+   * Push sound preferences and the quiet state into the audio layer.
+   * Auto-quiet runs from the Nighttime Routine's configured window start
+   * (override-resolved — never a hardcoded time) until midnight: the phone
+   * is in her room. The alarm is exempt and keeps its gain.
+   */
+  private syncAudio(): void {
+    const s = this.state.settings;
+    setAudioPrefs({ cues: s.sound !== false, alarm: s.alarmSound !== false });
+    const night = this.resolvedPlan('nighttime');
+    if (night?.enabled) {
+      const d = new Date(this.state.nowMs);
+      const minutes = d.getHours() * 60 + d.getMinutes();
+      const [h, m] = night.windowStart.split(':').map(Number);
+      setQuietHours(minutes >= h * 60 + m);
+    } else {
+      setQuietHours(false);
+    }
   }
 
   private startTicking(): void {
@@ -223,6 +260,7 @@ class Store {
       return;
     }
     this.set({ nowMs: now });
+    this.syncAudio();
   }
 
   /**
@@ -361,7 +399,11 @@ class Store {
   }
 
   childRequestReview(occId: string): void {
+    const before = this.state.occurrences[occId];
     this.mutateOccurrence(occId, (occ) => requestReview(occ, this.state.nowMs));
+    if (this.state.occurrences[occId] !== before) {
+      playAskParent(); // handing over, not celebrating — the only descending cue
+    }
   }
 
   childAckSentBack(occId: string): void {
@@ -472,9 +514,12 @@ class Store {
     this.set({ award: next, pendingAwards: rest });
     void kvSet('pendingAwards', rest);
     this.navigate({ name: 'award' });
-    if (next.streak > 0 && next.streak % 7 === 0) {
+    if (isStreakMilestone(next.streak)) {
       // Let the award moment's own "Routine complete!" card land first.
-      window.setTimeout(() => this.toast(`★ ${next.streak} day streak!`, 'Amazing! Keep it going!'), 2600);
+      window.setTimeout(() => {
+        this.toast(`★ ${next.streak} day streak!`, 'Amazing! Keep it going!');
+        playStreakMilestone(); // milestones only — never the daily extension
+      }, 2600);
     }
   }
 
@@ -549,13 +594,23 @@ class Store {
 
   // ---------- customization ----------
 
+  /** Parent settings toggles. Setting them makes no sound (parent action). */
+  setSoundPrefs(prefs: { sound?: boolean; alarmSound?: boolean }): void {
+    const settings = { ...this.state.settings, ...prefs };
+    this.set({ settings });
+    void kvSet('settings', settings);
+    this.syncAudio();
+  }
+
   setAvatar(avatar: string): void {
+    playPickBlip();
     const settings = { ...this.state.settings, avatar };
     this.set({ settings });
     void kvSet('settings', settings);
   }
 
   setTheme(theme: string): void {
+    playPickBlip();
     const settings = { ...this.state.settings, theme };
     this.set({ settings });
     void kvSet('settings', settings);
@@ -571,6 +626,7 @@ class Store {
 
   timerStart(minutes: number): void {
     this.setTimer(startTimer(minutes, Date.now()));
+    playTimerStart();
   }
 
   timerPause(): void {
@@ -583,6 +639,7 @@ class Store {
         return;
       }
       this.setTimer(next);
+      playTimerPause(); // resume stays silent — it already started once
     } catch {
       /* stale tap */
     }

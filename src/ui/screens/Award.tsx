@@ -5,7 +5,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { CHILD_NAME, REDEMPTION_THRESHOLD } from '../../config/profile';
 import { fmtCoins } from '../../lib/dates';
-import { playAwardJingle } from '../../lib/audio';
+import { playAwardJingle, playRedemptionFanfare } from '../../lib/audio';
 import { store, useAppState } from '../../store/hooks';
 import { ChildStrips, TimerPill } from '../components/chrome';
 import { CoinCount, PixelButton, XPBar, useTheme } from '../components/core';
@@ -49,8 +49,16 @@ export function Award() {
     });
   }, []);
 
+  // Crossing 1,720 upgrades the arpeggio to the redemption fanfare (the
+  // arpeggio again an octave up at +0.90s) — the app's only big sound.
+  const crossedGoal =
+    award !== undefined &&
+    award.balanceBefore < REDEMPTION_THRESHOLD &&
+    award.balanceAfter >= REDEMPTION_THRESHOLD;
   useEffect(() => {
-    playAwardJingle();
+    if (crossedGoal) playRedemptionFanfare();
+    else playAwardJingle();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
