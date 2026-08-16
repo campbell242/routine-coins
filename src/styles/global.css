@@ -118,6 +118,52 @@ input {
     inset 0 -5px 0 rgba(0, 0, 0, 0.25);
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
 }
+/* ===== Parent-zone controls (design v7) =====
+   The parent area is iron and neutral: no green, no gold. Gold is a coin,
+   green is Haley. Availability is carried by the bevel instead of colour —
+   raised bright stone = live, recessed dark iron = not available. The same
+   pair does toggles (ON/OFF), edit confirmations, and every disabled state,
+   so "available / not available" looks identical across the zone. */
+.bevel-parent-on {
+  background: #cfc8b2;
+  border-color: #4a4a44;
+  color: #2b2b24;
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -5px 0 rgba(0, 0, 0, 0.18);
+  text-shadow: none;
+}
+.bevel-parent-off,
+.bevel.bevel-parent-off:disabled {
+  background: #4a4a44;
+  border-color: #2b2b24;
+  color: #8a8578;
+  /* pressed: shadow at the top, no highlight — it reads as sunk in */
+  box-shadow: inset 0 4px 0 rgba(0, 0, 0, 0.3);
+  text-shadow: none;
+}
+.bevel-parent-on.bevel-sm {
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -4px 0 rgba(0, 0, 0, 0.18);
+}
+.bevel-parent-off.bevel-sm,
+.bevel.bevel-parent-off.bevel-sm:disabled {
+  box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0.3);
+}
+/* Cancel is never a filled button in the parent area: plain underlined text,
+   full-width tap target, so the eye lands on the choice and not the exit. */
+.parent-cancel {
+  font-family: 'Jersey 25', monospace;
+  width: 100%;
+  text-align: center;
+  color: #6b675c;
+  text-decoration: underline;
+  padding: 13px;
+  background: none;
+  border: none;
+}
+
 .bevel:disabled,
 .bevel-disabled {
   background: #7d7d7d;
@@ -530,5 +576,6 @@ input {
   text-align: center;
 }
 .pixel-input:focus {
-  outline: 3px solid #f8c53a;
+  /* parent-zone editing surface: slate, never gold (design v7) */
+  outline: 3px solid #3f5f78;
 }

@@ -19,7 +19,7 @@ import {
 import { addDays, dateKey, fmtCoins, fmtDateShort, fmtHM, fmtTimeOfDay, fromDateKey } from '../../../lib/dates';
 import { store, useAppState } from '../../../store/hooks';
 import { ConfirmModal, Modal } from '../../components/chrome';
-import { GreenButton, PixelButton, SlotCheck } from '../../components/core';
+import { EditValue, GreenButton, ParentCancel, PixelButton, SlotCheck } from '../../components/core';
 
 // ---------- shared chrome ----------
 
@@ -341,14 +341,12 @@ function ReviewView({ occId }: { occId?: string }) {
             onChange={(e) => setAmountText(e.target.value.replace(/[^0-9]/g, '').slice(0, 3))}
             autoFocus
           />
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 14 }}>
-            <PixelButton variant="stone" small style={{ fontSize: 17, padding: 13 }} onClick={() => setModal('none')}>
-              Cancel
-            </PixelButton>
+          <div style={{ marginTop: 14 }}>
             <PixelButton
+              variant="parentOn"
               small
               disabled={!/^\d+$/.test(amountText)}
-              style={{ fontSize: 17, padding: 13, ...(/^\d+$/.test(amountText) ? { background: '#57a636' } : {}) }}
+              style={{ fontSize: 17, padding: 13 }}
               onClick={() => {
                 setAward(Number(amountText));
                 setModal('none');
@@ -356,6 +354,7 @@ function ReviewView({ occId }: { occId?: string }) {
             >
               Set
             </PixelButton>
+            <ParentCancel onClick={() => setModal('none')} />
           </div>
         </Modal>
       )}
@@ -374,10 +373,7 @@ function ReviewView({ occId }: { occId?: string }) {
             onChange={(e) => setNote(e.target.value)}
             autoFocus
           />
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 14 }}>
-            <PixelButton variant="stone" small style={{ fontSize: 17, padding: 13 }} onClick={() => setModal('none')}>
-              Cancel
-            </PixelButton>
+          <div style={{ marginTop: 14 }}>
             <PixelButton
               variant="slate"
               small
@@ -386,6 +382,7 @@ function ReviewView({ occId }: { occId?: string }) {
             >
               Send back
             </PixelButton>
+            <ParentCancel onClick={() => setModal('none')} />
           </div>
         </Modal>
       )}
@@ -544,11 +541,11 @@ function SettingsView() {
                   }}
                   style={editBtnStyle}
                 >
-                  <span className="px" style={{ color: '#3d7a22' }}>
+                  <EditValue>
                     {plan.windowEnd
                       ? `${fmtHM(plan.windowStart, false)}–${fmtHM(plan.windowEnd, false)} ✎`
                       : `${fmtHM(plan.windowStart)} ✎`}
-                  </span>
+                  </EditValue>
                 </button>
               </div>
             ))}
@@ -561,7 +558,7 @@ function SettingsView() {
             <div style={{ ...rowStyle, borderBottom: 'none' }}>
               Sleepover or special night?
               <button onClick={() => setModal({ kind: 'excuse' })} style={editBtnStyle}>
-                <span className="px" style={{ color: '#3d7a22' }}>Excuse a night ✎</span>
+                <EditValue>Excuse a night ✎</EditValue>
               </button>
             </div>
           </div>
@@ -575,8 +572,8 @@ function SettingsView() {
               <span style={{ marginLeft: 'auto' }}>
                 <PixelButton
                   small
-                  variant={soundOn ? undefined : 'stone'}
-                  style={{ fontSize: 14, padding: '8px 14px', width: 'auto', ...(soundOn ? { background: '#57a636' } : {}) }}
+                  variant={soundOn ? 'parentOn' : 'parentOff'}
+                  style={{ fontSize: 14, padding: '8px 14px', width: 'auto' }}
                   onClick={() => store.setSoundPrefs({ sound: !soundOn })}
                 >
                   {soundOn ? 'ON' : 'OFF'}
@@ -588,8 +585,8 @@ function SettingsView() {
               <span style={{ marginLeft: 'auto' }}>
                 <PixelButton
                   small
-                  variant={alarmOn ? undefined : 'stone'}
-                  style={{ fontSize: 14, padding: '8px 14px', width: 'auto', ...(alarmOn ? { background: '#57a636' } : {}) }}
+                  variant={alarmOn ? 'parentOn' : 'parentOff'}
+                  style={{ fontSize: 14, padding: '8px 14px', width: 'auto' }}
                   onClick={() => store.setSoundPrefs({ alarmSound: !alarmOn })}
                 >
                   {alarmOn ? 'ON' : 'OFF'}
@@ -615,9 +612,7 @@ function SettingsView() {
                 }}
                 style={editBtnStyle}
               >
-                <span className="px" style={{ color: '#3d7a22' }}>
-                  {baseShared} ✎
-                </span>
+                <EditValue>{baseShared} ✎</EditValue>
               </button>
             </div>
             <div style={rowStyle}>
@@ -632,9 +627,7 @@ function SettingsView() {
                   }}
                   style={{ width: 'auto', minHeight: 44, display: 'flex', alignItems: 'center', margin: '-9px 0' }}
                 >
-                  <span className="px" style={{ color: '#3d7a22' }}>
-                    ＋/− adjust
-                  </span>
+                  <EditValue>＋/− adjust</EditValue>
                 </button>
               </span>
             </div>
@@ -654,7 +647,12 @@ function SettingsView() {
                     Redeem coins
                   </PixelButton>
                 ) : (
-                  <PixelButton disabled small style={{ fontSize: 14, padding: '8px 12px', width: 'auto' }}>
+                  <PixelButton
+                    variant="parentOn"
+                    disabled
+                    small
+                    style={{ fontSize: 14, padding: '8px 12px', width: 'auto' }}
+                  >
                     Redeem · {fmtCoins(toGo)} to go
                   </PixelButton>
                 )}
@@ -675,9 +673,7 @@ function SettingsView() {
                 }}
                 style={editBtnStyle}
               >
-                <span className="px" style={{ color: '#3d7a22' }}>
-                  ···· ✎
-                </span>
+                <EditValue>···· ✎</EditValue>
               </button>
             </div>
           </div>
@@ -705,14 +701,12 @@ function SettingsView() {
                   /^\d{2}:\d{2}$/.test(field1) &&
                   (plan.windowEnd === undefined || /^\d{2}:\d{2}$/.test(field2));
                 return (
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 14 }}>
-                    <PixelButton variant="stone" small style={{ fontSize: 17, padding: 13 }} onClick={() => setModal({ kind: 'none' })}>
-                      Cancel
-                    </PixelButton>
+                  <div style={{ marginTop: 14 }}>
                     <PixelButton
+                      variant="parentOn"
                       small
                       disabled={!valid}
-                      style={{ fontSize: 17, padding: 13, ...(valid ? { background: '#57a636' } : {}) }}
+                      style={{ fontSize: 17, padding: 13 }}
                       onClick={() => {
                         store.setOverride(plan.id, {
                           windowStart: field1,
@@ -723,6 +717,7 @@ function SettingsView() {
                     >
                       Save
                     </PixelButton>
+                    <ParentCancel onClick={() => setModal({ kind: 'none' })} />
                   </div>
                 );
               })()}
@@ -740,14 +735,12 @@ function SettingsView() {
             onChange={(e) => setField1(e.target.value.replace(/[^0-9]/g, '').slice(0, 3))}
             autoFocus
           />
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 14 }}>
-            <PixelButton variant="stone" small style={{ fontSize: 17, padding: 13 }} onClick={() => setModal({ kind: 'none' })}>
-              Cancel
-            </PixelButton>
+          <div style={{ marginTop: 14 }}>
             <PixelButton
+              variant="parentOn"
               small
               disabled={!/^\d+$/.test(field1)}
-              style={{ fontSize: 17, padding: 13, ...(/^\d+$/.test(field1) ? { background: '#57a636' } : {}) }}
+              style={{ fontSize: 17, padding: 13 }}
               onClick={() => {
                 store.setBaseAwardAll(Number(field1));
                 setModal({ kind: 'none' });
@@ -755,6 +748,7 @@ function SettingsView() {
             >
               Save
             </PixelButton>
+            <ParentCancel onClick={() => setModal({ kind: 'none' })} />
           </div>
         </Modal>
       )}
@@ -771,7 +765,9 @@ function SettingsView() {
             autoFocus
           />
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 14 }}>
-            <GreenButton
+            <PixelButton
+              variant="parentOn"
+              small
               style={{ fontSize: 17, padding: 13 }}
               onClick={() => {
                 const n = Number(field1);
@@ -780,7 +776,7 @@ function SettingsView() {
               }}
             >
               ＋ Add
-            </GreenButton>
+            </PixelButton>
             <PixelButton
               variant="iron"
               small
@@ -794,14 +790,7 @@ function SettingsView() {
               − Subtract
             </PixelButton>
           </div>
-          <PixelButton
-            variant="stone"
-            small
-            style={{ fontSize: 15, padding: 11, marginTop: 10 }}
-            onClick={() => setModal({ kind: 'none' })}
-          >
-            Cancel
-          </PixelButton>
+          <ParentCancel onClick={() => setModal({ kind: 'none' })} style={{ marginTop: 4 }} />
         </Modal>
       )}
 
@@ -845,10 +834,7 @@ function SettingsView() {
                         : 'Enter an amount above zero.'
                       : `Keeps ${fmtCoins(balance - n)} coins.`}
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 12 }}>
-                  <PixelButton variant="stone" small style={{ fontSize: 17, padding: 13 }} onClick={() => setModal({ kind: 'none' })}>
-                    Cancel
-                  </PixelButton>
+                <div style={{ marginTop: 12 }}>
                   <PixelButton
                     variant="gold"
                     small
@@ -858,6 +844,7 @@ function SettingsView() {
                   >
                     Redeem
                   </PixelButton>
+                  <ParentCancel onClick={() => setModal({ kind: 'none' })} />
                 </div>
               </>
             );
@@ -899,7 +886,7 @@ function SettingsView() {
                     return (
                       <PixelButton
                         key={`${plan.id}:${dk}`}
-                        variant={done ? 'disabled' : 'iron'}
+                        variant={done ? 'parentOff' : 'parentOn'}
                         small
                         disabled={done}
                         style={{ fontSize: 16, padding: 12 }}
@@ -916,14 +903,7 @@ function SettingsView() {
                   }),
                 )}
               </div>
-              <PixelButton
-                variant="stone"
-                small
-                style={{ fontSize: 15, padding: 11, marginTop: 10 }}
-                onClick={() => setModal({ kind: 'none' })}
-              >
-                Cancel
-              </PixelButton>
+              <ParentCancel onClick={() => setModal({ kind: 'none' })} style={{ fontSize: 15, marginTop: 4 }} />
             </Modal>
           );
         })()}
@@ -941,14 +921,12 @@ function SettingsView() {
           <div style={{ fontSize: 12, fontWeight: 700, marginTop: 6, color: '#6b675c' }}>
             {field1.length === 4 ? 'Ready to save.' : 'Enter exactly 4 digits.'}
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 12 }}>
-            <PixelButton variant="stone" small style={{ fontSize: 17, padding: 13 }} onClick={() => setModal({ kind: 'none' })}>
-              Cancel
-            </PixelButton>
+          <div style={{ marginTop: 12 }}>
             <PixelButton
+              variant="parentOn"
               small
               disabled={!/^\d{4}$/.test(field1)}
-              style={{ fontSize: 17, padding: 13, ...(/^\d{4}$/.test(field1) ? { background: '#57a636' } : {}) }}
+              style={{ fontSize: 17, padding: 13 }}
               onClick={() => {
                 void store.setPin(field1);
                 setModal({ kind: 'none' });
@@ -956,6 +934,7 @@ function SettingsView() {
             >
               Save
             </PixelButton>
+            <ParentCancel onClick={() => setModal({ kind: 'none' })} />
           </div>
         </Modal>
       )}

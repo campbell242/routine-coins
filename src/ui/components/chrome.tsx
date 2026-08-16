@@ -7,7 +7,7 @@ import { fmtClock, fmtCountdown } from '../../lib/dates';
 import { remainingMs } from '../../engine/timer';
 import { primeAudio } from '../../lib/audio';
 import { store, useAppState } from '../../store/hooks';
-import { PixelButton, useTheme } from './core';
+import { ParentCancel, PixelButton, useTheme } from './core';
 
 export type Tab = 'home' | 'timer' | 'me';
 
@@ -222,13 +222,13 @@ export function ConfirmModal({
   return (
     <Modal title={title} onClose={onCancel}>
       {body && <div style={{ fontSize: 14, fontWeight: 600, color: '#4a463a', marginBottom: 14 }}>{body}</div>}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-        <PixelButton variant="stone" small style={{ fontSize: 17, padding: 13 }} onClick={onCancel}>
-          Cancel
-        </PixelButton>
+      {/* Parent-zone only: the confirm carries the weight, Cancel is plain
+          underlined text so the eye lands on the choice (design v7). */}
+      <div>
         <PixelButton variant="iron" small style={{ fontSize: 17, padding: 13 }} onClick={onConfirm}>
           {confirmLabel}
         </PixelButton>
+        <ParentCancel onClick={onCancel} />
       </div>
     </Modal>
   );

@@ -28,7 +28,22 @@ export function Strip({ style, height, size = 16 }: { style: StripStyle; height:
   );
 }
 
-type BevelVariant = 'primary' | 'gold' | 'stone' | 'slate' | 'iron' | 'disabled' | 'key' | 'keyDim';
+type BevelVariant =
+  | 'primary'
+  | 'gold'
+  | 'stone'
+  | 'slate'
+  | 'iron'
+  | 'disabled'
+  | 'key'
+  | 'keyDim'
+  /**
+   * Parent-zone pair (design v7): raised bright stone = live/ON, recessed
+   * dark iron = OFF. A disabled `parentOn` renders as `parentOff`, so
+   * "not available" and "off" are one look across the whole parent area.
+   */
+  | 'parentOn'
+  | 'parentOff';
 
 export function PixelButton({
   variant = 'primary',
@@ -49,7 +64,11 @@ export function PixelButton({
   const theme = useTheme();
   const cls = ['bevel'];
   const extra: CSSProperties = {};
-  if (disabled || variant === 'disabled') {
+  const parentZone = variant === 'parentOn' || variant === 'parentOff';
+  if ((disabled || variant === 'disabled') && parentZone) {
+    // The parent zone has its own "not available": recessed dark iron.
+    cls.push('bevel-parent-off');
+  } else if (disabled || variant === 'disabled') {
     cls.push('bevel-disabled');
   } else {
     switch (variant) {
@@ -80,6 +99,12 @@ export function PixelButton({
       case 'keyDim':
         cls.push('bevel-key-dim');
         break;
+      case 'parentOn':
+        cls.push('bevel-parent-on');
+        break;
+      case 'parentOff':
+        cls.push('bevel-parent-off');
+        break;
     }
   }
   if (small) cls.push('bevel-sm');
@@ -87,6 +112,40 @@ export function PixelButton({
     <button className={cls.join(' ')} disabled={disabled} onClick={onClick} style={{ ...extra, ...style }}>
       {children}
     </button>
+  );
+}
+
+/**
+ * Parent-zone Cancel (design v7): never a filled button — plain underlined
+ * text, full-width tap target. A filled Cancel is the brightest thing in a
+ * modal, so the eye lands on the way out before the choice.
+ */
+export function ParentCancel({
+  onClick,
+  label = 'Cancel',
+  style,
+}: {
+  onClick: () => void;
+  label?: string;
+  style?: CSSProperties;
+}) {
+  return (
+    <button className="parent-cancel" onClick={onClick} style={{ fontSize: 17, ...style }}>
+      {label}
+    </button>
+  );
+}
+
+/**
+ * An editable value in the parent area — the number/time plus its pencil.
+ * Slate, never green: slate is the parent's second colour, the material
+ * "Send back" is made of (design v7).
+ */
+export function EditValue({ children }: { children: ReactNode }) {
+  return (
+    <span className="px" style={{ color: '#3f5f78' }}>
+      {children}
+    </span>
   );
 }
 

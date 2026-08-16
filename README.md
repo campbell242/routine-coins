@@ -42,6 +42,25 @@ so coins, routines, streaks and settings survive app kills and reboots.
 - The parent session locks on LOCK, after 3 minutes of inactivity, or when
   leaving the parent area.
 
+### Parent-area materials (design v7)
+
+The parent zone is iron and neutral — **no green and no gold in its
+controls**: gold is a coin, green is Haley. Availability is carried by the
+bevel rather than by colour, so "available / not available" looks the same
+everywhere:
+
+| Element | Treatment |
+|---|---|
+| ON / live / enabled | `.bevel-parent-on` — `#cfc8b2` fill, 3px `#4a4a44` border, `#2b2b24` text, **raised** bevel |
+| OFF / disabled / unavailable | `.bevel-parent-off` — `#4a4a44` fill, 3px `#2b2b24` border, `#8a8578` text, **pressed** bevel (no highlight) |
+| Editable value + its ✎ | `#3f5f78` slate (`<EditValue>`), never green — the same material as "Send back" |
+| Cancel | never a filled button: `<ParentCancel>` — underlined `#6b675c` text, full-width tap target |
+
+A `PixelButton` with `variant="parentOn"` renders as `parentOff` when
+`disabled`, so new parent controls get the rule for free. Parent copy is
+plain and factual — explain the mechanic and stop; no exclamation marks, no
+encouragement (that voice belongs to Haley's side of the app).
+
 ## Project map
 
 ```
