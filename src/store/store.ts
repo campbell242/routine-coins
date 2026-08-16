@@ -44,6 +44,7 @@ import {
   requestPersistentStorage,
   saveApproval,
   saveOccurrence,
+  type PendingAward,
   type Settings,
 } from '../persistence/db';
 
@@ -54,6 +55,7 @@ export type Route =
   | { name: 'me' }
   | { name: 'pin' }
   | { name: 'parent'; view: 'review' | 'settings'; reviewOccId?: string }
+  | { name: 'handoff' }
   | { name: 'award' };
 
 /**
@@ -68,13 +70,8 @@ interface ParentShortcut {
   returnRoute: Route;
 }
 
-export interface AwardInfo {
-  planName: string;
-  amount: number;
-  balanceBefore: number;
-  balanceAfter: number;
-  streak: number;
-}
+/** The celebration payload the Award screen renders. */
+export type AwardInfo = PendingAward;
 
 export interface ToastData {
   id: number;
@@ -93,6 +90,8 @@ export interface AppState {
   timer: TimerState;
   toasts: ToastData[];
   award?: AwardInfo;
+  /** Approved routines whose celebration Haley hasn't released yet. */
+  pendingAwards: PendingAward[];
   parentUnlocked: boolean;
 }
 
@@ -135,6 +134,7 @@ class Store {
     settings: { avatar: DEFAULT_AVATAR, theme: DEFAULT_THEME },
     timer: TIMER_IDLE,
     toasts: [],
+    pendingAwards: [],
     parentUnlocked: false,
   };
 
@@ -161,12 +161,13 @@ class Store {
   async init(): Promise<void> {
     void requestPersistentStorage();
 
-    const [balance, overrides, settings, timer, pinHash, occList] = await Promise.all([
+    const [balance, overrides, settings, timer, pinHash, pendingAwards, occList] = await Promise.all([
       kvGet('balance'),
       kvGet('overrides'),
       kvGet('settings'),
       kvGet('timer'),
       kvGet('pinHash'),
+      kvGet('pendingAwards'),
       loadOccurrences(),
     ]);
 
@@ -192,6 +193,7 @@ class Store {
       overrides: overrides ?? {},
       settings: settings ?? { avatar: DEFAULT_AVATAR, theme: DEFAULT_THEME },
       timer: timerState,
+      pendingAwards: Array.isArray(pendingAwards) ? pendingAwards : [],
       occurrences: sanitizeOccurrences(occList),
       // If the alarm moment was missed while the app was killed, show the
       // expired state immediately on reopen.
@@ -413,23 +415,47 @@ class Store {
       ? planStreak(plan, { ...this.state.occurrences, [approved.id]: approved }, dateKey(new Date(this.state.nowMs)))
       : 0;
 
-    this.set({
-      award: {
+    // The celebration is NOT played here. Approving banks the coins; the
+    // party belongs to Haley, and waits for her tap (see collectAward).
+    // Queued rather than replacing, so approving two routines in one sitting
+    // can't silently swallow one of her moments.
+    const pendingAwards = [
+      ...this.state.pendingAwards.filter((p) => p.occId !== approved.id),
+      {
+        occId: approved.id,
         planName: occ.snapshot.name,
         amount: approved.award ?? 0,
         balanceBefore,
         balanceAfter,
         streak,
       },
-    });
-    // Showing the child-facing award screen leaves the parent area (ends
-    // session) — and it already hands the phone back, so the shortcut's
-    // return route is spent rather than followed.
+    ];
+    this.set({ pendingAwards });
+    void kvSet('pendingAwards', pendingAwards);
+
+    // The handoff screen is child-facing, so this leaves the parent area and
+    // ends the session — and it already hands the phone back, so the
+    // shortcut's return route is spent rather than followed.
     this.takeShortcut();
+    this.navigate({ name: 'handoff' });
+  }
+
+  /**
+   * Haley's tap releases the celebration the parent's approval queued up.
+   * The coins were already hers; this is the moment, and it is hers to open.
+   */
+  collectAward(): void {
+    const [next, ...rest] = this.state.pendingAwards;
+    if (!next) {
+      this.navigate({ name: 'home' });
+      return;
+    }
+    this.set({ award: next, pendingAwards: rest });
+    void kvSet('pendingAwards', rest);
     this.navigate({ name: 'award' });
-    if (streak > 0 && streak % 7 === 0) {
+    if (next.streak > 0 && next.streak % 7 === 0) {
       // Let the award moment's own "Routine complete!" card land first.
-      window.setTimeout(() => this.toast(`★ ${streak} day streak!`, 'Amazing! Keep it going!'), 2600);
+      window.setTimeout(() => this.toast(`★ ${next.streak} day streak!`, 'Amazing! Keep it going!'), 2600);
     }
   }
 

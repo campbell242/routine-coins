@@ -223,6 +223,10 @@ await page.getByText('PARENTS').click();
 for (const k of ['1', '2', '3', '4']) await page.getByText(k, { exact: true }).click();
 await page.waitForTimeout(300);
 await page.getByText(/^Approve & award/).click();
+// Approving banks the coins but does NOT play the celebration — the phone
+// goes back to Haley and she releases it.
+await shot(page, 'handoff-hand-the-phone-back');
+await page.getByText('Tap to see your coins!').click();
 await shot(page, '1m-coin-award');
 await page.getByText('Back to Home').click();
 
