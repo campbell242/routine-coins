@@ -2,7 +2,7 @@
 // counter, +N pop, XP bar with the new segment flashing bright before it
 // settles. Short and non-blocking — one tap back to Home.
 
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { CHILD_NAME, REDEMPTION_THRESHOLD } from '../../config/profile';
 import { fmtCoins } from '../../lib/dates';
 import { playAwardJingle } from '../../lib/audio';
@@ -10,16 +10,44 @@ import { store, useAppState } from '../../store/hooks';
 import { ChildStrips, TimerPill } from '../components/chrome';
 import { CoinCount, PixelButton, XPBar, useTheme } from '../components/core';
 
+// Reward release (spec §2): 8 coins spawn at the big coin — staggered 60ms
+// from 350ms — and arc down INTO the balance counter, shrinking to 0.38, so
+// they read as becoming the number. Spawn offsets fan them out slightly;
+// each coin's flight vector is corrected for its own offset so every one
+// lands on the counter's coin. Last landing ≈ 350+7×60+550 ≈ 1370ms, just
+// ahead of the XP glow at 1400ms.
 const FLYERS = [
-  { size: 22, left: '18%', top: '24%', rot: '-12deg', dx: '30vw', dy: '38vh' },
-  { size: 16, right: '20%', top: '20%', rot: '15deg', dx: '-18vw', dy: '42vh' },
-  { size: 18, left: '26%', bottom: '26%', rot: '8deg', dx: '22vw', dy: '12vh' },
-  { size: 14, right: '24%', bottom: '30%', rot: '-20deg', dx: '-14vw', dy: '16vh' },
+  { size: 20, sx: -16, sy: -10, rot: '-12deg' },
+  { size: 15, sx: 18, sy: -14, rot: '15deg' },
+  { size: 18, sx: -30, sy: 6, rot: '8deg' },
+  { size: 14, sx: 30, sy: 2, rot: '-20deg' },
+  { size: 16, sx: -6, sy: -22, rot: '22deg' },
+  { size: 15, sx: 10, sy: 14, rot: '-6deg' },
+  { size: 18, sx: -22, sy: -2, rot: '4deg' },
+  { size: 14, sx: 24, sy: -8, rot: '-16deg' },
 ] as const;
 
 export function Award() {
   const { award } = useAppState();
   const theme = useTheme();
+
+  // Flight vector from the big coin to the balance counter's coin, measured
+  // once the screen has laid out (t=0 is Haley's tap — screen enter).
+  const bigCoinRef = useRef<HTMLImageElement | null>(null);
+  const counterRef = useRef<HTMLDivElement | null>(null);
+  const [flight, setFlight] = useState<{ dx: number; dy: number } | null>(null);
+
+  useLayoutEffect(() => {
+    const big = bigCoinRef.current;
+    const counterImg = counterRef.current?.querySelector('img');
+    if (!big || !counterImg) return;
+    const b = big.getBoundingClientRect();
+    const c = counterImg.getBoundingClientRect();
+    setFlight({
+      dx: c.left + c.width / 2 - (b.left + b.width / 2),
+      dy: c.top + c.height / 2 - (b.top + b.height / 2),
+    });
+  }, []);
 
   useEffect(() => {
     playAwardJingle();
@@ -79,29 +107,30 @@ export function Award() {
           position: 'relative',
         }}
       >
-        {FLYERS.map((f, i) => (
-          <img
-            key={i}
-            src="assets/coin.png"
-            alt=""
-            className="coin-fly"
-            style={{
-              position: 'absolute',
-              width: f.size,
-              height: f.size,
-              left: 'left' in f ? f.left : undefined,
-              right: 'right' in f ? f.right : undefined,
-              top: 'top' in f ? f.top : undefined,
-              bottom: 'bottom' in f ? f.bottom : undefined,
-              transform: `rotate(${f.rot})`,
-              ['--rot' as string]: f.rot,
-              ['--dx' as string]: f.dx,
-              ['--dy' as string]: f.dy,
-              animationDelay: `${0.35 + i * 0.12}s`,
-            }}
-          />
-        ))}
-        <img src="assets/coin.png" alt="" className="pop-in" style={{ width: 72, height: 72 }} />
+        <span style={{ position: 'relative', display: 'inline-block' }}>
+          {flight &&
+            FLYERS.map((f, i) => (
+              <img
+                key={i}
+                src="assets/coin.png"
+                alt=""
+                className="coin-fly"
+                style={{
+                  position: 'absolute',
+                  width: f.size,
+                  height: f.size,
+                  left: `calc(50% - ${f.size / 2}px + ${f.sx}px)`,
+                  top: `calc(50% - ${f.size / 2}px + ${f.sy}px)`,
+                  ['--rot' as string]: f.rot,
+                  // correct for this coin's spawn offset so it lands ON the counter
+                  ['--dx' as string]: `${flight.dx - f.sx}px`,
+                  ['--dy' as string]: `${flight.dy - f.sy}px`,
+                  animationDelay: `${0.35 + i * 0.06}s`,
+                }}
+              />
+            ))}
+          <img ref={bigCoinRef} src="assets/coin.png" alt="" className="pop-in" style={{ width: 72, height: 72, display: 'block' }} />
+        </span>
         <div className="px pop-in" style={{ fontSize: 64, color: '#b07d00', lineHeight: 1 }}>
           +{award.amount}
         </div>
@@ -116,7 +145,7 @@ export function Award() {
       </div>
 
       <div style={{ padding: '0 18px 8px', flex: 'none' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+        <div ref={counterRef} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
           <CoinCount balance={award.balanceAfter} />
           <span className="px" style={{ marginLeft: 'auto', fontSize: 15, color: theme.accentText }}>
             +{award.amount} ▲
