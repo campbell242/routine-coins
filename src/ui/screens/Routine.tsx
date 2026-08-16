@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { iconSrc } from '../../config/icons';
 import type { ItemConfig } from '../../config/types';
 import {
@@ -167,12 +167,25 @@ function ParentReviewShortcut({ occ }: { occ: Occurrence }) {
 export function RoutineScreen({ planId }: { planId: string }) {
   useAppState(); // re-render on ticks and occurrence changes
   const occ = store.activeOccurrence(planId);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   // Defensive: resolved/missing occurrence (e.g. approved from the parent
   // area, or stale route after data cleanup) → back to Home.
   useEffect(() => {
     if (!occ) store.navigate({ name: 'home' });
   }, [occ]);
+
+  // Asking for review swaps the bottom CTA for the waiting banner and the
+  // "I'm the parent" button, both of which render at the TOP of the list. On
+  // a long checklist she taps from the bottom of the scroll and never sees
+  // what replaced it — so ride back up with her. Smooth, so the movement
+  // itself shows her the screen changed.
+  useEffect(() => {
+    if (occ?.status === 'review_requested') {
+      scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [occ?.status]);
+
   if (!occ) return null;
 
   const required = occ.snapshot.items.filter((i) => i.kind === 'required');
@@ -206,7 +219,7 @@ export function RoutineScreen({ planId }: { planId: string }) {
           {ready || waiting ? `All ${reqTotal} required done!` : `${reqDone} of ${reqTotal} required done`}
         </span>
       </div>
-      <div className="screen-scroll">
+      <div className="screen-scroll" ref={scrollRef}>
         <div style={{ flex: 1, padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 10 }}>
           <StatusBanner occ={occ} />
           {waiting && <ParentReviewShortcut occ={occ} />}

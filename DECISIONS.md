@@ -80,8 +80,24 @@ design README and mockup annotations.
   Settings, stored as SHA-256 hash). Design showed no PIN-change UI; a
   design-consistent "Parent PIN ···· ✎" row was added.
 - Session ends on LOCK, 3 minutes of inactivity, or leaving the parent area.
-  Approving shows the child-facing award screen, which *is* leaving the
+  Approving shows the child-facing handoff screen, which *is* leaving the
   parent area — the session ends there by design.
+- **The celebration is released by the child, never by the parent.**
+  Approving used to fire the jingle, coin burst and XP animation on the
+  parent's tap, with the phone still in their hand; the reward moment
+  belonged to the wrong person. Approval now banks the coins and shows a
+  handoff screen ("… approved! — hand the phone back"), and a gold
+  "Tap to see your coins!" button under Haley's thumb plays it.
+  **The coins still land at the parent's tap**, in the same single
+  transaction as resolving the occurrence. Deferring the award itself was
+  the obvious alternative and is a trap: the occurrence would stay
+  unresolved until she tapped, and an unresolved occurrence blocks that
+  plan's next occurrence — a forgotten tap would quietly stop tomorrow's
+  routine and freeze the streak. A missed *celebration* costs nothing.
+  Pending celebrations persist (the verify-last-night flow can approve while
+  she is at school) and are a queue, not one slot, so approving two routines
+  in one morning can't swallow one of her moments. Home carries the same
+  gold button until she collects.
 - **Extra confirmation taps**: redemption and manual subtraction (as
   specified) **plus "Close for today"** — it irreversibly ends the day's
   occurrence, matching the acceptance list's "destructive actions require the
@@ -103,7 +119,7 @@ design README and mockup annotations.
   queue/settings landing. The shortcut also records a **return route**: LOCK,
   send-back, and ✕-on-the-PIN-pad hand the phone back to Haley's routine
   screen rather than Home, so she sees the result (approval instead shows the
-  award screen, which already hands the phone back). Entering through the
+  handoff screen, which already hands the phone back). Entering through the
   PARENTS chip is unchanged in every respect. The shortcut is deliberately
   iron — the parent area's own material, never green or gold — so it never
   reads as one of Haley's actions.
@@ -116,7 +132,7 @@ design README and mockup annotations.
 - The five status banners from mockup 1f are implemented; the routine screen
   shows the **waiting** and **sent-back** banners contextually (mockups
   1d/1e show chip-only for in-progress/ready, so no banner in those states;
-  approved goes straight to the award screen).
+  approved goes to the handoff screen, then the award screen on her tap).
 - Checklist row hints stay visible when checked (mockup 1d shows checked rows
   with hints; 1e's hint-less checked rows read as sample-data variation).
   Checked rows drop to opacity .62 per the handoff.

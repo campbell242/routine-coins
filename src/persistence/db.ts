@@ -13,12 +13,30 @@ export interface Settings {
   theme: string;
 }
 
+/**
+ * A celebration the child has not collected yet. Approval banks the coins
+ * immediately (see saveApproval); this is only the party waiting to be
+ * released by HER tap, not the parent's. Persisted because a parent may
+ * approve last night's routine while she is at school — the moment has to
+ * survive the app closing.
+ */
+export interface PendingAward {
+  occId: string;
+  planName: string;
+  amount: number;
+  balanceBefore: number;
+  balanceAfter: number;
+  streak: number;
+}
+
 interface KvShape {
   balance: number;
   overrides: Record<string, PlanOverride>;
   settings: Settings;
   timer: TimerState;
   pinHash: string;
+  /** Oldest first — one entry per approved-but-uncollected routine. */
+  pendingAwards: PendingAward[];
 }
 
 interface HaleyDB extends DBSchema {
