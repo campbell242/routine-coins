@@ -8,6 +8,7 @@ import { DEFAULT_THEME } from '../config/themes';
 import type { PlanOverride, PlanResolved } from '../config/types';
 import {
   ackSentBack,
+  allRequiredDone,
   approve,
   closeForToday,
   excuseNight,
@@ -36,7 +37,7 @@ import {
   type TimerState,
 } from '../engine/timer';
 import { dateKey } from '../lib/dates';
-import { playAlarm } from '../lib/audio';
+import { playAlarm, playCheckBlip, playLastRequired } from '../lib/audio';
 import { setWakeLockWanted } from '../lib/wakeLock';
 import {
   hashPin,
@@ -336,9 +337,25 @@ class Store {
   }
 
   childToggleItem(occId: string, itemId: string): void {
+    const before = this.state.occurrences[occId];
     this.mutateOccurrence(occId, (occ) => toggleItem(occ, itemId, 'child', this.state.nowMs));
+    const after = this.state.occurrences[occId];
+    if (!before || !after || after === before) return; // rejected/no-op toggle
+
+    // Sound is HERS: only a successful check makes a cue; unchecking is
+    // silent (spec). The run's position derives from the occurrence's checked
+    // count, so it resets with the routine and walks back down on unchecks.
+    const nowChecked = after.checks[itemId]?.checked === true;
+    if (!nowChecked) return;
+    if (allRequiredDone(after) && !allRequiredDone(before)) {
+      playLastRequired(); // G5 → C6: "that's the set"
+    } else {
+      const count = Object.values(after.checks).filter((c) => c.checked).length;
+      playCheckBlip(count - 1);
+    }
   }
 
+  // Parent actions are silent, end to end (spec).
   parentToggleItem(occId: string, itemId: string): void {
     this.mutateOccurrence(occId, (occ) => toggleItem(occ, itemId, 'parent', this.state.nowMs));
   }

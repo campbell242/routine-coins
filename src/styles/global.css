@@ -294,6 +294,36 @@ input {
 .pop-in {
   animation: pop-in 0.45s ease-out;
 }
+
+/* ===== Check-off "block place" (spec §1) — 380ms total ===== */
+/* 0ms: the slot presses — chunky steps(3), not smooth. The press is the
+   part she feels. Reversed beats on uncheck run at 60% duration. */
+@keyframes slot-press {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.86); }
+  100% { transform: scale(1); }
+}
+.bc-press {
+  animation: slot-press 120ms steps(3);
+}
+.bc-press-r {
+  animation: slot-press 72ms steps(3);
+}
+/* 90ms: the ✔ pops — the pop-in keyframes over 180ms; `both` holds the
+   start scale through the delay. Uncheck never pops. */
+.tick-pop {
+  animation: pop-in 180ms ease-out 90ms both;
+}
+/* 200ms: the routine card's next progress pip flips green — an inset
+   overlay scaling from the left (the pip's border never distorts). */
+@keyframes pip-flip {
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+.pip-flip {
+  transform-origin: left;
+  animation: pip-flip 160ms ease-out both;
+}
 /* New XP segment: a bright overlay fades out, leaving the normal green fill
    underneath — the segment settles into the bar, never disappears. The glow
    waits until the LAST coin lands in the counter (~1400ms, spec §2), then
