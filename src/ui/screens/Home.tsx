@@ -12,6 +12,7 @@ import { earliestUnlock, planStateNow, type PlanToday } from '../../engine/sched
 import { displayStreak } from '../../engine/streaks';
 import { dateKey, fmtClock, fmtCoins, fmtDateLong, fmtHM, fromDateKey } from '../../lib/dates';
 import { store, useAppState } from '../../store/hooks';
+import { isStreakMilestone } from '../../store/store';
 import { ChildStrips, TabBar, TimerPill } from '../components/chrome';
 import { Chip, CoinCount, PixelButton, Strip, XPBar, useTheme, type ChipKind } from '../components/core';
 import type { PlanResolved } from '../../config/types';
@@ -22,6 +23,7 @@ import type { PlanResolved } from '../../config/types';
 // routine screen, where the pips aren't visible — so the flip plays the
 // first time she sees the card again, once, never on plain revisits).
 const seenPips = new Map<string, string>(); // planId → '0101…' done-mask
+let lastShownStreak: number | undefined; // streak count Home last rendered
 
 function cardChip(state: PlanToday): { kind: ChipKind; label: string } | undefined {
   if (state.kind === 'due') return undefined; // not started yet — no status chip
@@ -169,6 +171,16 @@ export function Home() {
 
   const todayKey = dateKey(now);
   const streak = displayStreak(plans, state.occurrences, todayKey);
+
+  // Streak extension (spec §3): the ★ pulses once when the count is higher
+  // than this session last showed; milestones add the rising stars + gold
+  // border flash. A broken streak animates nothing (the chip is absent).
+  const prevStreak = lastShownStreak;
+  useEffect(() => {
+    lastShownStreak = streak;
+  }, [streak]);
+  const streakGrew = prevStreak !== undefined && streak > prevStreak;
+  const streakMilestoneNow = streakGrew && isStreakMilestone(streak);
   const unlock = earliestUnlock(plans, state.occurrences, now);
   let unlockText: string | undefined;
   if (unlock) {
@@ -238,7 +250,8 @@ export function Home() {
               }}
               onClick={() => store.collectAward()}
             >
-              <img src="assets/coin.png" alt="" style={{ width: 24, height: 24 }} />
+              {/* idle: one steps(8) spin every 6s — it waits, it doesn't beg */}
+              <img src="assets/coin.png" alt="" className="coin-idle" style={{ width: 24, height: 24 }} />
               {state.pendingAwards.length === 1
                 ? 'Tap to see your coins!'
                 : `Tap to see your coins! (${state.pendingAwards.length})`}
@@ -299,11 +312,36 @@ export function Home() {
                 padding: '10px 12px',
                 background: '#efe9d8',
                 border: '3px solid #cfc8b2',
+                position: 'relative',
               }}
             >
+              {/* Milestone: gold border as a fading overlay + three rising stars */}
+              {streakMilestoneNow && (
+                <>
+                  <span className="chip-gold-flash" />
+                  {[0, 1, 2].map((i) => (
+                    <span
+                      key={i}
+                      className="px star-rise"
+                      style={{
+                        position: 'absolute',
+                        top: -6,
+                        left: `${16 + i * 22}px`,
+                        fontSize: 10,
+                        color: '#f8c53a',
+                        pointerEvents: 'none',
+                        animationDelay: `${i * 80}ms`,
+                      }}
+                    >
+                      ★
+                    </span>
+                  ))}
+                </>
+              )}
               {streak > 0 && (
                 <span className="px" style={{ fontSize: 16, color: '#8a8578' }}>
-                  ★ {streak} day streak
+                  <span className={streakGrew ? 'star-pulse' : undefined}>★</span>{' '}
+                  {streak} day streak
                 </span>
               )}
               <span style={{ marginLeft: 'auto', fontSize: 12, color: '#8a8578', fontWeight: 700 }}>

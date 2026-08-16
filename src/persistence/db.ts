@@ -11,6 +11,10 @@ import type { TimerState } from '../engine/timer';
 export interface Settings {
   avatar: string;
   theme: string;
+  /** Parent toggle: all sound cues. Defaults on; absent in older installs. */
+  sound?: boolean;
+  /** Parent toggle: the timer alarm alone, so it can stay audible with everything else off. */
+  alarmSound?: boolean;
 }
 
 /**

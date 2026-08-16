@@ -55,9 +55,11 @@ export function setWakeLockWanted(on: boolean): void {
   if (!on) void release();
 }
 
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible' && wanted) {
-    sentinel = undefined; // platform dropped it while hidden
-    void acquire();
-  }
-});
+if (typeof document !== 'undefined') {
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && wanted) {
+      sentinel = undefined; // platform dropped it while hidden
+      void acquire();
+    }
+  });
+}

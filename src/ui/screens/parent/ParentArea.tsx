@@ -468,6 +468,8 @@ function SettingsView() {
   const balance = state.balance;
   const toGo = Math.max(0, REDEMPTION_THRESHOLD - balance);
   const canRedeem = balance >= REDEMPTION_THRESHOLD;
+  const soundOn = state.settings.sound !== false;
+  const alarmOn = state.settings.alarmSound !== false;
   const baseShared = plans[0]?.baseAward ?? 40;
 
   const rowStyle = {
@@ -541,6 +543,42 @@ function SettingsView() {
               <button onClick={() => setModal({ kind: 'excuse' })} style={editBtnStyle}>
                 <span className="px" style={{ color: '#3d7a22' }}>Excuse a night ✎</span>
               </button>
+            </div>
+          </div>
+
+          <div style={{ background: '#fffdf6', border: '3px solid #2b2b24', padding: 12 }}>
+            <div className="px" style={{ fontSize: 16, color: '#8a8578', marginBottom: 8 }}>
+              SOUND
+            </div>
+            <div style={rowStyle}>
+              All sounds
+              <span style={{ marginLeft: 'auto' }}>
+                <PixelButton
+                  small
+                  variant={soundOn ? undefined : 'stone'}
+                  style={{ fontSize: 14, padding: '8px 14px', width: 'auto', ...(soundOn ? { background: '#57a636' } : {}) }}
+                  onClick={() => store.setSoundPrefs({ sound: !soundOn })}
+                >
+                  {soundOn ? 'ON' : 'OFF'}
+                </PixelButton>
+              </span>
+            </div>
+            <div style={{ ...rowStyle, borderBottom: 'none' }}>
+              Timer alarm
+              <span style={{ marginLeft: 'auto' }}>
+                <PixelButton
+                  small
+                  variant={alarmOn ? undefined : 'stone'}
+                  style={{ fontSize: 14, padding: '8px 14px', width: 'auto', ...(alarmOn ? { background: '#57a636' } : {}) }}
+                  onClick={() => store.setSoundPrefs({ alarmSound: !alarmOn })}
+                >
+                  {alarmOn ? 'ON' : 'OFF'}
+                </PixelButton>
+              </span>
+            </div>
+            <div style={{ fontSize: 11, color: '#8a8578', fontWeight: 600, marginTop: 6 }}>
+              The alarm has its own switch so the timer can stay audible with everything else off.
+              Sounds automatically play quieter during and after the nighttime routine.
             </div>
           </div>
 

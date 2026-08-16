@@ -167,10 +167,15 @@ function ChecklistRow({
   );
 }
 
-function StatusBanner({ occ }: { occ: Occurrence }) {
+function StatusBanner({ occ, justAsked }: { occ: Occurrence; justAsked: boolean }) {
   if (occ.status === 'review_requested') {
     return (
-      <div style={{ background: '#efefec', border: '3px solid #9a9a9a', padding: '12px 14px' }}>
+      // Slides down 8px and fades in only on the live ask; a revisit renders
+      // it still. Then the screen holds still (spec §4).
+      <div
+        className={justAsked ? 'banner-in' : undefined}
+        style={{ background: '#efefec', border: '3px solid #9a9a9a', padding: '12px 14px' }}
+      >
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div className="px" style={{ fontSize: 18, color: '#6b6b6b' }}>
             Waiting for a parent…
@@ -189,7 +194,9 @@ function StatusBanner({ occ }: { occ: Occurrence }) {
   }
   if (occ.status === 'sent_back') {
     return (
-      <div style={{ background: '#e8eef4', border: '3px solid #6d89a3', padding: '12px 14px' }}>
+      // Slides down and fades in, nothing else, no sound — the quiet is the
+      // point (spec §4).
+      <div className="banner-in" style={{ background: '#e8eef4', border: '3px solid #6d89a3', padding: '12px 14px' }}>
         <div className="px" style={{ fontSize: 18, color: '#42607c' }}>
           Sent back
         </div>
@@ -253,6 +260,10 @@ export function RoutineScreen({ planId }: { planId: string }) {
     if (!occ) store.navigate({ name: 'home' });
   }, [occ]);
 
+  // True only for the live ask on this mount — revisits render the waiting
+  // state still.
+  const [justAsked, setJustAsked] = useState(false);
+
   // Asking for review swaps the bottom CTA for the waiting banner and the
   // "I'm the parent" button, both of which render at the TOP of the list. On
   // a long checklist she taps from the bottom of the scroll and never sees
@@ -275,7 +286,11 @@ export function RoutineScreen({ planId }: { planId: string }) {
 
   let chip: JSX.Element;
   if (waiting) {
-    chip = <Chip kind="waiting">WAITING</Chip>;
+    chip = (
+      <span className={justAsked ? 'chip-fade-in' : undefined} style={{ display: 'inline-flex' }}>
+        <Chip kind="waiting">WAITING</Chip>
+      </span>
+    );
   } else if (occ.status === 'sent_back') {
     chip = <Chip kind="sentback">SENT BACK</Chip>;
   } else if (ready) {
@@ -299,7 +314,7 @@ export function RoutineScreen({ planId }: { planId: string }) {
       </div>
       <div className="screen-scroll" ref={scrollRef}>
         <div style={{ flex: 1, padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <StatusBanner occ={occ} />
+          <StatusBanner occ={occ} justAsked={justAsked} />
           {waiting && <ParentReviewShortcut occ={occ} />}
           {required.map((item) => (
             <ChecklistRow key={item.id} occ={occ} item={item} showCoin={false} />
@@ -322,7 +337,10 @@ export function RoutineScreen({ planId }: { planId: string }) {
                   justifyContent: 'center',
                   gap: 10,
                 }}
-                onClick={() => store.childRequestReview(occ.id)}
+                onClick={() => {
+                  setJustAsked(true);
+                  store.childRequestReview(occ.id);
+                }}
               >
                 <img src="assets/coin.png" alt="" style={{ width: 24, height: 24 }} />
                 Ask a parent to check!

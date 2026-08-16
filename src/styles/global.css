@@ -344,6 +344,136 @@ input {
   animation: xp-settle 1.6s ease-out 1.4s forwards;
 }
 
+/* ===== Streak (spec §3) ===== */
+/* Daily extension: the ★ scales 1 → 1.3 → 1 in steps(2), 300ms. A streak is
+   a fact, not a payday. */
+@keyframes star-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+.star-pulse {
+  display: inline-block;
+  animation: star-pulse 300ms steps(2);
+}
+/* Milestones: three 6px pixel stars pop above the chip, rise 18px and fade
+   over 700ms, staggered 80ms (delays inline). */
+@keyframes star-rise {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-18px); opacity: 0; }
+}
+.star-rise {
+  animation: star-rise 700ms ease-out both;
+}
+/* The chip border flashes gold as a FADING OVERLAY — never an animated
+   border-color. */
+@keyframes overlay-fade {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+.chip-gold-flash {
+  position: absolute;
+  inset: -3px;
+  border: 3px solid #f8c53a;
+  pointer-events: none;
+  animation: overlay-fade 700ms ease-out both;
+}
+
+/* ===== Small moments (spec §4) ===== */
+/* Uncollected reward button: one steps(8) coin rotation every 6 seconds.
+   It waits; it doesn't beg. */
+@keyframes coin-idle {
+  0% { transform: rotate(0deg); }
+  12% { transform: rotate(360deg); }
+  100% { transform: rotate(360deg); }
+}
+.coin-idle {
+  animation: coin-idle 6s steps(8) infinite;
+}
+/* Banner arriving (waiting after the ask; sent back): slides down 8px and
+   fades in. */
+@keyframes banner-in {
+  0% { transform: translateY(-8px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+.banner-in {
+  animation: banner-in 240ms ease-out both;
+}
+/* Chip cross-fade (READY → WAITING), 200ms. */
+.chip-fade-in {
+  animation: overlay-fade 200ms ease-out reverse both;
+}
+/* Theme change: the header trim strip cross-fades, 200ms. */
+.strip-fade-in {
+  animation: overlay-fade 200ms ease-out reverse both;
+}
+/* Timer start: the bar snaps to full over 200ms, so starting reads as
+   "loaded". */
+@keyframes bar-snap {
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+.bar-snap {
+  transform-origin: left;
+  animation: bar-snap 200ms ease-out;
+}
+/* Timer pause: bar and digits breathe between opacity 1 and .55 on a 2s
+   loop. Resume just stops the breathing. */
+@keyframes breathe {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+.breathe {
+  animation: breathe 2s ease-in-out infinite;
+}
+/* Timer last 10 seconds: digits pulse scale(1.04) once a second. No colour
+   change, no ticking — it's a bedroom. */
+@keyframes digit-pulse {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+.digit-pulse {
+  animation: digit-pulse 1s ease-in-out infinite;
+}
+
+/* ===== prefers-reduced-motion (spec global rules) =====
+   Keep the opacity fades, drop every transform and the coin arc. The award
+   still reads: number, counter, XP bar. */
+@media (prefers-reduced-motion: reduce) {
+  .coin-fly {
+    animation: none; /* base opacity 0 — the coins simply don't fly */
+  }
+  .pop-in,
+  .tick-pop,
+  .bc-press,
+  .bc-press-r,
+  .pip-flip,
+  .star-pulse,
+  .coin-idle,
+  .bar-snap,
+  .digit-pulse,
+  .pin-shake {
+    animation: none;
+  }
+  /* transform-driven celebration extras simply don't appear */
+  .star-rise,
+  .chip-gold-flash {
+    animation: none;
+    opacity: 0;
+  }
+  .toast {
+    animation: toast-in-fade 0.25s ease-out; /* fade only, no slide */
+  }
+  .banner-in {
+    animation: overlay-fade 240ms ease-out reverse both; /* fade only */
+  }
+}
+@keyframes toast-in-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 /* ===== Modal ===== */
 .modal-scrim {
   position: absolute;

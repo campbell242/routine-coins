@@ -1,11 +1,20 @@
 import { AVATARS } from '../../config/app';
 import { THEMES } from '../../config/themes';
+import { useEffect, useState } from 'react';
 import { store, useAppState } from '../../store/hooks';
 import { ChildStrips, SubHeader, TabBar, TimerPill } from '../components/chrome';
 
 export function Me() {
   const { settings } = useAppState();
   const selectedAvatar = AVATARS.find((a) => a.id === settings.avatar);
+
+  // The newly selected slot pops in on a live tap (spec §4); mount is still.
+  const [picked, setPicked] = useState<string | null>(null);
+  useEffect(() => {
+    if (!picked) return;
+    const h = window.setTimeout(() => setPicked(null), 500);
+    return () => window.clearTimeout(h);
+  }, [picked]);
 
   return (
     <div className="screen" style={{ background: '#f3eee1', color: '#2b2b24' }}>
@@ -24,7 +33,10 @@ export function Me() {
                 return (
                   <button
                     key={a.id}
-                    onClick={() => store.setAvatar(a.id)}
+                    onClick={() => {
+                      setPicked('av:' + a.id);
+                      store.setAvatar(a.id);
+                    }}
                     aria-label={a.name}
                     aria-pressed={selected}
                     style={
@@ -49,7 +61,12 @@ export function Me() {
                           }
                     }
                   >
-                    <img src={a.src} alt={a.name} style={{ width: 48, height: 48 }} />
+                    <img
+                      src={a.src}
+                      alt={a.name}
+                      className={picked === 'av:' + a.id ? 'pop-in' : undefined}
+                      style={{ width: 48, height: 48 }}
+                    />
                   </button>
                 );
               })}
@@ -70,7 +87,10 @@ export function Me() {
                 return (
                   <button
                     key={t.id}
-                    onClick={() => store.setTheme(t.id)}
+                    onClick={() => {
+                      setPicked('th:' + t.id);
+                      store.setTheme(t.id);
+                    }}
                     aria-pressed={selected}
                     style={{
                       display: 'flex',
@@ -84,6 +104,7 @@ export function Me() {
                     }}
                   >
                     <div
+                      className={picked === 'th:' + t.id ? 'pop-in' : undefined}
                       style={{
                         width: 40,
                         height: 26,

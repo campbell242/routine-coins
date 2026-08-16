@@ -319,6 +319,14 @@ describe('locked nighttime routine math (344/night)', () => {
   });
 });
 
+describe('streak milestones (7, 14, 30, then every 30)', () => {
+  it('matches the spec set and never the daily extension', async () => {
+    const { isStreakMilestone } = await import('../../store/store');
+    expect([1, 2, 6, 8, 13, 15, 29, 31, 45].some(isStreakMilestone)).toBe(false);
+    expect([7, 14, 30, 60, 90, 120].every(isStreakMilestone)).toBe(true);
+  });
+});
+
 describe('task icons', () => {
   it('resolves known names and degrades gracefully for unknown/missing ones', async () => {
     const { iconSrc, TASK_ICONS } = await import('../../config/icons');

@@ -221,6 +221,33 @@ design README and mockup annotations.
   coins; the streak SKIPS them exactly like a non-scheduled day. Already
   resolved dates can't be excused (button disabled, "already settled").
 
+## Motion & sound (design v5, MOTION_AND_SOUND.md)
+
+Built in three phases: reward release (8 coins into the counter, XP glow at
+1400ms, C6 on the arpeggio), check-off (380ms block place + pentatonic run,
+G5→C6 on the last required, silent unchecks), then streak/small moments/
+remaining cues/toggles/reduced-motion. Verified by instrumenting WebAudio —
+frequencies and gains logged in the built app match the cue table.
+
+Interpretations the spec left open (also reported back to design):
+- **Pip flip**: the spec's 200ms beat references the Home card's pip row,
+  which isn't on screen during check-off — newly-green pips flip (80ms
+  stagger) the first time the card is next seen, once, via a per-pip mask.
+- **Auto-quiet = half gain, not mute**: the whole routine happens inside
+  the nighttime window (opens 19:00), so muting would silence the app's
+  core sounds every night. All cues ×0.5 from windowStart (override-
+  resolved, never hardcoded) to midnight; the alarm keeps full gain.
+- **Preset cross-fade on timer start**: skipped — it conflicts with the
+  spec's own "no animation may delay a screen change / screen changes are
+  instant" rules (starting swaps the whole screen). The bar snap remains.
+- **Not commissioned by any phase** (spec §2 rows left unbuilt, flagged):
+  "+N rolls from 0", the counter coin's per-landing scale reaction, and
+  the 1600ms "Great job" fade-up.
+- Sound toggles live in parent settings (SOUND card): All sounds + a
+  separate Timer alarm switch; both persisted, parent toggles are silent.
+- Live-tap-only rule: nothing animates on mount or plain revisits (except
+  the sent-back banner's slide-in, which the spec specifies as arriving).
+
 ## Review hardening
 
 An adversarial multi-agent review (engine correctness, UX flows, pixel

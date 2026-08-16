@@ -2,12 +2,12 @@
 // toasts, and modals.
 
 import type { ReactNode } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { fmtClock, fmtCountdown } from '../../lib/dates';
 import { remainingMs } from '../../engine/timer';
 import { primeAudio } from '../../lib/audio';
 import { store, useAppState } from '../../store/hooks';
-import { PixelButton, Strip, useTheme } from './core';
+import { PixelButton, useTheme } from './core';
 
 export type Tab = 'home' | 'timer' | 'me';
 
@@ -234,13 +234,40 @@ export function ConfirmModal({
   );
 }
 
-/** Themed header strips at the top of child screens. */
+/**
+ * Themed header strips at the top of child screens. On a live theme change
+ * (Me screen) the new trim cross-fades over the old, 200ms (spec §4);
+ * plain mounts render instantly.
+ */
 export function ChildStrips({ withUnder = false }: { withUnder?: boolean }) {
   const theme = useTheme();
+  const prevRef = useRef(theme);
+  const [fadeFrom, setFadeFrom] = useState<typeof theme | null>(null);
+  useEffect(() => {
+    if (prevRef.current.id !== theme.id) {
+      setFadeFrom(prevRef.current);
+      prevRef.current = theme;
+      const h = window.setTimeout(() => setFadeFrom(null), 220);
+      return () => window.clearTimeout(h);
+    }
+  }, [theme]);
+
+  const strip = (cur: { image?: string; color?: string }, old: { image?: string; color?: string } | null, height: number) => (
+    <div style={{ position: 'relative', height, flex: 'none' }}>
+      <div style={{ position: 'absolute', inset: 0, background: (old ?? cur).image ? `url('${(old ?? cur).image}')` : (old ?? cur).color, backgroundSize: (old ?? cur).image ? '16px' : undefined }} />
+      {old && (
+        <div
+          className="strip-fade-in"
+          style={{ position: 'absolute', inset: 0, background: cur.image ? `url('${cur.image}')` : cur.color, backgroundSize: cur.image ? '16px' : undefined }}
+        />
+      )}
+    </div>
+  );
+
   return (
     <>
-      <Strip style={theme.strip} height={12} />
-      {withUnder && <Strip style={theme.stripUnder} height={8} />}
+      {strip(theme.strip, fadeFrom ? fadeFrom.strip : null, 12)}
+      {withUnder && strip(theme.stripUnder, fadeFrom ? fadeFrom.stripUnder : null, 8)}
     </>
   );
 }
