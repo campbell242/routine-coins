@@ -6,7 +6,9 @@ import {
   allRequiredDone,
   approve,
   closeForToday,
+  excuseNight,
   isReadyForReview,
+  isResolved,
   occurrenceId,
   requestReview,
   sendBack,
@@ -253,12 +255,78 @@ describe('streaks (schedule-aware, keyed to start date)', () => {
   });
 });
 
+describe('excused nights (parent streak protection)', () => {
+  it('an excused night is resolved, pays nothing, and clears blocking', () => {
+    const tue = new Date(2026, 7, 11, 20, 30);
+    const wed = new Date(2026, 7, 12, 20, 30);
+    const occs: OccurrenceMap = {};
+    const occ = startOccurrence(morning, '2026-08-11', tue.getTime());
+    occs[occ.id] = occ;
+    expect(canStartNow(morning, occs, wed)).toBe(false); // blocked by Tuesday
+
+    const excused = excuseNight(occ, wed.getTime());
+    expect(excused.status).toBe('excused');
+    expect(isResolved(excused)).toBe(true);
+    expect(excused.award).toBeUndefined(); // no coins
+    occs[excused.id] = excused;
+    expect(canStartNow(morning, occs, wed)).toBe(true); // unblocked
+    expect(() => excuseNight(excused, 1)).toThrow(TransitionError); // already resolved
+  });
+
+  it('the streak skips an excused day like a weekend, while a missed day still breaks', () => {
+    const occs: OccurrenceMap = {};
+    // Mon-Wed approved, Thu excused (retroactively created, never started), Fri approved
+    for (const dk of ['2026-08-03', '2026-08-04', '2026-08-05', '2026-08-07']) {
+      const occ = approvedOcc(morning, dk);
+      occs[occ.id] = occ;
+    }
+    occs[occurrenceId(morning.id, '2026-08-06')] = excuseNight(
+      startOccurrence(morning, '2026-08-06', T0),
+      T0,
+    );
+    // Saturday Aug 8: Mon+Tue+Wed+Fri count, Thursday skipped → 4
+    expect(planStreak(morning, occs, '2026-08-08')).toBe(4);
+
+    // without the excuse, Thursday missing breaks the chain → only Friday counts
+    delete occs[occurrenceId(morning.id, '2026-08-06')];
+    expect(planStreak(morning, occs, '2026-08-08')).toBe(1);
+  });
+});
+
+describe('locked nighttime routine math (344/night)', () => {
+  it('base 204 + sleep 100 + Stormy 20 + lunch 20 = 344; ×5 = one redemption', async () => {
+    const { nighttimeRoutine } = await import('../../config/plans');
+    const plan = resolvePlan(nighttimeRoutine, undefined);
+    expect(plan.windowStart).toBe('19:00');
+    expect(plan.baseAward).toBe(204);
+
+    let occ = startOccurrence(plan, '2026-08-16', T0);
+    for (const item of plan.items.filter((i) => i.kind === 'required')) {
+      occ = toggleItem(occ, item.id, 'child', T0);
+    }
+    expect(isReadyForReview(occ)).toBe(true);
+    expect(suggestedAward(occ)).toBe(204); // required only
+
+    occ = toggleItem(occ, 'n-stormy', 'child', T0);
+    occ = toggleItem(occ, 'n-lunch', 'child', T0);
+    occ = requestReview(occ, T0);
+    occ = toggleItem(occ, 'n-sleep', 'parent', T0 + 1); // verified next morning
+    expect(suggestedAward(occ)).toBe(344);
+    expect(344 * 5).toBe(1720); // five perfect nights = exactly one redemption
+
+    const { morningRoutine } = await import('../../config/plans');
+    expect(morningRoutine.enabled).toBe(false);
+  });
+});
+
 describe('task icons', () => {
   it('resolves known names and degrades gracefully for unknown/missing ones', async () => {
     const { iconSrc, TASK_ICONS } = await import('../../config/icons');
-    expect(Object.keys(TASK_ICONS)).toHaveLength(37);
+    expect(Object.keys(TASK_ICONS)).toHaveLength(39);
     expect(iconSrc('toothbrush')).toBe('assets/icons/toothbrush.png');
     expect(iconSrc('lantern')).toBe('assets/icons/lantern.png');
+    expect(iconSrc('rat')).toBe('assets/icons/rat.png');
+    expect(iconSrc('phone')).toBe('assets/icons/phone.png');
     expect(iconSrc('creeper-tnt')).toBeUndefined(); // invented name → no icon
     expect(iconSrc(undefined)).toBeUndefined();
     expect(iconSrc('')).toBeUndefined();

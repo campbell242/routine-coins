@@ -10,7 +10,9 @@ import {
   ackSentBack,
   approve,
   closeForToday,
+  excuseNight,
   isResolved,
+  occurrenceId,
   requestReview,
   sendBack,
   startOccurrence,
@@ -471,6 +473,25 @@ class Store {
     this.mutateOccurrence(occId, (occ) => closeForToday(occ, this.state.nowMs));
     // Stay in the parent area — there may be more to review or settings to visit.
     this.navigate({ name: 'parent', view: this.reviewQueue().length > 0 ? 'review' : 'settings' });
+  }
+
+  /**
+   * Excuse a night (sleepover, travel…): the streak skips that date; no
+   * coins. Works retroactively — if nobody opened the app that night, an
+   * already-excused occurrence is created for the date. No-op if the date
+   * was already resolved.
+   */
+  parentExcuseNight(planId: string, dk: string): void {
+    const existing = this.state.occurrences[occurrenceId(planId, dk)];
+    if (existing) {
+      if (isResolved(existing)) return; // already resolved — nothing to excuse
+      this.mutateOccurrence(existing.id, (occ) => excuseNight(occ, this.state.nowMs));
+      return;
+    }
+    const plan = this.resolvedPlan(planId);
+    if (!plan) return;
+    const occ = excuseNight(startOccurrence(plan, dk, this.state.nowMs), this.state.nowMs);
+    this.putOccurrence(occ);
   }
 
   parentAdjustBalance(delta: number): void {

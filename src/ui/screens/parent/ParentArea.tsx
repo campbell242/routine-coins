@@ -10,11 +10,13 @@ import { CHILD_NAME, REDEMPTION_THRESHOLD } from '../../../config/profile';
 import type { PlanResolved, Weekday } from '../../../config/types';
 import {
   isChecked,
+  isResolved,
+  occurrenceId,
   parentVerifyItems,
   suggestedAward,
   type Occurrence,
 } from '../../../engine/machine';
-import { dateKey, fmtCoins, fmtDateShort, fmtHM, fmtTimeOfDay, fromDateKey } from '../../../lib/dates';
+import { addDays, dateKey, fmtCoins, fmtDateShort, fmtHM, fmtTimeOfDay, fromDateKey } from '../../../lib/dates';
 import { store, useAppState } from '../../../store/hooks';
 import { ConfirmModal, Modal } from '../../components/chrome';
 import { GreenButton, PixelButton, SlotCheck } from '../../components/core';
@@ -458,6 +460,7 @@ function SettingsView() {
     | { kind: 'redeem' }
     | { kind: 'confirmRedeem'; amount: number }
     | { kind: 'pin' }
+    | { kind: 'excuse' }
   >({ kind: 'none' });
   const [field1, setField1] = useState('');
   const [field2, setField2] = useState('');
@@ -527,6 +530,18 @@ function SettingsView() {
                 </button>
               </div>
             ))}
+          </div>
+
+          <div style={{ background: '#fffdf6', border: '3px solid #2b2b24', padding: 12 }}>
+            <div className="px" style={{ fontSize: 16, color: '#8a8578', marginBottom: 8 }}>
+              STREAK
+            </div>
+            <div style={{ ...rowStyle, borderBottom: 'none' }}>
+              Sleepover or special night?
+              <button onClick={() => setModal({ kind: 'excuse' })} style={editBtnStyle}>
+                <span className="px" style={{ color: '#3d7a22' }}>Excuse a night ✎</span>
+              </button>
+            </div>
           </div>
 
           <div style={{ background: '#fffdf6', border: '3px solid #2b2b24', padding: 12 }}>
@@ -804,6 +819,56 @@ function SettingsView() {
           onCancel={() => setModal({ kind: 'none' })}
         />
       )}
+
+      {modal.kind === 'excuse' &&
+        (() => {
+          const now = new Date(state.nowMs);
+          const nights = [
+            { label: 'Tonight', dk: dateKey(now), date: now },
+            { label: 'Last night', dk: dateKey(addDays(now, -1)), date: addDays(now, -1) },
+          ];
+          return (
+            <Modal title="Excuse a night" onClose={() => setModal({ kind: 'none' })}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: '#4a463a', marginBottom: 12 }}>
+                Sleepover, travel, sick day — the streak skips the night instead of breaking.
+                No coins are awarded.
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                {plans.map((plan) =>
+                  nights.map(({ label, dk, date }) => {
+                    const existing = state.occurrences[occurrenceId(plan.id, dk)];
+                    const done = existing !== undefined && isResolved(existing);
+                    return (
+                      <PixelButton
+                        key={`${plan.id}:${dk}`}
+                        variant={done ? 'disabled' : 'iron'}
+                        small
+                        disabled={done}
+                        style={{ fontSize: 16, padding: 12 }}
+                        onClick={() => {
+                          store.parentExcuseNight(plan.id, dk);
+                          store.toast('Night excused', `${plan.name} · ${fmtDateShort(date)} — the streak skips it.`);
+                          setModal({ kind: 'none' });
+                        }}
+                      >
+                        {label} · {fmtDateShort(date)}
+                        {done ? ' · already settled' : ''}
+                      </PixelButton>
+                    );
+                  }),
+                )}
+              </div>
+              <PixelButton
+                variant="stone"
+                small
+                style={{ fontSize: 15, padding: 11, marginTop: 10 }}
+                onClick={() => setModal({ kind: 'none' })}
+              >
+                Cancel
+              </PixelButton>
+            </Modal>
+          );
+        })()}
 
       {modal.kind === 'pin' && (
         <Modal title="New 4-digit PIN" onClose={() => setModal({ kind: 'none' })}>
