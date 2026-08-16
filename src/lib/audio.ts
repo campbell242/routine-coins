@@ -67,6 +67,9 @@ export function playAwardJingle(): void {
     note(t0, 523.25, 0.25, 0.16); // C5
     note(t0 + 0.12, 659.25, 0.25, 0.16); // E5
     note(t0 + 0.24, 783.99, 0.45, 0.18); // G5
+    // Resolving on the octave, landing with the coins in the counter —
+    // what makes the moment feel finished rather than cut off (spec §Sound).
+    note(t0 + 0.36, 1046.5, 0.5, 0.18); // C6
   } catch {
     /* ignore */
   }

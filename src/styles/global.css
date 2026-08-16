@@ -265,21 +265,26 @@ input {
 }
 
 /* ===== Coin award moment ===== */
+/* Reward release (spec §2): coins spawn at the big coin (staggered 60ms from
+   350ms, delays set inline) and arc DOWN INTO the balance counter, shrinking
+   to 0.38 — they read as becoming the number, not as flying away. Opacity
+   holds until the landing so the coin is absorbed, never faded mid-flight. */
 @keyframes coin-arc {
   0% {
     transform: translate(0, 0) rotate(var(--rot)) scale(1);
     opacity: 1;
   }
-  70% {
+  92% {
     opacity: 1;
   }
   100% {
-    transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(0.4);
+    transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(0.38);
     opacity: 0;
   }
 }
 .coin-fly {
-  animation: coin-arc 1.3s cubic-bezier(0.3, -0.3, 0.7, 1) 0.4s forwards;
+  opacity: 0; /* invisible until its staggered spawn moment */
+  animation: coin-arc 0.55s cubic-bezier(0.3, -0.3, 0.7, 1) forwards;
 }
 @keyframes pop-in {
   0% { transform: scale(0.3); }
@@ -290,7 +295,9 @@ input {
   animation: pop-in 0.45s ease-out;
 }
 /* New XP segment: a bright overlay fades out, leaving the normal green fill
-   underneath — the segment settles into the bar (~1.5s), never disappears. */
+   underneath — the segment settles into the bar, never disappears. The glow
+   waits until the LAST coin lands in the counter (~1400ms, spec §2), then
+   settles over 1.6s. Base opacity 0 keeps it hidden through the delay. */
 @keyframes xp-settle {
   0%, 70% { opacity: 1; }
   100% { opacity: 0; }
@@ -303,7 +310,8 @@ input {
   position: absolute;
   inset: 0;
   background: #d9ff8a;
-  animation: xp-settle 1.6s ease-out forwards;
+  opacity: 0;
+  animation: xp-settle 1.6s ease-out 1.4s forwards;
 }
 
 /* ===== Modal ===== */
