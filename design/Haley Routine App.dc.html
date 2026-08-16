@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&family=Jersey+25&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#e9e4d6;font-family:'Nunito Sans',system-ui,sans-serif}
+a{color:#3d7a22;text-decoration:none}a:hover{color:#57a636;text-decoration:underline}
+img{image-rendering:pixelated}
+.dv-turn{padding:40px 44px 32px;scroll-margin-top:16px}
+.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 8px}
+.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+.dv-tname{font:600 14px/1.2 'Nunito Sans',sans-serif;color:#1a1a1a}
+.dv-opts{display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start}
+.dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}
+.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.1);color:#1a1a1a;border-radius:5px;text-decoration:none}
+.dv-olabel{display:flex;align-items:baseline;gap:8px;font:600 12px/1.3 'Nunito Sans',sans-serif;color:rgba(0,0,0,.6)}
+.dv-card{max-width:100%;background:#fff;border:1px solid rgba(0,0,0,.1);box-shadow:0 2px 6px rgba(0,0,0,.08);overflow:hidden}
+.dv-opt:target .dv-oid{background:#2a78d6;color:#fff}
+.dv-next{margin:26px 0 0;font:12px/1.5 'Nunito Sans',sans-serif;color:rgba(0,0,0,.5)}
+@keyframes dm-slot{0%,9%{transform:scale(1)}12%{transform:scale(.86)}17%{transform:scale(1.06)}22%,100%{transform:scale(1)}}
+@keyframes dm-fill{0%,11%{opacity:0}14%,86%{opacity:1}87%,100%{opacity:0}}
+@keyframes dm-check{0%,13%{transform:scale(.2);opacity:0}15%{transform:scale(1.18);opacity:1}19%,86%{transform:scale(1);opacity:1}87%,100%{transform:scale(.2);opacity:0}}
+@keyframes dm-row{0%,15%{opacity:1}23%,86%{opacity:.62}87%,100%{opacity:1}}
+@keyframes dm-pip{0%,19%{transform:scaleX(0)}25%,86%{transform:scaleX(1)}87%,100%{transform:scaleX(0)}}
+@keyframes dm-pop{0%{transform:scale(.3)}6%{transform:scale(1.15)}10%,100%{transform:scale(1)}}
+@keyframes dm-fly{0%,10%{transform:translate(0,0) scale(1);opacity:0}12%{opacity:1}24%{transform:translate(-72px,4px) scale(.8)}38%{transform:translate(-149px,116px) scale(.36);opacity:1}40%,100%{transform:translate(-149px,116px) scale(.3);opacity:0}}
+@keyframes dm-cpip{0%,36%{transform:scale(1)}40%{transform:scale(1.18)}46%,100%{transform:scale(1)}}
+@keyframes dm-glow{0%,44%{opacity:0}47%,60%{opacity:1}78%,100%{opacity:0}}
+@keyframes dm-star{0%,20%{transform:scale(1)}26%{transform:scale(1.3)}34%,100%{transform:scale(1)}}
+@keyframes dm-spark{0%,22%{transform:translateY(0) scale(.4);opacity:0}30%{opacity:1}55%{transform:translateY(-18px) scale(1);opacity:0}100%{opacity:0}}
+@keyframes dm-spin{0%,80%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+@keyframes dm-dot{0%,100%{opacity:.35}50%{opacity:1}}
+@keyframes dm-breathe{0%,100%{opacity:1}50%{opacity:.55}}
+@keyframes dm-slide{0%,12%{transform:translateY(-8px);opacity:0}22%,88%{transform:translateY(0);opacity:1}92%,100%{transform:translateY(-8px);opacity:0}}
+</style>
+</helmet>
+<section class="dv-turn" id="t5">
+<div class="dv-thd"><a class="dv-tid" href="#t5">5</a><span class="dv-tname">Answers to the build report</span></div>
+<div style="max-width:760px;background:#fffdf4;border:3px solid #2b2b24;padding:16px 20px;margin:0 0 26px;font-size:13px;line-height:1.6;color:#4a463a">
+Most of the report needs no new design — the calls made in the build are the right ones and I've amended the spec to match. One item does: a required row that carries a coin value (<a href="#5a">5a</a>). That pattern didn't exist when 1d/1e were drawn, and reusing the bonus chip unchanged leaves two problems worth fixing.
+</div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="5a"><div class="dv-olabel"><a class="dv-oid" href="#5a">5a</a>Required row with a coin value — the pattern</div>
+<div class="dv-card" data-screen-label="Required with value" style="width:600px;background:#f3eee1;padding:20px;display:flex;flex-direction:column;gap:16px">
+  <div style="display:flex;gap:16px">
+    <div style="flex:1;min-width:0">
+      <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">AS BUILT</div>
+      <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24">
+        <div style="width:46px;height:46px;flex:none;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f"></div>
+        <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">In bed, lights out, stay in bed</div><div style="font-size:13px;color:#6b675c;font-weight:600">9:30 — go to bed early if you want more reading</div><div style="font-size:13px;color:#6b675c;font-weight:600">A grown-up checks this one in the morning</div></div>
+        <div style="display:flex;align-items:center;gap:4px"><img src="assets/coin.png" alt="" style="width:18px;height:18px"><span style="font-family:'Jersey 25',monospace;font-size:17px;color:#8a6200">+100</span></div>
+      </div>
+      <div style="font-size:12px;color:#6b675c;font-weight:600;line-height:1.5;margin-top:8px">Two problems. The slot looks tappable and isn't — she's asleep when this is judged. And the two sublines are the same voice, so "a grown-up checks this" reads as advice rather than as the rule it is.</div>
+    </div>
+    <div style="flex:1;min-width:0">
+      <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#3d7a22;margin-bottom:8px">SPEC'D</div>
+      <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24">
+        <div style="width:46px;height:46px;flex:none;background:#6f6f6f;border:3px solid #4a4a44;display:flex;align-items:center;justify-content:center"><div style="width:14px;height:14px;background:#4a4a44"></div></div>
+        <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">In bed, lights out, stay in bed</div><div style="font-size:13px;color:#6b675c;font-weight:600">9:30 — go to bed early if you want more reading</div><div style="display:inline-block;margin-top:5px;font-family:'Jersey 25',monospace;font-size:13px;color:#fff;padding:2px 7px;background:#6f6f6f;border:2px solid #4a4a44">MORNING CHECK</div></div>
+        <div style="display:flex;align-items:center;gap:4px"><img src="assets/coin.png" alt="" style="width:18px;height:18px"><span style="font-family:'Jersey 25',monospace;font-size:17px;color:#8a6200">+100</span></div>
+      </div>
+      <div style="font-size:12px;color:#6b675c;font-weight:600;line-height:1.5;margin-top:8px">Locked slot: flat iron, inset square, no bevel highlight, not tappable. The rule moves into an iron pill — the parent material, so it reads as "someone else decides this" without saying anything negative.</div>
+    </div>
+  </div>
+  <div style="font-size:13px;line-height:1.7;color:#4a463a;border-top:2px solid #cfc8b2;padding-top:12px">
+    <b>The coin chip stays exactly as it is.</b> Gold chip on any row means coins; the border says whether the row is required or bonus. Those are two independent facts and they should stay on two independent channels — a special chip colour for "required with value" would make the chip mean two things at once.<br><br>
+    <b>Rule going forward:</b> a required row may carry a coin value. If it is parent-verified rather than self-checked, it takes the locked slot and the MORNING CHECK pill. If Haley can check it herself, it is an ordinary required row that happens to pay.<br><br>
+    <b>Parent review (1k):</b> as built is right — the row sits in the required list with a real toggle and its +100, unchecked auto-docks to 244, one tap makes 344. The parent is the one person who <i>can</i> set it, so that slot should be live.<br>
+    <b>"base X + earned Y":</b> accepted, and 1k is updated to match.
+  </div>
+</div>
+</div>
+
+<div class="dv-opt" id="5b"><div class="dv-olabel"><a class="dv-oid" href="#5b">5b</a>Everything else — confirmed as built</div>
+<div class="dv-card" data-screen-label="Report answers" style="width:600px;background:#fffdf6;border:3px solid #2b2b24;padding:20px;font-size:13px;line-height:1.7;color:#4a463a">
+  <div style="font-family:'Jersey 25',monospace;font-size:16px;color:#8a8578;margin-bottom:6px">SPEC CONFLICTS</div>
+  <b>1 · Timer preset cross-fade — dropped, don't re-spec.</b> You were right to cut it against the global rule. The bar-snap carries the "loaded" read on its own.<br>
+  <b>2 · Auto-quiet as half-gain — confirmed, with one change.</b> Your reasoning holds: the window opens at 19:00 and the routine's own cues live inside it. Keep ×0.5 from window start, alarm exempt. The change: drop to ×0.25 after the phone is handed over for the night, since nothing after that point is Haley acting.<br>
+  <b>3 · Pip flip deferred to the Home card — confirmed.</b> Don't add pips to the routine screen; the checklist already shows progress and a second progress display on the same screen is noise. Once-per-pip on next view is the right compromise.<br>
+  <div style="font-family:'Jersey 25',monospace;font-size:16px;color:#8a8578;margin:14px 0 6px">THE THREE UNBUILT ROWS — PLEASE BUILD ALL THREE</div>
+  They aren't optional polish; they're the middle of the reward chain. The "+55" roll is what makes the number land as a number, the counter's coin reaction is what connects the flying coins to the balance, and the "Great job" fade-up is what ends the sequence instead of letting it stop. Without them the coins arrive somewhere nothing happens.<br>
+  <div style="font-family:'Jersey 25',monospace;font-size:16px;color:#8a8578;margin:14px 0 6px">RENDERINGS</div>
+  <b>4 · Star glyphs — fine.</b> No sprite needed; the ★ glyph in Jersey 25 is the same material as the streak chip's own star.<br>
+  <b>5 · No digit roll — fine.</b> A +1 step doesn't need an odometer. The ★ pulse is the event.<br>
+  <b>6 · Non-square icons — correct, and now in the rules.</b> <code>object-fit: contain</code> in the shared 28px footprint, never resampled. Icons from here on may be any aspect ratio; the row reserves a square and the art sits inside it.<br>
+  <b>7 · Sent-back animating on mount — keep it.</b> It's the one banner that appears while she's away from the screen, so it has no arrival to animate other than the mount. Not an inconsistency worth fixing.<br>
+  <div style="font-family:'Jersey 25',monospace;font-size:16px;color:#8a8578;margin:14px 0 6px">STANDING DEVIATIONS</div>
+  <b>8 · "‹ Home" on the running timer</b> — already the spec since v5; the mockup you have is current.<br>
+  <b>9 · "Approved!" never renders</b> — correct and documented; approval goes 1k → 1o → 1m.<br>
+  <b>10 · Checked rows keep their hints (1d)</b> — 1d is right, 1e was sample-data variance. Keep hints.<br>
+  <b>12 · Parent settings additions</b> — send screenshots 06 and 07 and I'll do a pass. Nothing to change blind; iron/neutral was the right instinct.<br>
+  <b>13 · Theme token mapping</b> — your call stands. Dark text on light fills, following the gold-button convention, is the rule; the swatch trios were never a button spec.
+</div>
+</div>
+
+</div>
+<p class="dv-next">Only <a href="#5a">5a</a> needs building. Everything in <a href="#5b">5b</a> is a confirmation, except the three reward rows, which I'd like built.</p>
+</section>
+<section class="dv-turn" id="t3">
+<div class="dv-thd"><a class="dv-tid" href="#t3">3</a><span class="dv-tname">Motion — what moves, when, and for how long</span></div>
+<div style="max-width:760px;background:#fffdf4;border:3px solid #2b2b24;padding:16px 20px;margin:0 0 26px;font-size:13px;line-height:1.55;color:#4a463a">
+<div style="font-family:'Jersey 25',monospace;font-size:18px;color:#2b2b24;margin-bottom:6px">How to read these</div>
+The demos below loop on a timer so you can watch them; in the app each fires once, on the action. Every spec animates <b>transform and opacity only</b> — a colour change is always an overlay fading in, never an animated colour. Existing keyframes are named where a moment already has one.
+</div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="3a"><div class="dv-olabel"><a class="dv-oid" href="#3a">3a</a>Checking an item off — "block place"</div>
+<div class="dv-card" data-screen-label="Check-off motion" style="width:390px;background:#f3eee1;padding:18px;display:flex;flex-direction:column;gap:14px">
+  <div style="position:relative;display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24;animation:dm-row 4s ease-out infinite">
+    <div style="position:relative;width:52px;height:52px;flex:none;animation:dm-slot 4s steps(3) infinite">
+      <div style="position:absolute;inset:0;box-sizing:border-box;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f"></div>
+      <div style="position:absolute;inset:0;box-sizing:border-box;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;animation:dm-fill 4s steps(2) infinite"></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Jersey 25',monospace;font-size:28px;color:#fff;animation:dm-check 4s ease-out infinite">✔</div>
+    </div>
+    <div style="flex:1">
+      <div style="font-family:'Jersey 25',monospace;font-size:18px">Make your bed</div>
+      <div style="font-size:13px;color:#6b675c;font-weight:600">Covers up, pillow on top</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:5px">
+    <div style="flex:1;height:12px;background:#57a636;border:2px solid #20241a"></div>
+    <div style="flex:1;height:12px;background:#57a636;border:2px solid #20241a"></div>
+    <div style="position:relative;flex:1;height:12px;background:#d9d3c2;border:2px solid #20241a"><div style="position:absolute;inset:0;background:#57a636;transform-origin:left;animation:dm-pip 4s ease-out infinite"></div></div>
+    <div style="flex:1;height:12px;background:#d9d3c2;border:2px solid #20241a"></div>
+  </div>
+  <div style="font-size:13px;line-height:1.6;color:#4a463a">
+    <div style="font-family:'Jersey 25',monospace;font-size:16px;color:#8a8578;margin-bottom:4px">380MS TOTAL</div>
+    <b>0ms</b> — the slot presses: scale to 0.86 in <b>steps(3)</b>, chunky rather than smooth. The press is the part she feels.<br>
+    <b>60ms</b> — green fill rises over the gray as an overlay opacity in 2 steps, 90ms; the bevel reads as the checked pair.<br>
+    <b>90ms</b> — the ✔ pops, scale .2 → 1.18 → 1 over 180ms (existing <b>.pop-in</b>).<br>
+    <b>140ms</b> — the row settles to opacity .62 over 240ms.<br>
+    <b>200ms</b> — the routine card's next progress pip flips green, scaleX 0 → 1 from the left, 160ms.
+  </div>
+  <div style="font-size:12px;color:#6b675c;font-weight:600;line-height:1.55;border-top:2px solid #cfc8b2;padding-top:10px">
+    Unchecking runs the same beats reversed at 60% duration with no ✔ pop — a mis-tap should feel undoable, not punished.<br><br>
+    No coins move here. Coins aren't hers until a parent approves, and showing them at check time spends the award moment early.
+  </div>
+</div>
+</div>
+
+<div class="dv-opt" id="3b"><div class="dv-olabel"><a class="dv-oid" href="#3b">3b</a>The reward release — <a class="dv-oid" href="#1m">1m</a> retimed</div>
+<div class="dv-card" data-screen-label="Reward motion" style="width:390px;background:#f3eee1;padding:18px;display:flex;flex-direction:column;gap:14px">
+  <div style="position:relative;height:190px;background:#fffdf6;border:3px solid #cfc8b2;overflow:hidden">
+    <img src="assets/coin.png" alt="" style="position:absolute;left:50%;top:22px;margin-left:-24px;width:48px;height:48px;animation:dm-pop 3.2s ease-out infinite">
+    <div style="position:absolute;left:0;right:0;top:78px;text-align:center;font-family:'Jersey 25',monospace;font-size:34px;color:#b07d00;line-height:1">+55</div>
+    <img src="assets/coin.png" alt="" style="position:absolute;left:50%;top:34px;margin-left:-9px;width:18px;height:18px;animation:dm-fly 3.2s ease-out infinite">
+    <img src="assets/coin.png" alt="" style="position:absolute;left:50%;top:30px;margin-left:-2px;width:16px;height:16px;animation:dm-fly 3.2s ease-out .08s infinite">
+    <img src="assets/coin.png" alt="" style="position:absolute;left:50%;top:40px;margin-left:-18px;width:14px;height:14px;animation:dm-fly 3.2s ease-out .16s infinite">
+    <img src="assets/coin.png" alt="" style="position:absolute;left:50%;top:26px;margin-left:6px;width:16px;height:16px;animation:dm-fly 3.2s ease-out .24s infinite">
+    <div style="position:absolute;left:12px;right:12px;bottom:14px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+        <img src="assets/coin.png" alt="" style="width:22px;height:22px;animation:dm-cpip 3.2s ease-out infinite">
+        <span style="font-family:'Jersey 25',monospace;font-size:19px">1,295 <span style="font-size:12px;color:#8a8578">/ 1,720</span></span>
+        <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:13px;color:#3d7a22">+55 ▲</span>
+      </div>
+      <div style="height:16px;border:3px solid #20241a;background:#2f2f28;padding:2px;display:flex">
+        <div style="height:100%;width:69%;background:repeating-linear-gradient(90deg,transparent 0 16px,rgba(0,0,0,.25) 16px 19px),linear-gradient(#b4f06a,#7fe237 45%,#59c01c)"></div>
+        <div style="position:relative;height:100%;width:3.2%;background:#7fe237"><div style="position:absolute;inset:0;background:#d9ff8a;animation:dm-glow 3.2s ease-out infinite"></div></div>
+      </div>
+    </div>
+  </div>
+  <div style="font-size:13px;line-height:1.6;color:#4a463a">
+    <div style="font-family:'Jersey 25',monospace;font-size:16px;color:#8a8578;margin-bottom:4px">t = 0 IS SCREEN ENTER, NOT APPROVAL</div>
+    <b>0ms</b> — big coin pops in, 450ms (existing <b>.pop-in</b>).<br>
+    <b>120ms</b> — "+55" rolls from 0 over 500ms in steps, so the amount registers as a number, not a picture.<br>
+    <b>350ms</b> — 8 coins spawn at the big coin, staggered 60ms.<br>
+    <b>350–1300ms</b> — each arcs <i>down into the balance counter</i> and shrinks to .38 (<b>.coin-fly</b>, retargeted).<br>
+    <b>on each landing</b> — the counter's coin pips scale 1.18 → 1, 120ms.<br>
+    <b>1400ms</b> — last coin lands; only then does the XP segment glow #d9ff8a and settle over 1.6s (<b>.xp-new-segment</b>).<br>
+    <b>1600ms</b> — "Great job, Haley!" and the streak line fade up 8px, 260ms.
+  </div>
+  <div style="font-size:12px;color:#6b675c;font-weight:600;line-height:1.55;border-top:2px solid #cfc8b2;padding-top:10px">
+    Two changes to what exists: the four coins currently arc <i>away</i> and vanish — point them at the balance so they look like they become the number, and hold the XP glow until the last one lands instead of firing everything at once.<br><br>
+    Approving in <a href="#1k">1k</a> animates nothing. The handoff screen <a href="#1o">1o</a> gets the coin pop and nothing else. Every moving thing in the chain is downstream of Haley's tap.<br><br>
+    "Back to Home" stays tappable throughout. Nothing here blocks a tap or demands a wait.
+  </div>
+</div>
+</div>
+
+<div class="dv-opt" id="3c"><div class="dv-olabel"><a class="dv-oid" href="#3c">3c</a>Streak</div>
+<div class="dv-card" data-screen-label="Streak motion" style="width:390px;background:#f3eee1;padding:18px;display:flex;flex-direction:column;gap:14px">
+  <div style="position:relative;display:flex;align-items:center;gap:10px;padding:10px 12px;background:#efe9d8;border:3px solid #cfc8b2">
+    <div style="position:absolute;left:14px;top:-2px;font-family:'Jersey 25',monospace;font-size:11px;color:#c8961e;animation:dm-spark 3s ease-out infinite">★</div>
+    <div style="position:absolute;left:30px;top:-2px;font-family:'Jersey 25',monospace;font-size:9px;color:#f8c53a;animation:dm-spark 3s ease-out .08s infinite">★</div>
+    <div style="position:absolute;left:44px;top:-2px;font-family:'Jersey 25',monospace;font-size:11px;color:#c8961e;animation:dm-spark 3s ease-out .16s infinite">★</div>
+    <span style="display:inline-block;font-family:'Jersey 25',monospace;font-size:18px;color:#8a6200;animation:dm-star 3s steps(2) infinite">★</span>
+    <span style="font-family:'Jersey 25',monospace;font-size:16px;color:#8a8578">7 day streak</span>
+    <span style="margin-left:auto;font-size:12px;color:#8a8578;font-weight:700">Best yet!</span>
+  </div>
+  <div style="font-size:13px;line-height:1.6;color:#4a463a">
+    <b>Every extension</b> — the ★ scales 1 → 1.3 → 1 in steps(2), 300ms, and the count rolls to its new number. That is the whole thing, every day. A streak is a fact, not a payday.<br><br>
+    <b>Milestones (7, 14, 30, then every 30)</b> — three 6px pixel stars pop above the chip, rise 18px and fade over 700ms staggered 80ms; the chip border flashes gold as a fading overlay. Toast as today.<br><br>
+    <b>A broken streak animates nothing</b> and says nothing. The chip is simply absent — there is no state to design here.
+  </div>
+</div>
+</div>
+
+<div class="dv-opt" id="3d"><div class="dv-olabel"><a class="dv-oid" href="#3d">3d</a>Small moments</div>
+<div class="dv-card" data-screen-label="Small motion" style="width:560px;background:#f3eee1;padding:18px;display:flex;flex-direction:column;gap:16px">
+  <div style="display:flex;gap:16px;flex-wrap:wrap">
+    <div style="flex:1;min-width:230px">
+      <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">UNCOLLECTED REWARD — IDLE</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Jersey 25',monospace;font-size:19px;color:#3d2c00;padding:14px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.5),inset 0 -6px 0 rgba(0,0,0,.18)"><img src="assets/coin.png" alt="" style="width:22px;height:22px;animation:dm-spin 6s steps(8) infinite">Tap to see your coins!</div>
+      <div style="font-size:12px;color:#6b675c;font-weight:600;margin-top:8px;line-height:1.5">One steps(8) rotation of the coin every 6 seconds. It waits; it doesn't beg. Same idle on <a href="#1o">1o</a>.</div>
+    </div>
+    <div style="flex:1;min-width:230px">
+      <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">ASK A PARENT → WAITING</div>
+      <div style="background:#efefec;border:3px solid #9a9a9a;padding:10px 12px;animation:dm-slide 3s ease-out infinite">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#6b6b6b">Waiting for a parent…</div>
+          <span style="margin-left:auto;display:flex;gap:4px"><span style="width:8px;height:8px;background:#9a9a9a;animation:dm-dot 1.4s infinite"></span><span style="width:8px;height:8px;background:#9a9a9a;animation:dm-dot 1.4s .45s infinite"></span><span style="width:8px;height:8px;background:#9a9a9a;animation:dm-dot 1.4s .9s infinite"></span></span>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#6b675c;font-weight:600;margin-top:8px;line-height:1.5">Chip cross-fades READY → WAITING, 200ms; the banner slides down 8px and fades in, 240ms; the dots start their existing pulse. Then the screen holds still.</div>
+    </div>
+  </div>
+  <div style="font-size:13px;line-height:1.7;color:#4a463a;border-top:2px solid #cfc8b2;padding-top:12px">
+    <b>Sent back</b> — banner slides down 8px and fades in, 240ms. Nothing else, and no sound. The quiet is the point.<br>
+    <b>Handoff <a href="#1o">1o</a></b> — the coin pops in, 450ms. Nothing else moves, nothing sounds.<br>
+    <b>Timer start</b> — the bar snaps to full over 200ms, then begins draining, so starting reads as "loaded". Presets cross-fade out.<br>
+    <b>Timer pause</b> — bar and digits breathe between opacity 1 and .55 on a 2s loop. Resume just stops the breathing.<br>
+    <b>Timer last 10 seconds</b> — digits pulse scale 1.04 once a second. No colour change, no ticking. It's a bedroom.<br>
+    <b>Avatar or theme change</b> — the newly selected slot pops in (450ms) and the header trim strip cross-fades, 200ms.<br>
+    <b>Screen changes</b> — instant. No slides, no fades between screens; a 10-year-old taps fast and transitions become a tax.
+  </div>
+</div>
+</div>
+
+<div class="dv-opt" id="3e"><div class="dv-olabel"><a class="dv-oid" href="#3e">3e</a>Motion rules</div>
+<div class="dv-card" data-screen-label="Motion rules" style="width:390px;background:#fffdf6;border:3px solid #2b2b24;padding:18px;font-size:13px;line-height:1.7;color:#4a463a">
+  <div style="font-family:'Jersey 25',monospace;font-size:18px;color:#2b2b24;margin-bottom:8px">Rules any new motion holds</div>
+  <b>Transform and opacity only.</b> A colour change is an overlay fading, never an animated colour — the phone is on all day.<br>
+  <b>steps() over easing for anything pixel.</b> 2–4 steps. Smooth easing belongs to fades and slides, not to blocks.<br>
+  <b>Nothing over 500ms</b> except the reward chain, which is ~2s and is the only place worth spending time.<br>
+  <b>Only two things loop forever</b> — the waiting dots and the uncollected-coin idle. Both mean "still true", not "look at me".<br>
+  <b>Nothing animates on a failure-adjacent state.</b> Sent back, closed for today, wrong PIN, a broken streak: stillness.<br>
+  <b>Nothing blocks a tap</b> or has to finish before the next screen will accept input.<br>
+  <b>prefers-reduced-motion</b> — keep the opacity fades, drop every transform and the coin arc. The award still reads: number, counter, XP bar.
+</div>
+</div>
+
+</div>
+<p class="dv-next">Say which of these you want built first, or "cut the milestone stars" / "the check-off is too slow" — every timing above is a number I can change.</p>
+</section>
+<section class="dv-turn" id="t4">
+<div class="dv-thd"><a class="dv-tid" href="#t4">4</a><span class="dv-tname">Sound — cue board (tap to hear each one)</span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="4a"><div class="dv-olabel"><a class="dv-oid" href="#4a">4a</a>Cue board — playable</div>
+<div class="dv-card" data-screen-label="Sound cues" style="width:560px;background:#f3eee1;padding:18px;display:flex;flex-direction:column;gap:10px">
+  <div style="font-size:13px;color:#4a463a;line-height:1.55">Every cue below is the same sine voice already in <b>audio.ts</b> — 20ms attack, exponential decay, no samples. Tap a row to hear it at real gain. Judge them at arm's length on a phone speaker, not on laptop speakers.</div>
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <div onClick="{{ playCheckRun }}" style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24;cursor:pointer;user-select:none">
+      <span style="font-family:'Jersey 25',monospace;font-size:18px;color:#3d7a22;width:20px">▶</span>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Check an item off</div><div style="font-size:12px;color:#6b675c;font-weight:600">One 0.12s blip, gain .10 — and it climbs a pentatonic run as she goes down the list: C6 · D6 · E6 · G6 · A6, then holds. The checklist plays a scale, so finishing sounds finished.</div></div>
+    </div>
+    <div onClick="{{ playLastCheck }}" style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24;cursor:pointer;user-select:none">
+      <span style="font-family:'Jersey 25',monospace;font-size:18px;color:#3d7a22;width:20px">▶</span>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Last required item done</div><div style="font-size:12px;color:#6b675c;font-weight:600">The run resolves: G5 → C6, 0.18 / 0.30s, gain .14. Only sound in the app that says "that's the set".</div></div>
+    </div>
+    <div onClick="{{ playAskParent }}" style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24;cursor:pointer;user-select:none">
+      <span style="font-family:'Jersey 25',monospace;font-size:18px;color:#3d7a22;width:20px">▶</span>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Ask a parent to check</div><div style="font-size:12px;color:#6b675c;font-weight:600">Falling pair, G4 → D4, 0.25s each, gain .12. Handing over, not celebrating — the only descending cue.</div></div>
+    </div>
+    <div onClick="{{ playAward }}" style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fdf8e8;border:3px solid #c8961e;cursor:pointer;user-select:none">
+      <span style="font-family:'Jersey 25',monospace;font-size:18px;color:#8a6200;width:20px">▶</span>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Coin award <a href="#1m">1m</a></div><div style="font-size:12px;color:#6b675c;font-weight:600">Today's C5 · E5 · G5 plus a fourth note, C6 at +0.36s, landing with the coins in the counter. Resolving on the octave is what makes it feel finished rather than cut off.</div></div>
+    </div>
+    <div onClick="{{ playStreak }}" style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24;cursor:pointer;user-select:none">
+      <span style="font-family:'Jersey 25',monospace;font-size:18px;color:#3d7a22;width:20px">▶</span>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Streak milestone</div><div style="font-size:12px;color:#6b675c;font-weight:600">E5 → B5, 0.2s, gain .14. Milestones only (7, 14, 30…), never the daily extension.</div></div>
+    </div>
+    <div onClick="{{ playTimerStart }}" style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24;cursor:pointer;user-select:none">
+      <span style="font-family:'Jersey 25',monospace;font-size:18px;color:#3d7a22;width:20px">▶</span>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Timer start</div><div style="font-size:12px;color:#6b675c;font-weight:600">D5, 0.10s, gain .12. Confirmation that it took, nothing more.</div></div>
+    </div>
+    <div onClick="{{ playTimerPause }}" style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24;cursor:pointer;user-select:none">
+      <span style="font-family:'Jersey 25',monospace;font-size:18px;color:#3d7a22;width:20px">▶</span>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Timer pause</div><div style="font-size:12px;color:#6b675c;font-weight:600">A4, 0.12s, gain .10. Resume is silent — it already started once.</div></div>
+    </div>
+    <div onClick="{{ playAlarm }}" style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24;cursor:pointer;user-select:none">
+      <span style="font-family:'Jersey 25',monospace;font-size:18px;color:#3d7a22;width:20px">▶</span>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Timer alarm</div><div style="font-size:12px;color:#6b675c;font-weight:600">Unchanged: E5 + G5 rising third, three times, 1.1s apart. Still the loudest thing in the app at gain .22.</div></div>
+    </div>
+    <div onClick="{{ playAvatar }}" style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24;cursor:pointer;user-select:none">
+      <span style="font-family:'Jersey 25',monospace;font-size:18px;color:#3d7a22;width:20px">▶</span>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Avatar or theme change</div><div style="font-size:12px;color:#6b675c;font-weight:600">A5, 0.10s, gain .08 — the quietest cue. She'll tap these dozens of times in a row.</div></div>
+    </div>
+    <div onClick="{{ playRedeem }}" style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fdf8e8;border:3px solid #c8961e;cursor:pointer;user-select:none">
+      <span style="font-family:'Jersey 25',monospace;font-size:18px;color:#8a6200;width:20px">▶</span>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Redemption reached · 1,720</div><div style="font-size:12px;color:#6b675c;font-weight:600">The award arpeggio, then again an octave up. The only big sound in the app, and she'll hear it a few times a year. Everything else stays small so this one lands.</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="dv-opt" id="4b"><div class="dv-olabel"><a class="dv-oid" href="#4b">4b</a>Sound rules + the silent list</div>
+<div class="dv-card" data-screen-label="Sound rules" style="width:390px;background:#fffdf6;border:3px solid #2b2b24;padding:18px;font-size:13px;line-height:1.7;color:#4a463a">
+  <div style="font-family:'Jersey 25',monospace;font-size:18px;color:#2b2b24;margin-bottom:8px">Rules</div>
+  <b>Sine only, peak gain ≤ .22, 20ms attack.</b> No samples, no square waves, nothing percussive.<br>
+  <b>Haley's actions make sound. Parent actions are silent</b> — PIN entry, approve, send back, close for today, settings. She should never hear the app being administered.<br>
+  <b>Nothing negative ever sounds.</b> Silence is the design, not an omission.<br>
+  <b>Nothing runs longer than 1.5s</b> except the alarm.<br>
+  <b>Auto-quiet in the Nighttime Routine window</b> and after it. The phone is in her room; the alarm chime is the one exception and it stays at its current gain.<br>
+  <b>One global toggle</b> in parent settings <a href="#1l">1l</a>, plus a separate alarm-only toggle so the timer can stay audible with everything else off.<br>
+  <div style="font-family:'Jersey 25',monospace;font-size:16px;color:#8a8578;margin:14px 0 4px">STAYS SILENT</div>
+  Wrong PIN · sent back · closed for today · a missed routine · unchecking an item · the handoff screen <a href="#1o">1o</a> · every screen change · the parent area, end to end.
+</div>
+</div>
+
+</div>
+<p class="dv-next">Cues are cheap to retune — tell me "the check blip is too bright" or "make the award four notes not five" and I'll change the numbers in <a href="#4a">4a</a>.</p>
+</section>
+<section class="dv-turn" id="t2">
+<div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">Task icon pack — brainstorm (39 icons)</span></div>
+<div class="dv-opts">
+<div class="dv-opt" id="2a"><div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a>Icon brainstorm — pick the keepers</div>
+<div class="dv-card" data-screen-label="Icon brainstorm" style="width:780px;background:#f3eee1;padding:22px 24px;display:flex;flex-direction:column;gap:18px">
+  <div style="font-size:13px;color:#4a463a;line-height:1.5;max-width:640px">Hand-drawn pixel PNGs, same style as the avatars — attach one to any checklist item, sized 24–34px in a row. Tell me which to cut (or keep) by name; the survivors get added to the design system (1a) and the handoff package. Rougher ones can be redrawn on request.</div>
+  <sc-for list="{{ iconGroups }}" as="g" hint-placeholder-count="6">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578">{{ g.name }}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px">
+        <sc-for list="{{ g.items }}" as="ic" hint-placeholder-count="6">
+          <div style="width:78px;display:flex;flex-direction:column;align-items:center;gap:5px">
+            <div style="width:60px;height:60px;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f;display:flex;align-items:center;justify-content:center"><div role="img" aria-label="{{ ic.name }}" style="width:44px;height:44px;image-rendering:pixelated;background-repeat:no-repeat;background-position:center;background-size:contain;background-image:{{ ic.bg }}"></div></div>
+            <div style="font-size:11px;font-weight:700;color:#4a463a;text-align:center;line-height:1.2">{{ ic.name }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-for>
+</div>
+</div>
+</div>
+</section>
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Haley's Routine &amp; Minecoin App — design system + all screens</span></div>
+<div style="max-width:760px;background:#fffdf4;border:3px solid #2b2b24;padding:16px 20px;margin:0 0 26px;font-size:13px;line-height:1.55;color:#4a463a">
+<div style="font-family:'Jersey 25',monospace;font-size:18px;color:#2b2b24;margin-bottom:6px">Design notes</div>
+<b>Navigation:</b> three big bottom tabs — HOME, TIMER, ME (customization). The clock lives in every screen's header; a running timer pins a dark pill above the content on every child screen. The parent area hides behind a small iron-door chip in the Home footer. <b>Theming:</b> pixel bevels + block textures as trim only; content sits on calm parchment. Jersey 25 for headings/numbers/buttons, Nunito Sans for instructions. No red anywhere — "sent back" is calm slate blue. <b>Reward flow:</b> approving banks the coins and shows the handoff screen (<a href="#1o">1o</a>); the celebration in <a href="#1m">1m</a> only plays when Haley taps "Tap to see your coins!" — hers to release, not the parent's. If she isn't there, the uncollected reward waits as a gold button at the top of Home. Tweaks panel: coin balance drives the XP bar; toggle the running-timer pill.
+</div>
+<div class="dv-opts">
+
+<!-- ============ 1a DESIGN SYSTEM ============ -->
+<div class="dv-opt" id="1a"><div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Design system</div>
+<div class="dv-card" data-screen-label="Design system" style="width:780px;background:#f3eee1;padding:22px 24px;display:flex;flex-direction:column;gap:20px">
+  <div style="display:flex;gap:18px;flex-wrap:wrap">
+    <div style="flex:1;min-width:220px">
+      <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">PALETTE</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <div style="width:64px"><div style="height:40px;background:#f3eee1;border:2px solid #2b2b24"></div><div style="font-size:10px;margin-top:3px">Parchment bg</div></div>
+        <div style="width:64px"><div style="height:40px;background:#fffdf6;border:2px solid #2b2b24"></div><div style="font-size:10px;margin-top:3px">Card</div></div>
+        <div style="width:64px"><div style="height:40px;background:#2b2b24;border:2px solid #2b2b24"></div><div style="font-size:10px;margin-top:3px">Ink</div></div>
+        <div style="width:64px"><div style="height:40px;background:#57a636;border:2px solid #2b2b24"></div><div style="font-size:10px;margin-top:3px">Grass green</div></div>
+        <div style="width:64px"><div style="height:40px;background:#7fe237;border:2px solid #2b2b24"></div><div style="font-size:10px;margin-top:3px">XP green</div></div>
+        <div style="width:64px"><div style="height:40px;background:#f8c53a;border:2px solid #2b2b24"></div><div style="font-size:10px;margin-top:3px">Coin gold</div></div>
+        <div style="width:64px"><div style="height:40px;background:#9a9a9a;border:2px solid #2b2b24"></div><div style="font-size:10px;margin-top:3px">Stone</div></div>
+        <div style="width:64px"><div style="height:40px;background:#6d89a3;border:2px solid #2b2b24"></div><div style="font-size:10px;margin-top:3px">Calm slate<br>(sent back)</div></div>
+      </div>
+    </div>
+    <div style="flex:1;min-width:260px">
+      <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">TYPE</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:30px;color:#2b2b24">Jersey 25</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#5c584c;margin:2px 0 8px">headings · numbers · clock · buttons · coins (Jersey 25)</div>
+      <div style="font-size:15px;color:#2b2b24;font-weight:600">Nunito Sans — instructions and any sentence-length text stays in a clean sans, sized 14px+.</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start">
+    <div style="min-width:300px;flex:1">
+      <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">BUTTONS</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-family:'Jersey 25',monospace;font-size:21px;color:#fff;text-align:center;padding:14px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Primary action</div>
+        <div style="font-family:'Jersey 25',monospace;font-size:21px;color:#3d2c00;text-align:center;padding:14px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.5),inset 0 -6px 0 rgba(0,0,0,.18);text-shadow:0 1px 0 rgba(255,255,255,.4)">Coin / reward action</div>
+        <div style="font-family:'Jersey 25',monospace;font-size:21px;color:#fff;text-align:center;padding:14px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Secondary (stone)</div>
+        <div style="font-family:'Jersey 25',monospace;font-size:21px;color:#d5d2c9;text-align:center;padding:14px;background:#7d7d7d;border:3px solid #4a4a44;box-shadow:inset 0 4px 0 rgba(255,255,255,.12),inset 0 -6px 0 rgba(0,0,0,.18)">Disabled</div>
+      </div>
+    </div>
+    <div style="min-width:300px;flex:1;display:flex;flex-direction:column;gap:14px">
+      <div>
+        <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">COINS + XP BAR</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+          <img src="assets/coin.png" alt="coin" style="width:30px;height:30px">
+          <span style="font-family:'Jersey 25',monospace;font-size:26px;color:#2b2b24">1,240 <span style="font-size:16px;color:#8a8578">/ 1,720</span></span>
+        </div>
+        <div style="height:22px;border:3px solid #20241a;background:#2f2f28;padding:2px">
+          <div style="height:100%;width:72%;background:repeating-linear-gradient(90deg,transparent 0 16px,rgba(0,0,0,.25) 16px 19px),linear-gradient(#b4f06a,#7fe237 45%,#59c01c)"></div>
+        </div>
+        <div style="font-size:11px;color:#8a8578;margin-top:4px">Bar stays full past 1,720; the number keeps climbing.</div>
+      </div>
+      <div>
+        <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">SLOTS + CHECKS</div>
+        <div style="display:flex;gap:10px;align-items:center">
+          <div style="width:48px;height:48px;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f"></div>
+          <div style="width:48px;height:48px;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Jersey 25',monospace;font-size:28px;color:#fff">✔</div>
+          <div style="width:48px;height:48px;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f;display:flex;align-items:center;justify-content:center"><img src="assets/av-axolotl.png" alt="" style="width:34px;height:34px"></div>
+          <div style="font-size:12px;color:#5c584c">inventory slot ·<br>checked · avatar slot</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">STATUS CHIPS</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;font-family:'Jersey 25',monospace;font-size:14px">
+          <span style="padding:4px 10px;border:2px solid #57a636;color:#3d7a22;background:#eaf5df">IN PROGRESS</span>
+          <span style="padding:4px 10px;border:2px solid #c8961e;color:#8a6200;background:#fdf3d4">READY</span>
+          <span style="padding:4px 10px;border:2px solid #6d89a3;color:#42607c;background:#e8eef4">SENT BACK</span>
+          <span style="padding:4px 10px;border:2px solid #9a9a9a;color:#6b6b6b;background:#efefec">WAITING</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start">
+    <div style="min-width:320px;flex:1">
+      <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">ADVANCEMENT TOAST</div>
+      <div style="display:flex;gap:12px;align-items:center;background:#efe9d8;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.7),inset 0 -4px 0 rgba(0,0,0,.1),0 5px 0 rgba(32,36,26,.15);padding:12px 16px;max-width:340px">
+        <img src="assets/coin.png" alt="" style="width:34px;height:34px">
+        <div>
+          <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#b07d00">Routine complete!</div>
+          <div style="font-size:13px;color:#4a463a">Morning Routine · +55 coins</div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:#8a8578;margin-top:5px">Slides in top, self-dismisses ~3s. Never blocks taps.</div>
+    </div>
+    <div style="min-width:200px">
+      <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">TEXTURE TRIM (accents only)</div>
+      <div style="display:flex;gap:8px">
+        <div style="text-align:center"><div style="width:44px;height:44px;background:url('assets/tx-grass.png');background-size:16px;border:2px solid #2b2b24"></div><div style="font-size:10px;margin-top:3px">grass</div></div>
+        <div style="text-align:center"><div style="width:44px;height:44px;background:url('assets/tx-dirt.png');background-size:16px;border:2px solid #2b2b24"></div><div style="font-size:10px;margin-top:3px">dirt</div></div>
+        <div style="text-align:center"><div style="width:44px;height:44px;background:url('assets/tx-stone.png');background-size:16px;border:2px solid #2b2b24"></div><div style="font-size:10px;margin-top:3px">stone</div></div>
+        <div style="text-align:center"><div style="width:44px;height:44px;background:url('assets/tx-planks.png');background-size:16px;border:2px solid #2b2b24"></div><div style="font-size:10px;margin-top:3px">planks</div></div>
+        <div style="text-align:center"><div style="width:44px;height:44px;background:url('assets/tx-iron.png');background-size:16px;border:2px solid #2b2b24"></div><div style="font-size:10px;margin-top:3px">iron</div></div>
+      </div>
+    </div>
+    <div style="min-width:220px">
+      <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">AVATARS</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <img src="assets/av-steve.png" alt="Steve" style="width:40px;height:40px"><img src="assets/av-alex.png" alt="Alex" style="width:40px;height:40px"><img src="assets/av-creeper.png" alt="Creeper" style="width:40px;height:40px"><img src="assets/av-axolotl.png" alt="Axolotl" style="width:40px;height:40px"><img src="assets/av-cat.png" alt="Cat" style="width:40px;height:40px"><img src="assets/av-panda.png" alt="Panda" style="width:40px;height:40px"><img src="assets/av-fox.png" alt="Fox" style="width:40px;height:40px"><img src="assets/av-bee.png" alt="Bee" style="width:40px;height:40px">
+      </div>
+    </div>
+  </div>
+  <div>
+    <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;margin-bottom:8px">THEME VARIANTS — accents + header trim only; layout, gold, and XP bar never change</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <div style="width:128px;border:3px solid #c8961e;background:#fffdf6"><div style="height:12px;background:url('assets/tx-grass.png');background-size:12px"></div><div style="padding:8px"><div style="font-family:'Jersey 25',monospace;font-size:14px">Overworld ✔</div><div style="display:flex;gap:4px;margin-top:5px"><span style="width:14px;height:14px;background:#57a636"></span><span style="width:14px;height:14px;background:#7a5233"></span><span style="width:14px;height:14px;background:#7fe237"></span></div></div></div>
+      <div style="width:128px;border:3px solid #2b2b24;background:#fffdf6"><div style="height:12px;background:url('assets/tx-nether.png');background-size:12px"></div><div style="padding:8px"><div style="font-family:'Jersey 25',monospace;font-size:14px">Nether</div><div style="display:flex;gap:4px;margin-top:5px"><span style="width:14px;height:14px;background:#d96e2e"></span><span style="width:14px;height:14px;background:#8a4545"></span><span style="width:14px;height:14px;background:#f2a23e"></span></div></div></div>
+      <div style="width:128px;border:3px solid #2b2b24;background:#fffdf6"><div style="height:12px;background:#3a2e4a"></div><div style="padding:8px"><div style="font-family:'Jersey 25',monospace;font-size:14px">End</div><div style="display:flex;gap:4px;margin-top:5px"><span style="width:14px;height:14px;background:#a06fd6"></span><span style="width:14px;height:14px;background:#d8c7ee"></span><span style="width:14px;height:14px;background:#e5e8a0"></span></div></div></div>
+      <div style="width:128px;border:3px solid #2b2b24;background:#fffdf6"><div style="height:12px;background:#2e6e8f"></div><div style="padding:8px"><div style="font-family:'Jersey 25',monospace;font-size:14px">Ocean</div><div style="display:flex;gap:4px;margin-top:5px"><span style="width:14px;height:14px;background:#3aa6b9"></span><span style="width:14px;height:14px;background:#2e6e8f"></span><span style="width:14px;height:14px;background:#8fd8c9"></span></div></div></div>
+      <div style="width:128px;border:3px solid #2b2b24;background:#fffdf6"><div style="height:12px;background:#e8a9c6"></div><div style="padding:8px"><div style="font-family:'Jersey 25',monospace;font-size:14px">Cherry Grove</div><div style="display:flex;gap:4px;margin-top:5px"><span style="width:14px;height:14px;background:#e58bb4"></span><span style="width:14px;height:14px;background:#8f5a44"></span><span style="width:14px;height:14px;background:#f5cede"></span></div></div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 1b HOME ============ -->
+<div class="dv-opt" id="1b"><div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Home — morning routine due</div>
+<div class="dv-card" data-screen-label="Home" style="width:390px;background:#f3eee1;color:#2b2b24;display:flex;flex-direction:column;min-height:780px">
+  <div style="height:12px;background:url('assets/tx-grass.png');background-size:16px"></div>
+  <div style="height:8px;background:url('assets/tx-dirt.png');background-size:16px"></div>
+  <sc-if value="{{ timerRunning }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;justify-content:space-between;align-items:center;background:#20241a;color:#fff;padding:9px 16px;font-family:'Jersey 25',monospace;font-size:17px"><span>TIMER · 08:42</span><span style="color:#a8e07f;font-size:14px">tap to open ›</span></div>
+  </sc-if>
+  <div style="display:flex;align-items:center;gap:12px;padding:16px 18px 6px">
+    <div style="width:56px;height:56px;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f;display:flex;align-items:center;justify-content:center"><img src="assets/av-axolotl.png" alt="avatar" style="width:42px;height:42px"></div>
+    <div style="flex:1">
+      <div style="font-family:'Jersey 25',monospace;font-size:22px">Hi, Haley!</div>
+      <div style="font-size:13px;color:#6b675c;font-weight:600">Tuesday, Aug 15</div>
+    </div>
+  </div>
+  <div style="text-align:center;font-family:'Jersey 25',monospace;font-size:74px;line-height:1;padding:8px 0 2px">7:42<span style="font-size:26px;color:#8a8578"> AM</span></div>
+  <div style="padding:12px 18px 4px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+      <img src="assets/coin.png" alt="coins" style="width:28px;height:28px">
+      <span style="font-family:'Jersey 25',monospace;font-size:24px">{{ balanceText }} <span style="font-size:15px;color:#8a8578">/ 1,720</span></span>
+      <span style="margin-left:auto;font-size:12px;color:#8a8578;font-weight:700">{{ toGo }} to go!</span>
+    </div>
+    <div style="height:20px;border:3px solid #20241a;background:#2f2f28;padding:2px">
+      <div style="height:100%;width:{{ xpWidth }};background:repeating-linear-gradient(90deg,transparent 0 16px,rgba(0,0,0,.25) 16px 19px),linear-gradient(#b4f06a,#7fe237 45%,#59c01c)"></div>
+    </div>
+  </div>
+  <div style="flex:1;padding:16px 18px">
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Jersey 25',monospace;font-size:20px;color:#3d2c00;text-align:center;padding:15px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.5),inset 0 -6px 0 rgba(0,0,0,.18);margin-bottom:14px"><img src="assets/coin.png" alt="" style="width:22px;height:22px">Tap to see your coins! (2)</div>
+    <div style="background:#fffdf6;border:3px solid #2b2b24;box-shadow:0 5px 0 rgba(43,43,36,.14)">
+      <div style="height:8px;background:url('assets/tx-grass.png');background-size:16px"></div>
+      <div style="padding:16px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+          <span style="font-family:'Jersey 25',monospace;font-size:24px">Morning Routine</span>
+          <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:13px;padding:4px 9px;border:2px solid #57a636;color:#3d7a22;background:#eaf5df">IN PROGRESS</span>
+        </div>
+        <div style="font-size:14px;color:#6b675c;font-weight:600;margin-bottom:12px">2 of 4 done · finish by 8:30 · worth <b style="color:#8a6200">40+ coins</b></div>
+        <div style="display:flex;gap:5px;margin-bottom:16px">
+          <div style="flex:1;height:12px;background:#57a636;border:2px solid #20241a"></div>
+          <div style="flex:1;height:12px;background:#57a636;border:2px solid #20241a"></div>
+          <div style="flex:1;height:12px;background:#d9d3c2;border:2px solid #20241a"></div>
+          <div style="flex:1;height:12px;background:#d9d3c2;border:2px solid #20241a"></div>
+        </div>
+        <div style="font-family:'Jersey 25',monospace;font-size:23px;color:#fff;text-align:center;padding:16px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Keep going ›</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;margin-top:14px;padding:10px 12px;background:#efe9d8;border:3px solid #cfc8b2">
+      <span style="font-family:'Jersey 25',monospace;font-size:16px;color:#8a8578">★ 6 day streak</span>
+      <span style="margin-left:auto;font-size:12px;color:#8a8578;font-weight:700">Nighttime Routine at 8:00 PM</span>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:flex-end;padding:0 18px 10px">
+    <div style="display:flex;align-items:center;gap:8px;padding:7px 12px;background:url('assets/tx-iron.png');background-size:12px;border:3px solid #6b6b6b;box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -3px 0 rgba(0,0,0,.15)">
+      <span style="width:8px;height:8px;background:#4a4a44"></span>
+      <span style="font-family:'Jersey 25',monospace;font-size:13px;color:#4a4a44">PARENTS</span>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:10px 12px;background:#e7e0cd;border-top:3px solid #2b2b24">
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#3d2c00;text-align:center;padding:15px 4px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.5),inset 0 -5px 0 rgba(0,0,0,.18)">HOME</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">TIMER</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">ME</div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 1c HOME EMPTY ============ -->
+<div class="dv-opt" id="1c"><div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Home — nothing due</div>
+<div class="dv-card" data-screen-label="Home empty" style="width:390px;background:#f3eee1;color:#2b2b24;display:flex;flex-direction:column;min-height:780px">
+  <div style="height:12px;background:url('assets/tx-grass.png');background-size:16px"></div>
+  <div style="height:8px;background:url('assets/tx-dirt.png');background-size:16px"></div>
+  <div style="display:flex;align-items:center;gap:12px;padding:16px 18px 6px">
+    <div style="width:56px;height:56px;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f;display:flex;align-items:center;justify-content:center"><img src="assets/av-axolotl.png" alt="avatar" style="width:42px;height:42px"></div>
+    <div style="flex:1">
+      <div style="font-family:'Jersey 25',monospace;font-size:22px">All done, Haley!</div>
+      <div style="font-size:13px;color:#6b675c;font-weight:600">Tuesday, Aug 15</div>
+    </div>
+  </div>
+  <div style="text-align:center;font-family:'Jersey 25',monospace;font-size:74px;line-height:1;padding:8px 0 2px">3:15<span style="font-size:26px;color:#8a8578"> PM</span></div>
+  <div style="padding:12px 18px 4px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+      <img src="assets/coin.png" alt="coins" style="width:28px;height:28px">
+      <span style="font-family:'Jersey 25',monospace;font-size:24px">1,295 <span style="font-size:15px;color:#8a8578">/ 1,720</span></span>
+      <span style="margin-left:auto;font-size:12px;color:#8a8578;font-weight:700">425 to go!</span>
+    </div>
+    <div style="height:20px;border:3px solid #20241a;background:#2f2f28;padding:2px">
+      <div style="height:100%;width:75%;background:repeating-linear-gradient(90deg,transparent 0 16px,rgba(0,0,0,.25) 16px 19px),linear-gradient(#b4f06a,#7fe237 45%,#59c01c)"></div>
+    </div>
+  </div>
+  <div style="flex:1;padding:16px 18px;display:flex;flex-direction:column;gap:14px">
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Jersey 25',monospace;font-size:20px;color:#3d2c00;text-align:center;padding:15px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.5),inset 0 -6px 0 rgba(0,0,0,.18)"><img src="assets/coin.png" alt="" style="width:22px;height:22px">Tap to see your coins!</div>
+    <div style="background:#fffdf6;border:3px solid #2b2b24;padding:22px 16px;text-align:center;box-shadow:0 5px 0 rgba(43,43,36,.14)">
+      <img src="assets/av-bee.png" alt="" style="width:52px;height:52px;margin-bottom:8px">
+      <div style="font-family:'Jersey 25',monospace;font-size:24px;margin-bottom:4px">Nothing to do right now</div>
+      <div style="font-size:14px;color:#6b675c;font-weight:600">Nighttime Routine unlocks at 8:00 PM.<br>Enjoy your afternoon!</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div style="font-family:'Jersey 25',monospace;font-size:18px;color:#fff;text-align:center;padding:14px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Set a timer</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:18px;color:#fff;text-align:center;padding:14px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Change my look</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#efe9d8;border:3px solid #cfc8b2">
+      <span style="font-family:'Jersey 25',monospace;font-size:16px;color:#8a8578">★ 6 day streak</span>
+      <span style="margin-left:auto;font-size:12px;color:#8a8578;font-weight:700">Keep it up tonight!</span>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:flex-end;padding:0 18px 10px">
+    <div style="display:flex;align-items:center;gap:8px;padding:7px 12px;background:url('assets/tx-iron.png');background-size:12px;border:3px solid #6b6b6b;box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -3px 0 rgba(0,0,0,.15)">
+      <span style="width:8px;height:8px;background:#4a4a44"></span>
+      <span style="font-family:'Jersey 25',monospace;font-size:13px;color:#4a4a44">PARENTS</span>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:10px 12px;background:#e7e0cd;border-top:3px solid #2b2b24">
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#3d2c00;text-align:center;padding:15px 4px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.5),inset 0 -5px 0 rgba(0,0,0,.18)">HOME</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">TIMER</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">ME</div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 1d ROUTINE IN PROGRESS ============ -->
+<div class="dv-opt" id="1d"><div class="dv-olabel"><a class="dv-oid" href="#1d">1d</a>Routine — in progress</div>
+<div class="dv-card" data-screen-label="Routine in progress" style="width:390px;background:#f3eee1;color:#2b2b24;display:flex;flex-direction:column;min-height:780px">
+  <div style="height:12px;background:url('assets/tx-grass.png');background-size:16px"></div>
+  <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:3px solid #2b2b24;background:#fffdf6">
+    <span style="font-family:'Jersey 25',monospace;font-size:20px;color:#8a8578">‹</span>
+    <span style="font-family:'Jersey 25',monospace;font-size:23px">Morning Routine</span>
+    <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:24px;color:#2b2b24">7:46</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;padding:12px 16px 4px">
+    <span style="font-family:'Jersey 25',monospace;font-size:14px;padding:4px 9px;border:2px solid #57a636;color:#3d7a22;background:#eaf5df">IN PROGRESS</span>
+    <span style="font-size:13px;color:#6b675c;font-weight:700">2 of 4 required done</span>
+  </div>
+  <div style="flex:1;padding:12px 16px;display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24;opacity:.62">
+      <div style="width:46px;height:46px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Jersey 25',monospace;font-size:26px;color:#fff">✔</div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Brush teeth</div><div style="font-size:13px;color:#6b675c;font-weight:600">Two whole minutes!</div></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24;opacity:.62">
+      <div style="width:46px;height:46px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Jersey 25',monospace;font-size:26px;color:#fff">✔</div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Get dressed</div><div style="font-size:13px;color:#6b675c;font-weight:600">Clothes are on your chair</div></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24">
+      <div style="width:46px;height:46px;flex:none;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f"></div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Make your bed</div><div style="font-size:13px;color:#6b675c;font-weight:600">Covers up, pillow on top</div></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24">
+      <div style="width:46px;height:46px;flex:none;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f"></div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Pack backpack</div><div style="font-size:13px;color:#6b675c;font-weight:600">Homework folder + water bottle</div></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
+      <div style="flex:1;height:3px;background:#cfc8b2"></div>
+      <span style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a6200">BONUS COINS</span>
+      <div style="flex:1;height:3px;background:#cfc8b2"></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fdf8e8;border:3px solid #c8961e">
+      <div style="width:46px;height:46px;flex:none;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f"></div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Read 10 minutes</div><div style="font-size:13px;color:#6b675c;font-weight:600">Any book you like</div></div>
+      <div style="display:flex;align-items:center;gap:4px"><img src="assets/coin.png" alt="" style="width:18px;height:18px"><span style="font-family:'Jersey 25',monospace;font-size:17px;color:#8a6200">+15</span></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fdf8e8;border:3px solid #c8961e">
+      <div style="width:46px;height:46px;flex:none;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f"></div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Tidy your desk</div><div style="font-size:13px;color:#6b675c;font-weight:600">Clear surface, pencils in the cup</div></div>
+      <div style="display:flex;align-items:center;gap:4px"><img src="assets/coin.png" alt="" style="width:18px;height:18px"><span style="font-family:'Jersey 25',monospace;font-size:17px;color:#8a6200">+10</span></div>
+    </div>
+  </div>
+  <div style="padding:12px 16px 16px">
+    <div style="font-family:'Jersey 25',monospace;font-size:20px;color:#d5d2c9;text-align:center;padding:15px;background:#7d7d7d;border:3px solid #4a4a44;box-shadow:inset 0 4px 0 rgba(255,255,255,.12),inset 0 -6px 0 rgba(0,0,0,.18)">Ask a parent to check</div>
+    <div style="text-align:center;font-size:12px;color:#8a8578;font-weight:700;margin-top:6px">Finish 2 more to unlock</div>
+    <div style="text-align:center;font-size:11px;color:#8a8578;font-weight:600;margin-top:8px">Once asked, this screen switches to the Waiting banner plus the iron "I'm the parent — review now" button (<a href="#1f">1f</a>).</div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 1e ROUTINE READY ============ -->
+<div class="dv-opt" id="1e"><div class="dv-olabel"><a class="dv-oid" href="#1e">1e</a>Routine — ready for parent</div>
+<div class="dv-card" data-screen-label="Routine ready" style="width:390px;background:#f3eee1;color:#2b2b24;display:flex;flex-direction:column;min-height:780px">
+  <div style="height:12px;background:url('assets/tx-grass.png');background-size:16px"></div>
+  <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:3px solid #2b2b24;background:#fffdf6">
+    <span style="font-family:'Jersey 25',monospace;font-size:20px;color:#8a8578">‹</span>
+    <span style="font-family:'Jersey 25',monospace;font-size:23px">Morning Routine</span>
+    <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:24px;color:#2b2b24">8:05</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;padding:12px 16px 4px">
+    <span style="font-family:'Jersey 25',monospace;font-size:14px;padding:4px 9px;border:2px solid #c8961e;color:#8a6200;background:#fdf3d4">READY FOR REVIEW</span>
+    <span style="font-size:13px;color:#6b675c;font-weight:700">All 4 required done!</span>
+  </div>
+  <div style="flex:1;padding:12px 16px;display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24;opacity:.62">
+      <div style="width:46px;height:46px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Jersey 25',monospace;font-size:26px;color:#fff">✔</div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Brush teeth</div></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24;opacity:.62">
+      <div style="width:46px;height:46px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Jersey 25',monospace;font-size:26px;color:#fff">✔</div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Get dressed</div></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24;opacity:.62">
+      <div style="width:46px;height:46px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Jersey 25',monospace;font-size:26px;color:#fff">✔</div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Make your bed</div></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24;opacity:.62">
+      <div style="width:46px;height:46px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Jersey 25',monospace;font-size:26px;color:#fff">✔</div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Pack backpack</div></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
+      <div style="flex:1;height:3px;background:#cfc8b2"></div>
+      <span style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a6200">BONUS COINS</span>
+      <div style="flex:1;height:3px;background:#cfc8b2"></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fdf8e8;border:3px solid #c8961e">
+      <div style="width:46px;height:46px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Jersey 25',monospace;font-size:26px;color:#fff">✔</div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Read 10 minutes</div></div>
+      <div style="display:flex;align-items:center;gap:4px"><img src="assets/coin.png" alt="" style="width:18px;height:18px"><span style="font-family:'Jersey 25',monospace;font-size:17px;color:#8a6200">+15</span></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fdf8e8;border:3px solid #c8961e">
+      <div style="width:46px;height:46px;flex:none;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f"></div>
+      <div style="flex:1"><div style="font-family:'Jersey 25',monospace;font-size:18px">Tidy your desk</div><div style="font-size:13px;color:#6b675c;font-weight:600">Still time to grab this one!</div></div>
+      <div style="display:flex;align-items:center;gap:4px"><img src="assets/coin.png" alt="" style="width:18px;height:18px"><span style="font-family:'Jersey 25',monospace;font-size:17px;color:#8a6200">+10</span></div>
+    </div>
+  </div>
+  <div style="padding:12px 16px 16px">
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Jersey 25',monospace;font-size:22px;color:#3d2c00;text-align:center;padding:17px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.5),inset 0 -6px 0 rgba(0,0,0,.18)"><img src="assets/coin.png" alt="" style="width:24px;height:24px">Ask a parent to check!</div>
+    <div style="text-align:center;font-size:11px;color:#8a8578;font-weight:600;margin-top:8px">Tapping this puts the routine into Waiting: banner + the iron "I'm the parent — review now" button (<a href="#1f">1f</a>).</div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 1f STATUS TREATMENTS ============ -->
+<div class="dv-opt" id="1f"><div class="dv-olabel"><a class="dv-oid" href="#1f">1f</a>Routine status treatments</div>
+<div class="dv-card" data-screen-label="Status treatments" style="width:390px;background:#f3eee1;color:#2b2b24;padding:16px;display:flex;flex-direction:column;gap:14px">
+  <div style="font-family:'Jersey 25',monospace;font-size:16px;color:#8a8578">Banner shown at the top of the checklist</div>
+  <div style="background:#eaf5df;border:3px solid #57a636;padding:12px 14px">
+    <div style="font-family:'Jersey 25',monospace;font-size:18px;color:#3d7a22">In progress</div>
+    <div style="font-size:13px;font-weight:600;color:#4a463a">2 of 4 done — you've got this!</div>
+  </div>
+  <div style="background:#fdf3d4;border:3px solid #c8961e;padding:12px 14px">
+    <div style="font-family:'Jersey 25',monospace;font-size:18px;color:#8a6200">Ready for review</div>
+    <div style="font-size:13px;font-weight:600;color:#4a463a">Everything's done. Ask a parent to check!</div>
+  </div>
+  <div style="background:#efefec;border:3px solid #9a9a9a;padding:12px 14px">
+    <div style="display:flex;align-items:center;gap:8px">
+      <div style="font-family:'Jersey 25',monospace;font-size:18px;color:#6b6b6b">Waiting for a parent…</div>
+      <span style="margin-left:auto;display:flex;gap:4px"><span style="width:8px;height:8px;background:#9a9a9a"></span><span style="width:8px;height:8px;background:#bdbdbd"></span><span style="width:8px;height:8px;background:#d9d9d9"></span></span>
+    </div>
+    <div style="font-size:13px;font-weight:600;color:#4a463a">Hand the phone to a grown-up when they're ready.</div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Jersey 25',monospace;font-size:18px;color:#fff;text-align:center;padding:14px;background:#6f6f6f;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.3),inset 0 -5px 0 rgba(0,0,0,.25);text-shadow:0 1px 0 rgba(0,0,0,.3);margin-top:12px"><span style="width:10px;height:10px;background:#4a4a44;flex:none"></span>I'm the parent — review now</div>
+    <div style="font-size:12px;font-weight:600;color:#6b675c;text-align:center;margin-top:6px">Opens the parent PIN pad</div>
+  </div>
+  <div style="background:#e8eef4;border:3px solid #6d89a3;padding:12px 14px">
+    <div style="font-family:'Jersey 25',monospace;font-size:18px;color:#42607c">Sent back</div>
+    <div style="font-size:13px;font-weight:600;color:#4a463a">Dad says: "Bed needs one more try — pillow on top!"</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:16px;color:#fff;text-align:center;padding:11px;background:#6d89a3;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.3),inset 0 -4px 0 rgba(0,0,0,.22);text-shadow:0 1px 0 rgba(0,0,0,.3);margin-top:10px">Fix it and ask again</div>
+  </div>
+  <div style="background:#eaf5df;border:3px solid #57a636;padding:12px 14px">
+    <div style="display:flex;align-items:center;gap:8px">
+      <div style="font-family:'Jersey 25',monospace;font-size:18px;color:#3d7a22">Approved!</div>
+      <img src="assets/coin.png" alt="" style="width:20px;height:20px;margin-left:auto">
+      <span style="font-family:'Jersey 25',monospace;font-size:18px;color:#8a6200">+55</span>
+    </div>
+    <div style="font-size:13px;font-weight:600;color:#4a463a">Coins added. See you tonight at 8:00!</div>
+  </div>
+  <div style="font-size:11px;color:#8a8578;font-weight:600">Sent back is calm slate — never red, never creeper/TNT imagery. Closed-for-today uses the same neutral gray as Waiting. The Approved! banner is documented here but never appears in the app: approval goes to the handoff screen (<a href="#1o">1o</a>) and then <a href="#1m">1m</a>, so the checklist has no approved state.</div>
+</div>
+</div>
+
+<!-- ============ 1g TIMER IDLE ============ -->
+<div class="dv-opt" id="1g"><div class="dv-olabel"><a class="dv-oid" href="#1g">1g</a>Timer — set up</div>
+<div class="dv-card" data-screen-label="Timer idle" style="width:390px;background:#f3eee1;color:#2b2b24;display:flex;flex-direction:column;min-height:780px">
+  <div style="height:12px;background:url('assets/tx-grass.png');background-size:16px"></div>
+  <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:3px solid #2b2b24;background:#fffdf6">
+    <span style="font-family:'Jersey 25',monospace;font-size:23px">Timer</span>
+    <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:24px;color:#2b2b24">4:20</span>
+  </div>
+  <div style="flex:1;padding:20px 18px;display:flex;flex-direction:column;gap:16px">
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#8a8578">HOW LONG?</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div style="font-family:'Jersey 25',monospace;font-size:30px;color:#fff;text-align:center;padding:24px 8px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">5<div style="font-size:14px;margin-top:2px">MIN</div></div>
+      <div style="font-family:'Jersey 25',monospace;font-size:30px;color:#fff;text-align:center;padding:24px 8px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">10<div style="font-size:14px;margin-top:2px">MIN</div></div>
+      <div style="font-family:'Jersey 25',monospace;font-size:30px;color:#fff;text-align:center;padding:24px 8px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">15<div style="font-size:14px;margin-top:2px">MIN</div></div>
+      <div style="font-family:'Jersey 25',monospace;font-size:30px;color:#fff;text-align:center;padding:24px 8px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">30<div style="font-size:14px;margin-top:2px">MIN</div></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;margin-top:4px">
+      <div style="flex:1;height:3px;background:#cfc8b2"></div>
+      <span style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578">OR PICK YOUR OWN</span>
+      <div style="flex:1;height:3px;background:#cfc8b2"></div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:stretch">
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:#fffdf6;border:3px solid #2b2b24;padding:12px">
+        <span style="font-family:'Jersey 25',monospace;font-size:34px">12</span>
+        <span style="font-size:14px;font-weight:700;color:#6b675c">minutes</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="width:56px;font-family:'Jersey 25',monospace;font-size:22px;color:#fff;text-align:center;padding:6px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -4px 0 rgba(0,0,0,.28)">+</div>
+        <div style="width:56px;font-family:'Jersey 25',monospace;font-size:22px;color:#fff;text-align:center;padding:6px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -4px 0 rgba(0,0,0,.28)">−</div>
+      </div>
+    </div>
+    <div style="font-family:'Jersey 25',monospace;font-size:24px;color:#fff;text-align:center;padding:17px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Start ▶</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:10px 12px;background:#e7e0cd;border-top:3px solid #2b2b24">
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">HOME</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#3d2c00;text-align:center;padding:15px 4px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.5),inset 0 -5px 0 rgba(0,0,0,.18)">TIMER</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">ME</div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 1h TIMER RUNNING ============ -->
+<div class="dv-opt" id="1h"><div class="dv-olabel"><a class="dv-oid" href="#1h">1h</a>Timer — running</div>
+<div class="dv-card" data-screen-label="Timer running" style="width:390px;background:#20241a;color:#fff;display:flex;flex-direction:column;min-height:780px">
+  <div style="height:12px;background:url('assets/tx-grass.png');background-size:16px"></div>
+  <div style="display:flex;align-items:center;gap:10px;padding:12px 16px">
+    <span style="font-family:'Jersey 25',monospace;font-size:19px;color:#cfc8b2">‹ Home</span>
+    <span style="font-family:'Jersey 25',monospace;font-size:23px;color:#a8e07f">Timer</span>
+    <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:24px;color:#8a8578">4:22</span>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:20px">
+    <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#8a8578;letter-spacing:2px">12 MINUTE TIMER</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:110px;line-height:1">08:42</div>
+    <div style="width:100%;height:16px;border:3px solid #4a4f3e;background:#14170f;padding:2px">
+      <div style="height:100%;width:72%;background:repeating-linear-gradient(90deg,transparent 0 16px,rgba(0,0,0,.25) 16px 19px),linear-gradient(#b4f06a,#7fe237 45%,#59c01c)"></div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 18px 22px">
+    <div style="font-family:'Jersey 25',monospace;font-size:22px;color:#3d2c00;text-align:center;padding:17px;background:#f8c53a;border:3px solid #0d0f0a;box-shadow:inset 0 4px 0 rgba(255,255,255,.5),inset 0 -6px 0 rgba(0,0,0,.18)">Pause ⏸</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:22px;color:#fff;text-align:center;padding:17px;background:#9a9a9a;border:3px solid #0d0f0a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Cancel Timer</div>
+  </div>
+  <div style="text-align:center;font-size:12px;color:#8a8578;font-weight:600;padding-bottom:14px">Dark screen = easy on the eyes at bedtime.<br>The pill on other screens keeps the countdown visible.</div>
+</div>
+</div>
+
+<!-- ============ 1i TIMER EXPIRED ============ -->
+<div class="dv-opt" id="1i"><div class="dv-olabel"><a class="dv-oid" href="#1i">1i</a>Timer — time's up</div>
+<div class="dv-card" data-screen-label="Timer expired" style="width:390px;background:#20241a;color:#fff;display:flex;flex-direction:column;min-height:780px">
+  <div style="height:12px;background:#f8c53a"></div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:20px">
+    <img src="assets/coin.png" alt="" style="width:56px;height:56px">
+    <div style="font-family:'Jersey 25',monospace;font-size:52px;color:#f8c53a;text-align:center;line-height:1.1">TIME'S<br>UP!</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:40px;color:#8a8578">00:00</div>
+    <div style="font-size:14px;color:#cfc8b2;font-weight:600">Your 12 minute timer is done.</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 18px 26px">
+    <div style="font-family:'Jersey 25',monospace;font-size:22px;color:#fff;text-align:center;padding:17px;background:#57a636;border:3px solid #0d0f0a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Done!</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:22px;color:#fff;text-align:center;padding:17px;background:#9a9a9a;border:3px solid #0d0f0a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">+5 more min</div>
+  </div>
+  <div style="text-align:center;font-size:12px;color:#8a8578;font-weight:600;padding-bottom:14px">Gentle chime + screen flash in gold. Never red.</div>
+</div>
+</div>
+
+<!-- ============ 1j PARENT PIN ============ -->
+<div class="dv-opt" id="1j"><div class="dv-olabel"><a class="dv-oid" href="#1j">1j</a>Parent area — iron door + PIN</div>
+<div class="dv-card" data-screen-label="Parent PIN" style="width:390px;background:#e8e6e0;color:#2b2b24;display:flex;flex-direction:column;min-height:780px">
+  <div style="height:14px;background:url('assets/tx-iron.png');background-size:16px;border-bottom:3px solid #6b6b6b"></div>
+  <div style="display:flex;align-items:center;gap:10px;padding:14px 16px">
+    <div style="width:26px;height:38px;background:url('assets/tx-iron.png');background-size:10px;border:2px solid #6b6b6b;position:relative"><span style="position:absolute;right:3px;top:16px;width:4px;height:4px;background:#4a4a44"></span></div>
+    <div>
+      <div style="font-family:'Jersey 25',monospace;font-size:22px">Parent area</div>
+      <div style="font-size:12px;color:#6b675c;font-weight:600">Enter your 4-digit PIN</div>
+    </div>
+    <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:16px;color:#8a8578">✕ close</span>
+  </div>
+  <div style="display:flex;justify-content:center;gap:14px;padding:22px 0 10px">
+    <div style="width:20px;height:20px;background:#2b2b24;border:3px solid #2b2b24"></div>
+    <div style="width:20px;height:20px;background:#2b2b24;border:3px solid #2b2b24"></div>
+    <div style="width:20px;height:20px;background:#fff;border:3px solid #2b2b24"></div>
+    <div style="width:20px;height:20px;background:#fff;border:3px solid #2b2b24"></div>
+  </div>
+  <div style="flex:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;padding:18px 26px 26px;align-content:center">
+    <div style="font-family:'Jersey 25',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">1</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">2</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">3</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">4</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">5</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">6</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">7</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">8</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">9</div>
+    <div></div>
+    <div style="font-family:'Jersey 25',monospace;font-size:30px;text-align:center;padding:20px 0;background:#f4f2ec;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -5px 0 rgba(0,0,0,.12)">0</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:26px;text-align:center;padding:22px 0;background:#d9d6cd;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.6),inset 0 -5px 0 rgba(0,0,0,.12);color:#6b675c">⌫</div>
+  </div>
+  <div style="text-align:center;font-size:12px;color:#8a8578;font-weight:600;padding-bottom:16px">Iron/stone palette signals "grown-up zone" — calm, not scary.<br>Wrong PIN just shakes the dots. No lockout messaging shown to Haley.</div>
+</div>
+</div>
+
+<!-- ============ 1k PARENT APPROVAL ============ -->
+<div class="dv-opt" id="1k"><div class="dv-olabel"><a class="dv-oid" href="#1k">1k</a>Parent — approve routine</div>
+<div class="dv-card" data-screen-label="Parent approval" style="width:390px;background:#e8e6e0;color:#2b2b24;display:flex;flex-direction:column;min-height:780px">
+  <div style="height:14px;background:url('assets/tx-iron.png');background-size:16px;border-bottom:3px solid #6b6b6b"></div>
+  <div style="display:flex;align-items:center;gap:10px;padding:12px 16px">
+    <div style="font-family:'Jersey 25',monospace;font-size:21px">Review: Morning Routine</div>
+    <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:14px;color:#fff;padding:6px 10px;background:#6f6f6f;border:3px solid #20241a;box-shadow:inset 0 2px 0 rgba(255,255,255,.3),inset 0 -3px 0 rgba(0,0,0,.25)">LOCK ▪</span>
+  </div>
+  <div style="padding:0 16px;font-size:13px;color:#6b675c;font-weight:600">Finished 8:05 AM · asked for review 8:05 AM</div>
+  <div style="flex:1;padding:12px 16px;display:flex;flex-direction:column;gap:8px">
+    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fffdf6;border:2px solid #cfc8b2;font-size:14px;font-weight:600"><span style="color:#3d7a22;font-family:'Jersey 25',monospace">✔</span> Brush teeth</div>
+    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fffdf6;border:2px solid #cfc8b2;font-size:14px;font-weight:600"><span style="color:#3d7a22;font-family:'Jersey 25',monospace">✔</span> Get dressed</div>
+    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fffdf6;border:2px solid #cfc8b2;font-size:14px;font-weight:600"><span style="color:#3d7a22;font-family:'Jersey 25',monospace">✔</span> Make your bed</div>
+    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fffdf6;border:2px solid #cfc8b2;font-size:14px;font-weight:600"><span style="color:#3d7a22;font-family:'Jersey 25',monospace">✔</span> Pack backpack</div>
+    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fdf8e8;border:2px solid #c8961e;font-size:14px;font-weight:600"><span style="color:#3d7a22;font-family:'Jersey 25',monospace">✔</span> Bonus: Read 10 minutes<span style="margin-left:auto;font-family:'Jersey 25',monospace;color:#8a6200">+15</span></div>
+    <div style="margin-top:10px;background:#fffdf6;border:3px solid #2b2b24;padding:14px;text-align:center">
+      <div style="font-size:12px;color:#6b675c;font-weight:700;letter-spacing:1px;margin-bottom:6px">AWARD · base 40 + earned 15</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:16px">
+        <div style="width:52px;font-family:'Jersey 25',monospace;font-size:24px;color:#fff;padding:10px 0;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -4px 0 rgba(0,0,0,.28)">−5</div>
+        <div style="display:flex;align-items:center;gap:8px"><img src="assets/coin.png" alt="" style="width:32px;height:32px"><span style="font-family:'Jersey 25',monospace;font-size:46px">55</span></div>
+        <div style="width:52px;font-family:'Jersey 25',monospace;font-size:24px;color:#fff;padding:10px 0;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -4px 0 rgba(0,0,0,.28)">+5</div>
+      </div>
+      <div style="font-size:11px;color:#8a8578;font-weight:600;margin-top:4px">tap the number to type an exact amount</div>
+    </div>
+  </div>
+  <div style="padding:0 16px 18px;display:flex;flex-direction:column;gap:10px">
+    <div style="font-family:'Jersey 25',monospace;font-size:22px;color:#fff;text-align:center;padding:16px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Approve &amp; award 55</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#fff;text-align:center;padding:13px;background:#6d89a3;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.3),inset 0 -5px 0 rgba(0,0,0,.22);text-shadow:0 1px 0 rgba(0,0,0,.3)">Send back</div>
+      <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#fff;text-align:center;padding:13px;background:#6f6f6f;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.3),inset 0 -5px 0 rgba(0,0,0,.25);text-shadow:0 1px 0 rgba(0,0,0,.3)">Close for today</div>
+    </div>
+    <div style="text-align:center;font-size:11px;color:#8a8578;font-weight:600">Approve banks the coins and goes to the handoff screen (<a href="#1o">1o</a>) — not straight to the award moment.</div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 1l PARENT SETTINGS ============ -->
+<div class="dv-opt" id="1l"><div class="dv-olabel"><a class="dv-oid" href="#1l">1l</a>Parent — settings + verification</div>
+<div class="dv-card" data-screen-label="Parent settings" style="width:390px;background:#e8e6e0;color:#2b2b24;display:flex;flex-direction:column;min-height:780px">
+  <div style="height:14px;background:url('assets/tx-iron.png');background-size:16px;border-bottom:3px solid #6b6b6b"></div>
+  <div style="display:flex;align-items:center;gap:10px;padding:12px 16px">
+    <div style="font-family:'Jersey 25',monospace;font-size:22px">Settings</div>
+    <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:14px;color:#fff;padding:6px 10px;background:#6f6f6f;border:3px solid #20241a;box-shadow:inset 0 2px 0 rgba(255,255,255,.3),inset 0 -3px 0 rgba(0,0,0,.25)">LOCK ▪</span>
+  </div>
+  <div style="flex:1;padding:4px 16px 16px;display:flex;flex-direction:column;gap:14px;overflow:hidden">
+    <div style="background:#fdf8e8;border:3px solid #c8961e;padding:12px">
+      <div style="font-family:'Jersey 25',monospace;font-size:16px;color:#8a6200;margin-bottom:8px">VERIFY LAST NIGHT · Aug 14</div>
+      <div style="font-size:12px;color:#6b675c;font-weight:600;margin-bottom:8px">Items Haley couldn't check after the phone left her room:</div>
+      <div style="display:flex;align-items:center;gap:10px;padding:7px 0;font-size:14px;font-weight:600">
+        <div style="width:30px;height:30px;flex:none;background:#57a636;border:3px solid;border-color:#2c5c1a #a8e07f #a8e07f #2c5c1a;display:flex;align-items:center;justify-content:center;font-family:'Jersey 25',monospace;font-size:17px;color:#fff">✔</div>Lights out by 8:45
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:7px 0;font-size:14px;font-weight:600">
+        <div style="width:30px;height:30px;flex:none;background:#fffdf6;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f"></div>Stayed in bed after lights out
+      </div>
+      <div style="font-family:'Jersey 25',monospace;font-size:15px;color:#3d2c00;text-align:center;padding:10px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.5),inset 0 -4px 0 rgba(0,0,0,.18);margin-top:8px">Confirm &amp; award night coins</div>
+    </div>
+    <div style="background:#fffdf6;border:3px solid #2b2b24;padding:12px">
+      <div style="font-family:'Jersey 25',monospace;font-size:16px;color:#8a8578;margin-bottom:8px">ROUTINES</div>
+      <div style="display:flex;align-items:center;font-size:14px;font-weight:600;padding:6px 0;border-bottom:2px solid #efe9d8">Morning · weekdays<span style="margin-left:auto;font-family:'Jersey 25',monospace;color:#3d7a22">6:30–8:30 ✎</span></div>
+      <div style="display:flex;align-items:center;font-size:14px;font-weight:600;padding:6px 0">Nighttime · every day<span style="margin-left:auto;font-family:'Jersey 25',monospace;color:#3d7a22">8:00 PM ✎</span></div>
+    </div>
+    <div style="background:#fffdf6;border:3px solid #2b2b24;padding:12px">
+      <div style="font-family:'Jersey 25',monospace;font-size:16px;color:#8a8578;margin-bottom:8px">REWARDS + COINS</div>
+      <div style="display:flex;align-items:center;font-size:14px;font-weight:600;padding:6px 0;border-bottom:2px solid #efe9d8">Base award (each routine)<span style="margin-left:auto;font-family:'Jersey 25',monospace;color:#3d7a22">40 ✎</span></div>
+      <div style="display:flex;align-items:center;font-size:14px;font-weight:600;padding:6px 0;border-bottom:2px solid #efe9d8">Balance<span style="margin-left:auto;display:flex;align-items:center;gap:6px"><img src="assets/coin.png" alt="" style="width:18px;height:18px"><span style="font-family:'Jersey 25',monospace">1,240</span><span style="font-family:'Jersey 25',monospace;color:#3d7a22">＋/− adjust</span></span></div>
+      <div style="display:flex;align-items:center;font-size:14px;font-weight:600;padding:8px 0 2px">Redemption at 1,720
+        <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:14px;color:#d5d2c9;padding:8px 12px;background:#7d7d7d;border:3px solid #4a4a44;box-shadow:inset 0 2px 0 rgba(255,255,255,.12),inset 0 -3px 0 rgba(0,0,0,.18)">Redeem · 480 to go</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 1o HANDOFF ============ -->
+<div class="dv-opt" id="1o"><div class="dv-olabel"><a class="dv-oid" href="#1o">1o</a>Handoff — approved, hand the phone back</div>
+<div class="dv-card" data-screen-label="Handoff" style="width:390px;background:#f3eee1;color:#2b2b24;display:flex;flex-direction:column;min-height:780px">
+  <div style="height:12px;background:url('assets/tx-grass.png');background-size:16px"></div>
+  <div style="height:8px;background:url('assets/tx-dirt.png');background-size:16px"></div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px">
+    <img src="assets/coin.png" alt="" style="width:56px;height:56px">
+    <div style="font-family:'Jersey 25',monospace;font-size:30px;text-align:center;line-height:1.15">Morning Routine approved!</div>
+    <div style="font-size:14px;color:#6b675c;font-weight:600;text-align:center;max-width:280px;text-wrap:pretty">Hand the phone back to Haley — the coins are hers to collect.</div>
+  </div>
+  <div style="padding:0 18px 20px">
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Jersey 25',monospace;font-size:22px;color:#3d2c00;text-align:center;padding:17px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.5),inset 0 -6px 0 rgba(0,0,0,.18)"><img src="assets/coin.png" alt="" style="width:24px;height:24px">Tap to see your coins!</div>
+    <div style="text-align:center;font-size:12px;color:#8a8578;font-weight:600;margin-top:8px">Haley, this one's yours to press</div>
+  </div>
+  <div style="text-align:center;font-size:11px;color:#8a8578;font-weight:600;padding:0 18px 16px">Deliberately quiet — no coin burst, no jingle, no toast. The coins are already banked; all the celebration belongs to <a href="#1m">1m</a>. If nobody taps, the reward waits as a gold button at the top of Home (<a href="#1b">1b</a>).</div>
+</div>
+</div>
+
+<!-- ============ 1m COIN AWARD MOMENT ============ -->
+<div class="dv-opt" id="1m"><div class="dv-olabel"><a class="dv-oid" href="#1m">1m</a>Coin award moment — played by Haley</div>
+<div class="dv-card" data-screen-label="Coin award" style="width:390px;background:#f3eee1;color:#2b2b24;display:flex;flex-direction:column;min-height:780px;position:relative;overflow:hidden">
+  <div style="height:12px;background:url('assets/tx-grass.png');background-size:16px"></div>
+  <div style="height:8px;background:url('assets/tx-dirt.png');background-size:16px"></div>
+  <div style="position:absolute;left:16px;right:16px;top:34px;display:flex;gap:12px;align-items:center;background:#efe9d8;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.7),inset 0 -4px 0 rgba(0,0,0,.1),0 5px 0 rgba(32,36,26,.15);padding:12px 16px;z-index:2">
+    <img src="assets/coin.png" alt="" style="width:34px;height:34px">
+    <div>
+      <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#b07d00">Routine complete!</div>
+      <div style="font-size:13px;color:#4a463a;font-weight:600">Morning Routine · approved</div>
+    </div>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px;position:relative">
+    <img src="assets/coin.png" alt="" style="position:absolute;width:22px;height:22px;left:18%;top:24%;transform:rotate(-12deg)">
+    <img src="assets/coin.png" alt="" style="position:absolute;width:16px;height:16px;right:20%;top:20%;transform:rotate(15deg)">
+    <img src="assets/coin.png" alt="" style="position:absolute;width:18px;height:18px;left:26%;bottom:26%;transform:rotate(8deg)">
+    <img src="assets/coin.png" alt="" style="position:absolute;width:14px;height:14px;right:24%;bottom:30%;transform:rotate(-20deg)">
+    <img src="assets/coin.png" alt="" style="width:72px;height:72px">
+    <div style="font-family:'Jersey 25',monospace;font-size:64px;color:#b07d00;line-height:1">+55</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:20px;color:#3d7a22">Great job, Haley!</div>
+    <div style="font-size:13px;color:#6b675c;font-weight:600">Streak: 7 days in a row!</div>
+  </div>
+  <div style="padding:0 18px 8px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+      <img src="assets/coin.png" alt="" style="width:28px;height:28px">
+      <span style="font-family:'Jersey 25',monospace;font-size:24px">1,240 <span style="font-size:15px;color:#8a8578">/ 1,720</span></span>
+      <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:15px;color:#3d7a22">+55 ▲</span>
+    </div>
+    <div style="height:20px;border:3px solid #20241a;background:#2f2f28;padding:2px;display:flex">
+      <div style="height:100%;width:69%;background:repeating-linear-gradient(90deg,transparent 0 16px,rgba(0,0,0,.25) 16px 19px),linear-gradient(#b4f06a,#7fe237 45%,#59c01c)"></div>
+      <div style="height:100%;width:3.2%;background:#d9ff8a"></div>
+    </div>
+    <div style="font-size:11px;color:#8a8578;font-weight:600;margin-top:4px">New segment flashes bright, then settles into the bar (~1.5s). Coins arc into the counter.</div>
+  </div>
+  <div style="padding:10px 18px 18px">
+    <div style="font-family:'Jersey 25',monospace;font-size:22px;color:#fff;text-align:center;padding:16px;background:#57a636;border:3px solid #20241a;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">Back to Home</div>
+    <div style="text-align:center;font-size:11px;color:#8a8578;font-weight:600;margin-top:8px">Reached only when Haley taps "Tap to see your coins!" — from the handoff screen (<a href="#1o">1o</a>) or from the gold button on Home (<a href="#1b">1b</a>). Never fires on the parent's approve tap.</div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 1n CUSTOMIZATION ============ -->
+<div class="dv-opt" id="1n"><div class="dv-olabel"><a class="dv-oid" href="#1n">1n</a>Customization — avatar + theme</div>
+<div class="dv-card" data-screen-label="Customization" style="width:390px;background:#f3eee1;color:#2b2b24;display:flex;flex-direction:column;min-height:780px">
+  <div style="height:12px;background:url('assets/tx-grass.png');background-size:16px"></div>
+  <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:3px solid #2b2b24;background:#fffdf6">
+    <span style="font-family:'Jersey 25',monospace;font-size:23px">My look</span>
+    <span style="margin-left:auto;font-family:'Jersey 25',monospace;font-size:24px;color:#2b2b24">4:31</span>
+  </div>
+  <div style="flex:1;padding:16px;display:flex;flex-direction:column;gap:16px">
+    <div>
+      <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#8a8578;margin-bottom:10px">PICK YOUR AVATAR</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+        <div style="aspect-ratio:1;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f;display:flex;align-items:center;justify-content:center"><img src="assets/av-steve.png" alt="Steve" style="width:48px;height:48px"></div>
+        <div style="aspect-ratio:1;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f;display:flex;align-items:center;justify-content:center"><img src="assets/av-alex.png" alt="Alex" style="width:48px;height:48px"></div>
+        <div style="aspect-ratio:1;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f;display:flex;align-items:center;justify-content:center"><img src="assets/av-creeper.png" alt="Creeper" style="width:48px;height:48px"></div>
+        <div style="aspect-ratio:1;background:#c8961e;border:4px solid #f8c53a;outline:3px solid #20241a;display:flex;align-items:center;justify-content:center"><img src="assets/av-axolotl.png" alt="Axolotl (selected)" style="width:48px;height:48px"></div>
+        <div style="aspect-ratio:1;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f;display:flex;align-items:center;justify-content:center"><img src="assets/av-cat.png" alt="Cat" style="width:48px;height:48px"></div>
+        <div style="aspect-ratio:1;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f;display:flex;align-items:center;justify-content:center"><img src="assets/av-panda.png" alt="Panda" style="width:48px;height:48px"></div>
+        <div style="aspect-ratio:1;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f;display:flex;align-items:center;justify-content:center"><img src="assets/av-fox.png" alt="Fox" style="width:48px;height:48px"></div>
+        <div style="aspect-ratio:1;background:#8b8b8b;border:3px solid;border-color:#3f3f3f #ffffff #ffffff #3f3f3f;display:flex;align-items:center;justify-content:center"><img src="assets/av-bee.png" alt="Bee" style="width:48px;height:48px"></div>
+      </div>
+      <div style="text-align:center;font-family:'Jersey 25',monospace;font-size:16px;color:#8a6200;margin-top:8px">Axolotl — good choice!</div>
+    </div>
+    <div>
+      <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#8a8578;margin-bottom:10px">PICK YOUR WORLD</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fffdf6;border:4px solid #f8c53a;outline:3px solid #20241a">
+          <div style="width:40px;height:26px;background:url('assets/tx-grass.png');background-size:12px;border:2px solid #20241a"></div>
+          <span style="font-family:'Jersey 25',monospace;font-size:18px">Overworld</span>
+          <span style="margin-left:auto;display:flex;gap:4px"><span style="width:13px;height:13px;background:#57a636"></span><span style="width:13px;height:13px;background:#7a5233"></span><span style="width:13px;height:13px;background:#7fe237"></span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24">
+          <div style="width:40px;height:26px;background:url('assets/tx-nether.png');background-size:12px;border:2px solid #20241a"></div>
+          <span style="font-family:'Jersey 25',monospace;font-size:18px">Nether</span>
+          <span style="margin-left:auto;display:flex;gap:4px"><span style="width:13px;height:13px;background:#d96e2e"></span><span style="width:13px;height:13px;background:#8a4545"></span><span style="width:13px;height:13px;background:#f2a23e"></span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24">
+          <div style="width:40px;height:26px;background:#3a2e4a;border:2px solid #20241a"></div>
+          <span style="font-family:'Jersey 25',monospace;font-size:18px">End</span>
+          <span style="margin-left:auto;display:flex;gap:4px"><span style="width:13px;height:13px;background:#a06fd6"></span><span style="width:13px;height:13px;background:#d8c7ee"></span><span style="width:13px;height:13px;background:#e5e8a0"></span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24">
+          <div style="width:40px;height:26px;background:#2e6e8f;border:2px solid #20241a"></div>
+          <span style="font-family:'Jersey 25',monospace;font-size:18px">Ocean</span>
+          <span style="margin-left:auto;display:flex;gap:4px"><span style="width:13px;height:13px;background:#3aa6b9"></span><span style="width:13px;height:13px;background:#2e6e8f"></span><span style="width:13px;height:13px;background:#8fd8c9"></span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fffdf6;border:3px solid #2b2b24">
+          <div style="width:40px;height:26px;background:#e8a9c6;border:2px solid #20241a"></div>
+          <span style="font-family:'Jersey 25',monospace;font-size:18px">Cherry Grove</span>
+          <span style="margin-left:auto;display:flex;gap:4px"><span style="width:13px;height:13px;background:#e58bb4"></span><span style="width:13px;height:13px;background:#8f5a44"></span><span style="width:13px;height:13px;background:#f5cede"></span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:10px 12px;background:#e7e0cd;border-top:3px solid #2b2b24">
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">HOME</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#fff;text-align:center;padding:15px 4px;background:#9a9a9a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.28);text-shadow:0 2px 0 rgba(0,0,0,.3)">TIMER</div>
+    <div style="font-family:'Jersey 25',monospace;font-size:17px;color:#3d2c00;text-align:center;padding:15px 4px;background:#f8c53a;border:3px solid #20241a;box-shadow:inset 0 3px 0 rgba(255,255,255,.5),inset 0 -5px 0 rgba(0,0,0,.18)">ME</div>
+  </div>
+</div>
+</div>
+
+</div>
+<p class="dv-next">Try next: "make the Nether variant of Home" · "riff on the Home layout" · "tighten the checklist rows" — reference any screen by its id, e.g. <a class="dv-oid" href="#1b">1b</a>.</p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;coinBalance&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1240,&quot;min&quot;:0,&quot;max&quot;:5000,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Sample data&quot;},&quot;timerRunning&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sample data&quot;}}">
+class Component extends DCLogic {
+  _ac() {
+    if (!this._c) { const A = window.AudioContext || window.webkitAudioContext; this._c = new A(); }
+    if (this._c.state === 'suspended') { this._c.resume(); }
+    return this._c;
+  }
+  _note(at, freq, dur, peak) {
+    const c = this._ac(), o = c.createOscillator(), g = c.createGain();
+    o.type = 'sine'; o.frequency.value = freq;
+    g.gain.setValueAtTime(0.0001, at);
+    g.gain.exponentialRampToValueAtTime(peak, at + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+    o.connect(g).connect(c.destination);
+    o.start(at); o.stop(at + dur + 0.05);
+  }
+  _seq(list) {
+    const t0 = this._ac().currentTime + 0.04;
+    list.forEach(n => this._note(t0 + n[0], n[1], n[2], n[3]));
+  }
+  renderVals() {
+    const b = this.props.coinBalance ?? 1240;
+    const pct = Math.min(100, Math.round((b / 1720) * 1000) / 10);
+    const rawGroups = [
+      {name:'HYGIENE & BATHROOM', items:[{id:'toothbrush',name:'Toothbrush'},{id:'shower',name:'Shower / bath'},{id:'towel',name:'Towel'},{id:'comb',name:'Hairbrush'}]},
+      {name:'BEDROOM & CLOTHES', items:[{id:'bed',name:'Bed'},{id:'shirt',name:'Clothes'},{id:'basket',name:'Laundry'},{id:'lantern',name:'Lights out'},{id:'door',name:'Door / leave'},{id:'phone',name:'Phone / hand it in'}]},
+      {name:'SCHOOL & CHORES', items:[{id:'backpack',name:'Backpack'},{id:'pencil',name:'Homework'},{id:'paper',name:'Worksheet'},{id:'book',name:'Reading'},{id:'broom',name:'Tidy up'},{id:'trash',name:'Trash'},{id:'flower',name:'Water plants'},{id:'bone',name:'Feed pet'},{id:'rat',name:'Pet rat'}]},
+      {name:'FOOD & DRINK', items:[{id:'cookie',name:'Snack'},{id:'apple',name:'Golden apple (fruit)'},{id:'bowl',name:'Breakfast'},{id:'cup',name:'Milk / drink'},{id:'bottle',name:'Water bottle'},{id:'drumstick',name:'Protein'},{id:'carrot',name:'Vegetables'}]},
+      {name:'TIME & DAY', items:[{id:'clock',name:'Clock'},{id:'hourglass',name:'Timer'},{id:'sun',name:'Morning'},{id:'moon',name:'Night'},{id:'star',name:'Streak / star'},{id:'bell',name:'Reminder'}]},
+      {name:'FUN & REWARDS', items:[{id:'heart',name:'Kindness'},{id:'sword',name:'Screen time'},{id:'pickaxe',name:'Big chore'},{id:'shield',name:'Bonus quest'},{id:'chest',name:'Reward chest'},{id:'key',name:'Special unlock'},{id:'orb',name:'XP / bonus'}]}
+    ];
+    const iconGroups = rawGroups.map(g => ({name: g.name, items: g.items.map(it => ({...it, bg: "url('assets/icons/" + it.id + ".png')"}))}));
+    const S = list => () => this._seq(list);
+    const award = off => [[off, 523.25, .25, .16], [off + .12, 659.25, .25, .16], [off + .24, 783.99, .45, .18], [off + .36, 1046.50, .5, .18]];
+    return {
+      playCheckRun: S([[0, 1046.50, .12, .10], [.5, 1174.66, .12, .10], [1, 1318.51, .12, .10], [1.5, 1567.98, .12, .10], [2, 1760.00, .12, .10]]),
+      playLastCheck: S([[0, 783.99, .18, .14], [.16, 1046.50, .3, .14]]),
+      playAskParent: S([[0, 392.00, .25, .12], [.22, 293.66, .25, .12]]),
+      playAward: S(award(0)),
+      playStreak: S([[0, 659.25, .2, .14], [.18, 987.77, .2, .14]]),
+      playTimerStart: S([[0, 587.33, .1, .12]]),
+      playTimerPause: S([[0, 440.00, .12, .10]]),
+      playAlarm: S([0, 1.1, 2.2].flatMap(t => [[t, 659.25, .5, .22], [t + .18, 783.99, .7, .22]])),
+      playAvatar: S([[0, 880.00, .1, .08]]),
+      playRedeem: S(award(0).concat(award(.9).map(n => [n[0], n[1] * 2, n[2], n[3] * .8]))),
+      iconGroups,
+      balanceText: b.toLocaleString('en-US'),
+      xpWidth: pct + '%',
+      toGo: Math.max(0, 1720 - b).toLocaleString('en-US'),
+      timerRunning: this.props.timerRunning ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>
