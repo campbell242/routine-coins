@@ -3,6 +3,7 @@
 // Walking backward over the plan's *scheduled* days (so a weekday-only plan's
 // streak survives weekends):
 //   • approved  → counts, keep walking
+//   • excused (parent: sleepover etc.) → skipped like a non-scheduled day
 //   • unresolved (still pending a parent) → doesn't count yet, doesn't break
 //   • closed, or the day passed with no occurrence → the chain ends
 // Today (and a pending day) never breaks the chain — a streak only ever
@@ -26,6 +27,7 @@ export function planStreak(plan: PlanResolved, occs: OccurrenceMap, todayKey: st
       streak++;
       continue;
     }
+    if (occ?.status === 'excused') continue; // parent-excused night — skip, don't count, don't break
     if (dk === todayKey) continue; // today just isn't done yet
     if (occ && occ.status !== 'closed') continue; // pending parent resolution — not broken yet
     break; // closed or missed → chain ends here

@@ -142,6 +142,30 @@ design README and mockup annotations.
   broom (bonus); nighttime — toothbrush, shirt, broom, basket, book (bonus),
   lantern (overnight), bed (overnight). No icon repeats within a single list.
 
+## The real nighttime routine + excused nights (family-locked)
+
+- The family locked their actual routine (nighttime only): opens 7:00 PM,
+  worth exactly 344/night — base 204 for the five required items (snack →
+  clean clothes → brush/floss → reading with a parent → phone to parents'
+  room), +100 for the parent-verified "in bed, lights out, stay in bed",
+  +20 feed Stormy, +20 pack lunch. 344 × 5 = 1,720 = one redemption.
+- The morning plan is `enabled: false` (kept in config; its item IDs stay
+  retired). The replaced nighttime items got NEW stable IDs (n-snack,
+  n-change, n-teethfloss, n-parentread, n-phone, n-sleep, n-stormy,
+  n-lunch); the old ones (n-teeth … n-stayedinbed) are never reused.
+- The +100 sleep item is mandatory in spirit but modeled as a coin-valued
+  parent-verified item: a night she gets up costs exactly 100 automatically,
+  without wiping out credit for the rest of the evening. It renders in the
+  gold coins section by design.
+- "Phone to Mom & Dad's room" is the built-in handoff: she checks it in
+  their room and hands the phone over for review on the spot.
+- **Excused nights**: new `excused` occurrence status. A parent (PIN'd, in
+  Settings → STREAK → "Excuse a night") can excuse Tonight or Last night —
+  retroactive excusing creates an already-excused occurrence, covering the
+  sleepover-where-nobody-opened-the-app case. Excused nights award no
+  coins; the streak SKIPS them exactly like a non-scheduled day. Already
+  resolved dates can't be excused (button disabled, "already settled").
+
 ## Review hardening
 
 An adversarial multi-agent review (engine correctness, UX flows, pixel

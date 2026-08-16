@@ -17,7 +17,13 @@ export type OccurrenceStatus =
   | 'review_requested'
   | 'sent_back'
   | 'approved'
-  | 'closed';
+  | 'closed'
+  /**
+   * Parent-excused night (sleepover, travel, sick day): resolved with no
+   * award, and the streak SKIPS the day like a non-scheduled one instead of
+   * breaking. May be applied retroactively.
+   */
+  | 'excused';
 
 export interface ItemCheck {
   checked: boolean;
@@ -49,7 +55,7 @@ export function occurrenceId(planId: string, dk: string): string {
 }
 
 export function isResolved(occ: Occurrence): boolean {
-  return occ.status === 'approved' || occ.status === 'closed';
+  return occ.status === 'approved' || occ.status === 'closed' || occ.status === 'excused';
 }
 
 export function makeSnapshot(plan: PlanResolved, now: number): PlanSnapshot {
@@ -213,4 +219,13 @@ export function approve(occ: Occurrence, award: number, now: number): Occurrence
 export function closeForToday(occ: Occurrence, now: number): Occurrence {
   assertUnresolved(occ, 'closeForToday');
   return { ...occ, status: 'closed', resolvedAt: now };
+}
+
+/**
+ * Parent excuses the night (sleepover, travel…). No award; the streak skips
+ * this date instead of breaking.
+ */
+export function excuseNight(occ: Occurrence, now: number): Occurrence {
+  assertUnresolved(occ, 'excuseNight');
+  return { ...occ, status: 'excused', resolvedAt: now };
 }
