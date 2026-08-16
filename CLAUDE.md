@@ -20,7 +20,7 @@ config change only.
   `'parent-morning'` for after-lights-out items a parent verifies next
   morning. Time-conditioned items are never auto-evaluated or auto-failed.
 - **Set an `icon` on every new item**, chosen from the fixed task icon pack
-  in `src/config/icons.ts` (`TASK_ICONS`, 37 names — the same list is
+  in `src/config/icons.ts` (`TASK_ICONS`, 39 names — the same list is
   documented in README.md "Authoring checklists"). Pick the best semantic
   fit (e.g. brush teeth → `toothbrush`, reading → `book`, lights out →
   `lantern`). Do not leave items icon-less when a reasonable fit exists,

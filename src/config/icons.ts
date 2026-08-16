@@ -1,8 +1,10 @@
-// Task icon pack (design/README.md "Task Icon Pack", screen 2a).
-// 37 hand-drawn pixel PNGs in assets/icons/. Icons are decorative labels on
-// checklist items — never buttons, never the only signal of meaning (the task
-// text is always present). Referenced from item config by bare name
-// (e.g. icon: 'toothbrush'); unknown names degrade gracefully to no icon.
+// Task icon pack (design/README.md "Task Icon Pack", screen 2a; additions in
+// design/NEW_ICONS.md). 39 hand-drawn pixel PNGs in assets/icons/. Icons are
+// decorative labels on checklist items — never buttons, never the only signal
+// of meaning (the task text is always present). Referenced from item config by
+// bare name (e.g. icon: 'toothbrush'); unknown names degrade gracefully to no
+// icon. Note: rat + phone are drawn on a 2px block grid (the original 37 use
+// 4px) — deliberate, per NEW_ICONS.md; render as-is, never resample.
 
 export const TASK_ICONS: Record<string, string> = {
   // Hygiene & bathroom
@@ -16,6 +18,7 @@ export const TASK_ICONS: Record<string, string> = {
   basket: 'laundry',
   lantern: 'lights out',
   door: 'door / leave',
+  phone: 'phone / hand it in',
   // School & chores
   backpack: 'backpack',
   pencil: 'homework',
@@ -25,6 +28,7 @@ export const TASK_ICONS: Record<string, string> = {
   trash: 'trash',
   flower: 'water plants',
   bone: 'feed pet',
+  rat: 'pet rat — Stormy',
   // Food & drink
   cookie: 'snack',
   apple: 'fruit',

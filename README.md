@@ -103,6 +103,9 @@ aren't in this list.**
 | `flower` | water plants | | `orb` | XP / bonus |
 | `cookie` | snack | | `apple` | fruit |
 | `bowl` | breakfast | | `cup` | milk / drink |
+| `phone` | phone / hand it in | | `rat` | pet rat — Stormy |
 
 Tip: avoid repeating the same icon twice within one routine's list when a
-distinct alternative fits.
+distinct alternative fits. Note: `rat` and `phone` are drawn on a finer 2px
+block grid than the original 37 (deliberate — see `design/NEW_ICONS.md`);
+render them as-is, never resample them to the older grid.

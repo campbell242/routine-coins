@@ -322,9 +322,11 @@ describe('locked nighttime routine math (344/night)', () => {
 describe('task icons', () => {
   it('resolves known names and degrades gracefully for unknown/missing ones', async () => {
     const { iconSrc, TASK_ICONS } = await import('../../config/icons');
-    expect(Object.keys(TASK_ICONS)).toHaveLength(37);
+    expect(Object.keys(TASK_ICONS)).toHaveLength(39);
     expect(iconSrc('toothbrush')).toBe('assets/icons/toothbrush.png');
     expect(iconSrc('lantern')).toBe('assets/icons/lantern.png');
+    expect(iconSrc('rat')).toBe('assets/icons/rat.png');
+    expect(iconSrc('phone')).toBe('assets/icons/phone.png');
     expect(iconSrc('creeper-tnt')).toBeUndefined(); // invented name → no icon
     expect(iconSrc(undefined)).toBeUndefined();
     expect(iconSrc('')).toBeUndefined();

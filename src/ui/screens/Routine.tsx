@@ -51,7 +51,9 @@ function ChecklistRow({
           src={icon}
           alt=""
           aria-hidden="true"
-          style={{ width: 28, height: 28, flex: 'none' }}
+          // contain: non-square icons (rat 40×22, phone 24×40) keep their
+          // true proportions inside the shared 28px footprint
+          style={{ width: 28, height: 28, flex: 'none', objectFit: 'contain' }}
           onError={(e) => {
             (e.target as HTMLImageElement).style.display = 'none';
           }}
