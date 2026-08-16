@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { AVATARS } from '../../config/app';
 import { CHILD_NAME, REDEMPTION_THRESHOLD } from '../../config/profile';
 import {
@@ -14,6 +15,13 @@ import { store, useAppState } from '../../store/hooks';
 import { ChildStrips, TabBar, TimerPill } from '../components/chrome';
 import { Chip, CoinCount, PixelButton, Strip, XPBar, useTheme, type ChipKind } from '../components/core';
 import type { PlanResolved } from '../../config/types';
+
+// Which pip count each plan's card last showed (module-level: survives
+// navigation, resets with the app). Pips that turned green since the card
+// was last seen flip in with scaleX (spec §1's 200ms beat happens on the
+// routine screen, where the pips aren't visible — so the flip plays the
+// first time she sees the card again, once, never on plain revisits).
+const seenPips = new Map<string, string>(); // planId → '0101…' done-mask
 
 function cardChip(state: PlanToday): { kind: ChipKind; label: string } | undefined {
   if (state.kind === 'due') return undefined; // not started yet — no status chip
@@ -57,6 +65,17 @@ function RoutineCard({ plan, state }: { plan: PlanResolved; state: PlanToday }) 
   const segments = occ
     ? requiredChildItems(occ).map((i) => occ.checks[i.id]?.checked === true)
     : Array.from({ length: reqTotal }, () => false);
+
+  // Pips greened since this card was last on screen get the one-time flip
+  // (per-pip mask, so out-of-order checks flip the right pips).
+  const mask = segments.map((d) => (d ? '1' : '0')).join('');
+  const prevMask = seenPips.get(plan.id);
+  useEffect(() => {
+    seenPips.set(plan.id, mask);
+  }, [plan.id, mask]);
+  const newPips = segments
+    .map((done, i) => (done && prevMask !== undefined && prevMask[i] === '0' ? i : -1))
+    .filter((i) => i >= 0);
 
   let cta: JSX.Element;
   if (waiting) {
@@ -104,15 +123,32 @@ function RoutineCard({ plan, state }: { plan: PlanResolved; state: PlanToday }) 
         </div>
         <div style={{ display: 'flex', gap: 5, marginBottom: 16 }}>
           {segments.map((done, i) => (
+            // Static gray pip; green is an inset overlay so the flip's scaleX
+            // never distorts the border (mirrors the §3a demo structure).
             <div
               key={i}
               style={{
                 flex: 1,
                 height: 12,
-                background: done ? theme.primary : '#d9d3c2',
+                background: '#d9d3c2',
                 border: '2px solid #20241a',
+                position: 'relative',
               }}
-            />
+            >
+              {done && (
+                <div
+                  className={newPips.includes(i) ? 'pip-flip' : undefined}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: theme.primary,
+                    ...(newPips.includes(i)
+                      ? { animationDelay: `${newPips.indexOf(i) * 80}ms` }
+                      : {}),
+                  }}
+                />
+              )}
+            </div>
           ))}
         </div>
         {cta}

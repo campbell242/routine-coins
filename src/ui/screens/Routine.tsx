@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { iconSrc } from '../../config/icons';
 import type { ItemConfig } from '../../config/types';
 import {
@@ -10,7 +10,63 @@ import {
 } from '../../engine/machine';
 import { store, useAppState } from '../../store/hooks';
 import { ChildStrips, SubHeader, TimerPill } from '../components/chrome';
-import { Chip, PixelButton, SectionRule, SlotCheck } from '../components/core';
+import { Chip, PixelButton, SectionRule, SlotCheck, useTheme } from '../components/core';
+
+/**
+ * The "block place" checkbox (spec §1): gray slot always underneath, the
+ * checked bevel as an overlay whose opacity steps in over it, the ✔ popping
+ * on top. Animates ONLY on a live tap (`anim`), never on mount — revisiting
+ * the screen renders finished states with no motion. Parent-area checkboxes
+ * use the plain SlotCheck and stay still.
+ */
+function BlockCheck({
+  checked,
+  size,
+  anim,
+}: {
+  checked: boolean;
+  size: number;
+  anim: 'check' | 'uncheck' | null;
+}) {
+  const theme = useTheme();
+  return (
+    <span
+      className={anim === 'check' ? 'bc-press' : anim === 'uncheck' ? 'bc-press-r' : undefined}
+      style={{ position: 'relative', width: size, height: size, flex: 'none', display: 'block' }}
+    >
+      <span className="slot" style={{ position: 'absolute', inset: 0 }} />
+      <span
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: theme.primary,
+          border: '3px solid',
+          borderColor: `${theme.checkedDark} ${theme.checkedLight} ${theme.checkedLight} ${theme.checkedDark}`,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          // 60ms in, the green rises over the gray in 2 chunky steps (90ms);
+          // unchecking reverses at 60% duration.
+          opacity: checked ? 1 : 0,
+          transition: checked ? 'opacity 90ms steps(2) 60ms' : 'opacity 54ms steps(2)',
+        }}
+      >
+        {checked && (
+          <span
+            className={anim === 'check' ? 'tick-pop' : undefined}
+            style={{
+              fontFamily: "'Pixelify Sans', monospace",
+              fontSize: size * 0.57,
+              color: theme.primaryText,
+            }}
+          >
+            ✔
+          </span>
+        )}
+      </span>
+    </span>
+  );
+}
 
 function ChecklistRow({
   occ,
@@ -27,6 +83,14 @@ function ChecklistRow({
   const isBonus = item.kind === 'bonus';
   const parentLater = item.attestation === 'parent-morning';
 
+  // Live-tap animation flag: set on her tap, cleared after the sequence.
+  const [anim, setAnim] = useState<'check' | 'uncheck' | null>(null);
+  useEffect(() => {
+    if (!anim) return;
+    const h = window.setTimeout(() => setAnim(null), 450);
+    return () => window.clearTimeout(h);
+  }, [anim]);
+
   const icon = iconSrc(item.icon);
 
   const row = (
@@ -38,12 +102,18 @@ function ChecklistRow({
         padding: '10px 12px',
         background: isBonus ? '#fdf8e8' : '#fffdf6',
         border: `3px solid ${isBonus ? '#c8961e' : '#2b2b24'}`,
+        // 140ms in, the row settles to .62 over 240ms (uncheck: 60% duration).
         opacity: checked ? 0.62 : 1,
+        transition: checked ? 'opacity 240ms ease 140ms' : 'opacity 144ms ease',
         width: '100%',
         textAlign: 'left',
       }}
     >
-      <SlotCheck checked={checked} size={46} />
+      {editable ? (
+        <BlockCheck checked={checked} size={46} anim={anim} />
+      ) : (
+        <SlotCheck checked={checked} size={46} />
+      )}
       {icon && (
         // Decorative task icon (design README: 24–34px, left of the task
         // text, never the only signal of meaning).
@@ -85,7 +155,13 @@ function ChecklistRow({
 
   if (!editable) return row;
   return (
-    <button onClick={() => store.childToggleItem(occ.id, item.id)} style={{ display: 'block' }}>
+    <button
+      onClick={() => {
+        setAnim(checked ? 'uncheck' : 'check');
+        store.childToggleItem(occ.id, item.id);
+      }}
+      style={{ display: 'block' }}
+    >
       {row}
     </button>
   );

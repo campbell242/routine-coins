@@ -58,6 +58,44 @@ export function playAlarm(): void {
   }
 }
 
+/**
+ * Check-off run (spec cue table): one .12s blip per check, gain .10, pitch
+ * climbing a pentatonic run as she goes down the list, then holding at A6.
+ * The run's position is DERIVED — the caller passes the occurrence's checked
+ * count, so it resets with the routine and walks back down on unchecks.
+ */
+export const CHECK_RUN = [1046.5, 1174.66, 1318.51, 1567.98, 1760.0] as const; // C6 D6 E6 G6 A6
+
+export function checkBlipFreq(index: number): number {
+  return CHECK_RUN[Math.min(Math.max(index, 0), CHECK_RUN.length - 1)];
+}
+
+export function playCheckBlip(index: number): void {
+  try {
+    primeAudio();
+    if (!ctx) return;
+    note(ctx.currentTime + 0.02, checkBlipFreq(index), 0.12, 0.1);
+  } catch {
+    /* ignore */
+  }
+}
+
+/**
+ * The last required item done — replaces the run's next step. G5 → C6, the
+ * only cue that says "that's the set".
+ */
+export function playLastRequired(): void {
+  try {
+    primeAudio();
+    if (!ctx) return;
+    const t0 = ctx.currentTime + 0.02;
+    note(t0, 783.99, 0.18, 0.14); // G5
+    note(t0 + 0.16, 1046.5, 0.3, 0.14); // C6
+  } catch {
+    /* ignore */
+  }
+}
+
 /** A tiny positive blip for the coin-award moment. */
 export function playAwardJingle(): void {
   try {
