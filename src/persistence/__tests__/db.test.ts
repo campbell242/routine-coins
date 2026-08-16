@@ -1,9 +1,19 @@
 import 'fake-indexeddb/auto';
 import { describe, expect, it } from 'vitest';
-import { hashPin, kvGet, kvSet, loadOccurrences, saveOccurrence } from '../db';
+import { DB_NAME, hashPin, kvGet, kvSet, loadOccurrences, saveOccurrence } from '../db';
 import { startOccurrence } from '../../engine/machine';
 import { resolvePlan } from '../../engine/overrides';
 import { morningRoutine } from '../../config/plans';
+
+describe('database identity', () => {
+  // Pinned deliberately. Everything Haley has earned lives in a database
+  // with this exact name; if a refactor or a PROFILE_ID edit changes it, the
+  // app opens an empty database and her phone looks factory-reset. Changing
+  // this literal is a data migration, never a rename — fail loudly first.
+  it('is the name real installs already use', () => {
+    expect(DB_NAME).toBe('haley-routine-coins');
+  });
+});
 
 describe('persistence round-trip (survives "app kill")', () => {
   it('kv values and occurrences read back exactly as written', async () => {

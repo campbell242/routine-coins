@@ -5,7 +5,8 @@
 // occurrence). Approval and send-back are one tap — easy everyday use.
 
 import { useEffect, useRef, useState } from 'react';
-import { CHILD_NAME, PARENT_SESSION_IDLE_MS, REDEMPTION_THRESHOLD } from '../../../config/app';
+import { PARENT_SESSION_IDLE_MS } from '../../../config/app';
+import { CHILD_NAME, REDEMPTION_THRESHOLD } from '../../../config/profile';
 import type { PlanResolved, Weekday } from '../../../config/types';
 import {
   isChecked,

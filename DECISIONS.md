@@ -17,13 +17,28 @@ design README and mockup annotations.
   instead of Workbox: precaches the whole build output, cache-first with a
   cached-index navigation fallback, content-hash-versioned cache. ~50 lines,
   fully auditable, fully offline.
-- **Fonts self-hosted** (Pixelify Sans + Nunito Sans latin woff2) so the app
+- **Fonts self-hosted** (Jersey 25 + Nunito Sans latin woff2) so the app
   works offline; declared in `index.html` with document-relative URLs.
+  Jersey 25 replaced Pixelify Sans per design v4 (Pixelify's digits were
+  ambiguous — 5 read as S). It has **one weight**: the `@font-face` declares
+  `font-weight: 400`, and no pixel-font element sets a weight, so the browser
+  never synthesizes a bold. Nunito Sans (sentence text) is unchanged.
 
 ## Configuration & engine
 
 - Plans are typed TS config objects (`src/config/plans.ts`) consumed by a
   generic engine. Adding a Saturday routine = appending one `PlanConfig`.
+- **A child profile is exactly two files**: `src/config/profile.ts` (name,
+  coin goal, default PIN and avatar, storage identity) and
+  `src/config/plans.ts` (her routines). `app.ts` holds only app-wide
+  constants — timer presets, the avatar catalog, the parent-session timeout
+  — so a second profile never touches it. Config is compiled into the
+  bundle, not loaded at runtime, so a second child means a second build
+  deployed to its own URL; keeping the per-child surface to two files is
+  what makes that a copy-and-edit job rather than a refactor. Runtime-loaded
+  JSON was considered and rejected: it would give up the compile-time typing
+  that makes config edits safe, and require runtime validation the engine
+  deliberately doesn't do.
 - **Occurrence start = the child opens/starts the routine** (taps the Home
   card CTA). The configuration snapshot is taken at that moment. Before that,
   Home renders the card from live (override-resolved) config.
@@ -65,8 +80,24 @@ design README and mockup annotations.
   Settings, stored as SHA-256 hash). Design showed no PIN-change UI; a
   design-consistent "Parent PIN ···· ✎" row was added.
 - Session ends on LOCK, 3 minutes of inactivity, or leaving the parent area.
-  Approving shows the child-facing award screen, which *is* leaving the
+  Approving shows the child-facing handoff screen, which *is* leaving the
   parent area — the session ends there by design.
+- **The celebration is released by the child, never by the parent.**
+  Approving used to fire the jingle, coin burst and XP animation on the
+  parent's tap, with the phone still in their hand; the reward moment
+  belonged to the wrong person. Approval now banks the coins and shows a
+  handoff screen ("… approved! — hand the phone back"), and a gold
+  "Tap to see your coins!" button under Haley's thumb plays it.
+  **The coins still land at the parent's tap**, in the same single
+  transaction as resolving the occurrence. Deferring the award itself was
+  the obvious alternative and is a trap: the occurrence would stay
+  unresolved until she tapped, and an unresolved occurrence blocks that
+  plan's next occurrence — a forgotten tap would quietly stop tomorrow's
+  routine and freeze the streak. A missed *celebration* costs nothing.
+  Pending celebrations persist (the verify-last-night flow can approve while
+  she is at school) and are a queue, not one slot, so approving two routines
+  in one morning can't swallow one of her moments. Home carries the same
+  gold button until she collects.
 - **Extra confirmation taps**: redemption and manual subtraction (as
   specified) **plus "Close for today"** — it irreversibly ends the day's
   occurrence, matching the acceptance list's "destructive actions require the
@@ -80,6 +111,18 @@ design README and mockup annotations.
   "Dad says" was sample copy).
 - Multiple pending reviews render as a picker row; review-queue order:
   review-requested first, then oldest.
+- **Routine-screen review shortcut**: while an occurrence is waiting, the
+  child's routine screen shows an iron "I'm the parent — review now" button
+  under the waiting banner, so the parent doesn't have to back out to Home
+  for the PARENTS chip. It goes to the same PIN pad (no bypass); a correct
+  PIN then lands on *that* occurrence's review instead of the usual
+  queue/settings landing. The shortcut also records a **return route**: LOCK,
+  send-back, and ✕-on-the-PIN-pad hand the phone back to Haley's routine
+  screen rather than Home, so she sees the result (approval instead shows the
+  handoff screen, which already hands the phone back). Entering through the
+  PARENTS chip is unchanged in every respect. The shortcut is deliberately
+  iron — the parent area's own material, never green or gold — so it never
+  reads as one of Haley's actions.
 
 ## Child UX
 
@@ -89,7 +132,7 @@ design README and mockup annotations.
 - The five status banners from mockup 1f are implemented; the routine screen
   shows the **waiting** and **sent-back** banners contextually (mockups
   1d/1e show chip-only for in-progress/ready, so no banner in those states;
-  approved goes straight to the award screen).
+  approved goes to the handoff screen, then the award screen on her tap).
 - Checklist row hints stay visible when checked (mockup 1d shows checked rows
   with hints; 1e's hint-less checked rows read as sample-data variation).
   Checked rows drop to opacity .62 per the handoff.
@@ -97,6 +140,18 @@ design README and mockup annotations.
   a `‹` back affordance was added to the running screen header so a child
   can reach her checklist mid-timer without cancelling (deviation, documented;
   the timer pill keeps the countdown visible everywhere).
+- **The running screen's exit hierarchy was inverted, and was corrected.**
+  That `‹` is the only way off the screen that keeps the timer alive, yet it
+  was the dimmest thing on it (muted `#8a8578`, 4.30:1) while the *destructive*
+  exit was a full-width button reading just "Cancel" — which a 10-year-old
+  reads as "cancel out of this screen", not "destroy my timer". Two copy/color
+  changes (deviations from mockup 1h, deliberate): the back reads **`‹ Home`**
+  in light parchment `#cfc8b2` (9.45:1 — bright enough to find, neutral so it
+  never merges with the accent-green title beside it), and the stone button
+  reads **"Cancel Timer"**, naming what it ends. Both stay in the mockup's
+  positions; no third button competes with Pause/Cancel. The labelled back is
+  opt-in per screen (`SubHeader`'s `backLabel`), so the light sub-screens keep
+  their bare `‹`.
 - Pause is allowed (mockup shows Pause ⏸); pausing freezes remaining time,
   resuming re-anchors the absolute end timestamp. A *running* timer can never
   be extended; "+5 more min" exists only from the expired state and starts a

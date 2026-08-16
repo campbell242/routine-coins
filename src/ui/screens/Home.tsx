@@ -1,4 +1,5 @@
-import { AVATARS, CHILD_NAME, REDEMPTION_THRESHOLD } from '../../config/app';
+import { AVATARS } from '../../config/app';
+import { CHILD_NAME, REDEMPTION_THRESHOLD } from '../../config/profile';
 import {
   bonusItems,
   isReadyForReview,
@@ -185,6 +186,28 @@ export function Home() {
         </div>
 
         <div style={{ flex: 1, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+          {/* A reward approved while she was away (a parent verifying last
+              night over breakfast, say) waits here rather than being lost —
+              still hers to release, never played on her behalf. */}
+          {state.pendingAwards.length > 0 && (
+            <PixelButton
+              variant="gold"
+              style={{
+                fontSize: 21,
+                padding: 16,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 10,
+              }}
+              onClick={() => store.collectAward()}
+            >
+              <img src="assets/coin.png" alt="" style={{ width: 24, height: 24 }} />
+              {state.pendingAwards.length === 1
+                ? 'Tap to see your coins!'
+                : `Tap to see your coins! (${state.pendingAwards.length})`}
+            </PixelButton>
+          )}
           {planStates.map(({ plan, st }) => (
             <RoutineCard key={plan.id} plan={plan} state={st} />
           ))}

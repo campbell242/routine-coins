@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { store, useAppState } from './store/hooks';
 import { Toasts } from './ui/components/chrome';
 import { Award } from './ui/screens/Award';
+import { Handoff } from './ui/screens/Handoff';
 import { Home } from './ui/screens/Home';
 import { Me } from './ui/screens/Me';
 import { ParentArea } from './ui/screens/parent/ParentArea';
@@ -43,6 +44,9 @@ export function App() {
       break;
     case 'parent':
       screen = <ParentArea view={state.route.view} reviewOccId={state.route.reviewOccId} />;
+      break;
+    case 'handoff':
+      screen = <Handoff />;
       break;
     case 'award':
       screen = <Award />;

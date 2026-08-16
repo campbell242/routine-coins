@@ -99,6 +99,7 @@ function RunningTimer() {
         title="Timer"
         titleColor="#a8e07f"
         dark
+        backLabel="Home"
         onBack={() => store.navigate({ name: 'home' })}
       />
       <div
@@ -152,7 +153,8 @@ function RunningTimer() {
           style={{ fontSize: 22, padding: 17, borderColor: '#0d0f0a' }}
           onClick={() => store.timerCancel()}
         >
-          Cancel
+          {/* Names what it ends: bare "Cancel" reads as "leave this screen". */}
+          Cancel Timer
         </PixelButton>
       </div>
     </div>

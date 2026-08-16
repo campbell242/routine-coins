@@ -5,7 +5,7 @@
 import type { CSSProperties, ReactNode } from 'react';
 import type { StripStyle, ThemeVariant } from '../../config/themes';
 import { getTheme } from '../../config/themes';
-import { REDEMPTION_THRESHOLD } from '../../config/app';
+import { REDEMPTION_THRESHOLD } from '../../config/profile';
 import { fmtCoins } from '../../lib/dates';
 import { useAppState } from '../../store/hooks';
 
@@ -140,7 +140,7 @@ export function SlotCheck({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontFamily: "'Pixelify Sans', monospace",
+        fontFamily: "'Jersey 25', monospace",
         fontSize: size * 0.57,
         color: checkColor,
       }}

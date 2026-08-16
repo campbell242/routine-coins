@@ -61,11 +61,18 @@ export function TabBar({ active }: { active: Tab }) {
 export function SubHeader({
   title,
   onBack,
+  backLabel,
   dark = false,
   titleColor,
 }: {
   title: string;
   onBack?: () => void;
+  /**
+   * Word beside the ‹, naming where back goes. The dark timer screen has no
+   * tab bar, so its ‹ is the only way out that doesn't cancel the timer — it
+   * gets a label and a brighter color instead of the muted glyph alone.
+   */
+  backLabel?: string;
   dark?: boolean;
   titleColor?: string;
 }) {
@@ -98,8 +105,11 @@ export function SubHeader({
             margin: '-10px -6px', // ≥44px hit area without changing the layout
           }}
         >
-          <span className="px" style={{ fontSize: 20, color: '#8a8578' }}>
-            ‹
+          {/* Light parchment on dark (9.45:1, vs 4.30 for the muted gray) —
+              bright enough to find, neutral so it never merges with the
+              accent-green title sitting beside it. */}
+          <span className="px" style={{ fontSize: 20, color: dark ? '#cfc8b2' : '#8a8578' }}>
+            {backLabel ? `‹ ${backLabel}` : '‹'}
           </span>
         </button>
       )}

@@ -66,7 +66,7 @@ export function PinScreen() {
           <div style={{ fontSize: 12, color: '#6b675c', fontWeight: 600 }}>Enter your 4-digit PIN</div>
         </div>
         <button
-          onClick={() => store.navigate({ name: 'home' })}
+          onClick={() => store.cancelPin()}
           aria-label="Close"
           style={{
             marginLeft: 'auto',

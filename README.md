@@ -34,6 +34,10 @@ so coins, routines, streaks and settings survive app kills and reboots.
 ## Parents
 
 - The **PARENTS** chip (bottom-right of Home) opens the PIN pad.
+- When a routine is waiting for a check, the routine screen also offers
+  **"I'm the parent — review now"** — the same PIN pad, but it lands straight
+  on that routine's review, and LOCK hands the phone back to Haley's routine
+  screen. A shortcut, not a bypass: the PIN is still required.
 - **The out-of-the-box PIN is `1234`** — change it in Parent → Settings.
 - The parent session locks on LOCK, after 3 minutes of inactivity, or when
   leaving the parent area.
@@ -43,8 +47,10 @@ so coins, routines, streaks and settings survive app kills and reboots.
 ```
 design/                  # design handoff (reference only)
 public/assets/           # pixel-art PNGs from the handoff (rendered pixelated)
-public/fonts/            # self-hosted Pixelify Sans + Nunito Sans
-src/config/              # plan configurations, theme variant tokens, app constants
+public/fonts/            # self-hosted Jersey 25 + Nunito Sans
+src/config/profile.ts    #   ONE child: name, coin goal, PIN, storage identity
+src/config/plans.ts      #   ONE child: her routines
+src/config/              # theme variant tokens, icon manifest, app-wide constants
 src/engine/              # pure logic: occurrence state machine, scheduler,
                          #   streaks, coin ledger, timer
 src/persistence/         # IndexedDB (idb) storage

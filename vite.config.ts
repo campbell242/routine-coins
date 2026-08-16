@@ -1,6 +1,6 @@
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
-import { APP_DESCRIPTION, APP_NAME, APP_SHORT_NAME } from './src/config/app';
+import { APP_DESCRIPTION, APP_NAME, APP_SHORT_NAME } from './src/config/profile';
 
 // The install-time identity (tab title, PWA manifest) derives from
 // src/config/app.ts so the child's name lives in exactly one place.

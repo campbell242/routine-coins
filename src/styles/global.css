@@ -41,9 +41,10 @@ input {
   font: inherit;
 }
 
-/* Pixel font shorthand — mirrors the mockups' font-family:'Pixelify Sans',monospace */
+/* Pixel font shorthand — mirrors the mockups' font-family:'Jersey 25',monospace.
+   Jersey 25 ships a single weight: never set font-weight on pixel-font text. */
 .px {
-  font-family: 'Pixelify Sans', monospace;
+  font-family: 'Jersey 25', monospace;
 }
 
 /* ===== App frame: portrait phone, fills the screen ===== */
@@ -77,7 +78,7 @@ input {
 
 /* ===== Bevel buttons (no border-radius anywhere) ===== */
 .bevel {
-  font-family: 'Pixelify Sans', monospace;
+  font-family: 'Jersey 25', monospace;
   text-align: center;
   border: 3px solid #20241a;
   color: #fff;
@@ -326,7 +327,7 @@ input {
 
 /* number/time entry inside modals */
 .pixel-input {
-  font-family: 'Pixelify Sans', monospace;
+  font-family: 'Jersey 25', monospace;
   font-size: 28px;
   color: #2b2b24;
   background: #fffdf6;
