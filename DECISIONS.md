@@ -208,10 +208,17 @@ design README and mockup annotations.
   retired). The replaced nighttime items got NEW stable IDs (n-snack,
   n-change, n-teethfloss, n-parentread, n-phone, n-sleep, n-stormy,
   n-lunch); the old ones (n-teeth … n-stayedinbed) are never reused.
-- The +100 sleep item is mandatory in spirit but modeled as a coin-valued
-  parent-verified item: a night she gets up costs exactly 100 automatically,
-  without wiping out credit for the rest of the evening. It renders in the
-  gold coins section by design.
+- The +100 sleep item started as a coin-valued bonus, then was promoted
+  (2026-08-16, "option A") to `kind: 'required'` while keeping its own
+  +100: it now sits in the required section of the checklist — mandatory in
+  placement — but its coins still only count toward the suggested award
+  when a parent checks it, so a night she gets up costs exactly 100
+  automatically, without wiping out credit for the rest of the evening.
+  `suggestedAward` therefore sums ALL checked coin-valued items regardless
+  of kind. Because it's parent-verified (`parent-morning`), it never gates
+  "Ask a parent" or the Home pips — those key off required+child items —
+  and the parent can toggle it in the review screen and the morning-verify
+  block alike. Its +100 chip shows on the row wherever it renders.
 - "Phone to Mom & Dad's room" is the built-in handoff: she checks it in
   their room and hands the phone over for review on the spot.
 - **Excused nights**: new `excused` occurrence status. A parent (PIN'd, in

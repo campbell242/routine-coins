@@ -68,15 +68,7 @@ function BlockCheck({
   );
 }
 
-function ChecklistRow({
-  occ,
-  item,
-  showCoin,
-}: {
-  occ: Occurrence;
-  item: ItemConfig;
-  showCoin: boolean;
-}) {
+function ChecklistRow({ occ, item }: { occ: Occurrence; item: ItemConfig }) {
   const checked = isChecked(occ, item.id);
   const editable =
     (occ.status === 'in_progress' || occ.status === 'sent_back') && item.attestation === 'child';
@@ -142,7 +134,9 @@ function ChecklistRow({
           </div>
         )}
       </div>
-      {showCoin && item.bonus !== undefined && (
+      {/* Any item with a coin value shows its chip — including the required
+          sleep item, whose +100 lives in the required section. */}
+      {item.bonus !== undefined && (
         <div style={{ display: 'flex', alignItems: 'center', gap: 4, flex: 'none' }}>
           <img src="assets/coin.png" alt="" style={{ width: 18, height: 18 }} />
           <span className="px" style={{ fontSize: 17, color: '#8a6200' }}>
@@ -317,11 +311,11 @@ export function RoutineScreen({ planId }: { planId: string }) {
           <StatusBanner occ={occ} justAsked={justAsked} />
           {waiting && <ParentReviewShortcut occ={occ} />}
           {required.map((item) => (
-            <ChecklistRow key={item.id} occ={occ} item={item} showCoin={false} />
+            <ChecklistRow key={item.id} occ={occ} item={item} />
           ))}
           {bonus.length > 0 && <SectionRule label="BONUS COINS" color="#8a6200" />}
           {bonus.map((item) => (
-            <ChecklistRow key={item.id} occ={occ} item={item} showCoin />
+            <ChecklistRow key={item.id} occ={occ} item={item} />
           ))}
         </div>
         {!waiting && (

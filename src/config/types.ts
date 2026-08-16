@@ -25,7 +25,12 @@ export interface ItemConfig {
   label: string;
   hint?: string;
   kind: 'required' | 'bonus';
-  /** Coin value for bonus items. */
+  /**
+   * Coin value. On bonus items it's the classic bonus. A REQUIRED item may
+   * also carry one: it renders in the required section (mandatory in
+   * placement) but its coins only count toward the suggested award when
+   * checked — so an unmet requirement docks itself without parent math.
+   */
   bonus?: number;
   attestation: Attestation;
   /**

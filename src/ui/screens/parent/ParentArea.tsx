@@ -129,7 +129,8 @@ function ReviewView({ occId }: { occId?: string }) {
   const required = occ.snapshot.items.filter((i) => i.kind === 'required');
   const bonus = occ.snapshot.items.filter((i) => i.kind === 'bonus');
   const base = occ.snapshot.baseAward;
-  const bonusEarned = suggestedAward(occ) - base;
+  // Checked coin-valued items: bonuses plus the required sleep item's +100.
+  const coinsEarned = suggestedAward(occ) - base;
 
   const timeline: string[] = [];
   if (occ.dateKey !== todayKey) timeline.push(`from ${occDayLabel(occ, todayKey)}`);
@@ -161,9 +162,11 @@ function ReviewView({ occId }: { occId?: string }) {
         <div style={{ flex: 1, padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
           {required.map((item) => {
             const done = isChecked(occ, item.id);
-            return (
+            // Parent-morning items (the sleep item) are the parent's to
+            // attest — toggleable here just like in the bonus list below.
+            const parentItem = item.attestation === 'parent-morning';
+            const row = (
               <div
-                key={item.id}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -173,9 +176,13 @@ function ReviewView({ occId }: { occId?: string }) {
                   border: '2px solid #cfc8b2',
                   fontSize: 14,
                   fontWeight: 600,
+                  width: '100%',
+                  textAlign: 'left',
                 }}
               >
-                {done ? (
+                {parentItem ? (
+                  <SlotCheck checked={done} size={24} themed={false} />
+                ) : done ? (
                   <span className="px" style={{ color: '#3d7a22' }}>
                     ✔
                   </span>
@@ -191,12 +198,25 @@ function ReviewView({ occId }: { occId?: string }) {
                   />
                 )}
                 {item.label}
-                {!done && (
-                  <span className="px" style={{ marginLeft: 'auto', fontSize: 13, color: '#8a8578' }}>
-                    not done
+                {item.bonus !== undefined ? (
+                  <span className="px" style={{ marginLeft: 'auto', color: '#8a6200' }}>
+                    +{item.bonus}
                   </span>
+                ) : (
+                  !done && (
+                    <span className="px" style={{ marginLeft: 'auto', fontSize: 13, color: '#8a8578' }}>
+                      not done
+                    </span>
+                  )
                 )}
               </div>
+            );
+            return parentItem ? (
+              <button key={item.id} onClick={() => store.parentToggleItem(occ.id, item.id)} style={{ display: 'block' }}>
+                {row}
+              </button>
+            ) : (
+              <div key={item.id}>{row}</div>
             );
           })}
           {bonus.map((item) => {
@@ -251,7 +271,7 @@ function ReviewView({ occId }: { occId?: string }) {
 
           <div style={{ marginTop: 10, background: '#fffdf6', border: '3px solid #2b2b24', padding: 14, textAlign: 'center' }}>
             <div style={{ fontSize: 12, color: '#6b675c', fontWeight: 700, letterSpacing: 1, marginBottom: 6 }}>
-              AWARD · base {base} + bonus {bonusEarned}
+              AWARD · base {base} + earned {coinsEarned}
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16 }}>
               <PixelButton

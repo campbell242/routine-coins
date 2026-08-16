@@ -67,7 +67,7 @@ const night: PlanResolved = resolvePlan(nightCfg, undefined);
 
 function approvedOcc(plan: PlanResolved, dk: string): Occurrence {
   let occ = startOccurrence(plan, dk, T0);
-  for (const item of plan.items.filter((i) => i.kind === 'required')) {
+  for (const item of plan.items.filter((i) => i.kind === 'required' && i.attestation === 'child')) {
     occ = toggleItem(occ, item.id, 'child', T0);
   }
   occ = requestReview(occ, T0);
@@ -300,16 +300,26 @@ describe('locked nighttime routine math (344/night)', () => {
     expect(plan.windowStart).toBe('19:00');
     expect(plan.baseAward).toBe(204);
 
+    // The sleep item is REQUIRED in placement but parent-verified and
+    // coin-valued: it never gates the child's "ready" state, and its +100
+    // only counts once a parent checks it — unchecked, it docks itself.
+    const sleep = plan.items.find((i) => i.id === 'n-sleep');
+    expect(sleep?.kind).toBe('required');
+    expect(sleep?.attestation).toBe('parent-morning');
+    expect(sleep?.bonus).toBe(100);
+
     let occ = startOccurrence(plan, '2026-08-16', T0);
-    for (const item of plan.items.filter((i) => i.kind === 'required')) {
+    for (const item of plan.items.filter((i) => i.kind === 'required' && i.attestation === 'child')) {
       occ = toggleItem(occ, item.id, 'child', T0);
     }
-    expect(isReadyForReview(occ)).toBe(true);
-    expect(suggestedAward(occ)).toBe(204); // required only
+    expect(isReadyForReview(occ)).toBe(true); // sleep never blocks asking
+    expect(suggestedAward(occ)).toBe(204); // child-required only
 
     occ = toggleItem(occ, 'n-stormy', 'child', T0);
     occ = toggleItem(occ, 'n-lunch', 'child', T0);
     occ = requestReview(occ, T0);
+    // Sleep still unchecked → the suggestion is auto-docked by exactly 100.
+    expect(suggestedAward(occ)).toBe(244);
     occ = toggleItem(occ, 'n-sleep', 'parent', T0 + 1); // verified next morning
     expect(suggestedAward(occ)).toBe(344);
     expect(344 * 5).toBe(1720); // five perfect nights = exactly one redemption

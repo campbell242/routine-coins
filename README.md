@@ -70,6 +70,10 @@ Adding a routine (e.g. a Saturday plan) is a configuration change in
 Checklist items live in `src/config/plans.ts` (`ItemConfig`): stable `id`,
 `label`, optional `hint`, `kind` (`required` | `bonus`), `bonus` coins,
 `attestation` (`child` | `parent-morning`), and an optional **`icon`**.
+A `required` item may also carry `bonus` coins (the nightly sleep item):
+it renders in the required section with its coin chip, and its value only
+counts toward the suggested award when checked — an unmet requirement
+docks itself without parent math.
 
 ### Task icons
 

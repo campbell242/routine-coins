@@ -43,10 +43,12 @@ export const nighttimeRoutine: PlanConfig = {
     // The natural handoff: she checks this in Mom & Dad's room and hands the
     // phone over for review on the spot.
     { id: 'n-phone', label: 'Phone to Mom & Dad’s room', hint: 'On the charger before 9:30', kind: 'required', attestation: 'child', icon: 'phone' },
-    // Happens after the phone leaves her room — a parent confirms it the
-    // next morning. Mandatory in spirit; its own +100 makes the consequence
-    // automatic without wiping out credit for the rest of the night.
-    { id: 'n-sleep', label: 'In bed, lights out, stay in bed', hint: '9:30 — go to bed early if you want more reading', kind: 'bonus', bonus: 100, attestation: 'parent-morning', icon: 'lantern' },
+    // Required, but it happens after the phone leaves her room — a parent
+    // confirms it the next morning, so it never gates "Ask a parent". Its
+    // own +100 makes the consequence automatic: unchecked next morning, the
+    // suggested award drops by exactly 100 without wiping out credit for
+    // the rest of the night.
+    { id: 'n-sleep', label: 'In bed, lights out, stay in bed', hint: '9:30 — go to bed early if you want more reading', kind: 'required', bonus: 100, attestation: 'parent-morning', icon: 'lantern' },
     { id: 'n-stormy', label: 'Feed Stormy', hint: 'Dinner for the rat!', kind: 'bonus', bonus: 20, attestation: 'child', icon: 'rat' },
     { id: 'n-lunch', label: 'Pack lunch + water bottle', hint: 'Ready for tomorrow', kind: 'bonus', bonus: 20, attestation: 'child', icon: 'apple' },
   ],

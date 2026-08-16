@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import { AVATARS } from '../../config/app';
 import { CHILD_NAME, REDEMPTION_THRESHOLD } from '../../config/profile';
 import {
-  bonusItems,
   isReadyForReview,
   requiredChildItems,
   requiredDoneCount,
+  valuedItems,
   type Occurrence,
 } from '../../engine/machine';
 import { earliestUnlock, planStateNow, type PlanToday } from '../../engine/scheduler';
@@ -43,9 +43,11 @@ function RoutineCard({ plan, state }: { plan: PlanResolved; state: PlanToday }) 
     ? requiredChildItems(occ).length
     : plan.items.filter((i) => i.kind === 'required' && i.attestation === 'child').length;
   const reqDone = occ ? requiredDoneCount(occ) : 0;
+  // "worth 204+": the plus means coin-valued items exist beyond the base —
+  // bonuses or the coin-valued required sleep item.
   const hasBonus = occ
-    ? bonusItems(occ).length > 0
-    : plan.items.some((i) => i.kind === 'bonus');
+    ? valuedItems(occ).length > 0
+    : plan.items.some((i) => i.bonus !== undefined);
   const base = occ ? occ.snapshot.baseAward : plan.baseAward;
   const windowEnd = occ ? occ.snapshot.windowEnd : plan.windowEnd;
 
