@@ -135,3 +135,5 @@ A required row may carry a coin value; the gold coin chip is unchanged from the 
 **Parent review (1k) is unchanged from the build**: the row sits in the required list with a live toggle and its value; unchecked auto-docks, one tap restores it. The parent is the one person who can set it, so that slot stays interactive.
 
 **Award editor copy**: "AWARD · base X + **earned** Y". Design file updated to match.
+
+**Auto-quiet has no exemptions except the alarm.** The award and redemption cues play at ×0.25 after the phone handoff like everything else. The same-night collection happens on a phone that is already in the parents' room, and a rule with one exception is a rule someone has to remember.

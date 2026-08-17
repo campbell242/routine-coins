@@ -132,3 +132,21 @@ All in `assets/`, hand-drawn pixel art, render with `image-rendering: pixelated`
 
 ## Sample Data Note
 All names, items, times, balances (1,240 / 1,720, +55 award, 6-day streak) are sample data. Redemption threshold 1,720 and preset timer values 5/10/15/30 are real spec values.
+
+---
+
+## Parent-area rules (v7)
+
+The parent zone is iron and neutral. **No green and no gold inside it** — gold is a coin, green is Haley.
+
+**Toggles.** ON = `#cfc8b2` fill, 3px `#4a4a44` border, `#2b2b24` text, raised bevel (inset highlight top, shadow bottom). OFF = `#4a4a44` fill, 3px `#2b2b24` border, `#cfc8b2` text, pressed bevel (inset shadow top, no highlight). The bevel carries the state, so the label stays legible (5.3:1) rather than being dimmed. The bevel direction carries the state — the same pressed/raised language the checkbox slot uses.
+
+**Editable values and the ✎ affordance.** `#3f5f78`, never green. That slate is already the parent's second colour (it is what "Send back" is made of), it is the one accent Haley's side never uses, and it reads at 6.5:1 on the parent ground.
+
+**Disabled.** Recessed dark iron `#4a4a44` with a `#cfc8b2` label, and the reason appended to the label rather than in a separate line ("Last night · Aug 16 · already settled"). Same two-tone pair as the toggles, so "available / not" looks identical everywhere. Do **not** dim the label: the raised bevel and light fill on the available option already carry the difference, and the reason is load-bearing text.
+
+**Cancel is never a filled button** anywhere in the parent area: underlined text, `#6b675c`, full width, and still ≥44px tall. Losing the fill does not mean losing the tap target. Nothing here is dangerous enough that leaving should compete with doing.
+
+**Checkbox states.** A green bevelled slot means Haley did it. A **white ✔ on flat iron** means a grown-up recorded it. A **plain inset square on flat iron** means it is locked and not yet decided. Three different facts, three different looks.
+
+**Parent voice.** Plain, factual, no exclamation, no encouragement: explain the mechanic and stop. Haley's side gets the warmth; the parent side gets the manual.
