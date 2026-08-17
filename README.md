@@ -42,6 +42,35 @@ so coins, routines, streaks and settings survive app kills and reboots.
 - The parent session locks on LOCK, after 3 minutes of inactivity, or when
   leaving the parent area.
 
+### Parent-area materials (design v7)
+
+**Green means Haley acted. Gold means coins are moving.** Neither is about
+who is holding the phone:
+
+- Green is **never** a parent-initiated action — nothing a parent taps in
+  order to *do* something is green. Green only ever reports what Haley did.
+- Gold is allowed anywhere coins actually move, parent zone included
+  ("Approve & award", "Confirm & award night coins", "Redeem coins" — one
+  family). The exception is a coin button that *can't* pay: a disabled
+  "Redeem · N to go" takes the recessed iron below.
+- Everything else in the parent zone is iron, stone or slate, and
+  availability is carried by the bevel rather than by colour, so
+  "available / not available" looks the same everywhere:
+
+| Element | Treatment |
+|---|---|
+| ON / live / enabled | `.bevel-parent-on` — `#cfc8b2` fill, 3px `#4a4a44` border, `#2b2b24` text, **raised** bevel |
+| OFF / disabled / unavailable | `.bevel-parent-off` — `#4a4a44` fill, 3px `#2b2b24` border, `#cfc8b2` text, **pressed** bevel (no highlight). Never dim the label: the bevel carries the state, and a disabled option's appended reason is load-bearing text |
+| Editable value + its ✎ | `#3f5f78` slate (`<EditValue>`), never green — the same material as "Send back" |
+| Cancel | never a filled button: `<ParentCancel>` — underlined `#6b675c` text, full width, ≥44px tall, placed under the confirm |
+| Checkbox meaning | green bevelled slot = Haley did it · white ✔ on flat iron (`parentMark`) = a grown-up recorded it · plain inset square on flat iron = locked, not yet decided |
+| Coin action | gold, with the coin icon on the primary one — it moves coins, so it is not iron |
+
+A `PixelButton` with `variant="parentOn"` renders as `parentOff` when
+`disabled`, so new parent controls get the rule for free. Parent copy is
+plain and factual — explain the mechanic and stop; no exclamation marks, no
+encouragement (that voice belongs to Haley's side of the app).
+
 ## Project map
 
 ```

@@ -102,6 +102,46 @@ design README and mockup annotations.
   specified) **plus "Close for today"** — it irreversibly ends the day's
   occurrence, matching the acceptance list's "destructive actions require the
   extra confirmation". Approve and send back stay one-tap (easy everyday use).
+- **Parent-zone materials (design v7–v8, mockup sections 6–7 + design
+  README)**: **green means Haley acted; gold means coins are moving** —
+  neither is about who holds the phone. Green is never a parent-initiated
+  action (nothing a parent taps in order to *do* something is green; green
+  only reports what she did), gold is allowed wherever coins actually move
+  including the parent zone, and everything else is iron, stone or slate.
+  Availability moved into the bevel: raised bright
+  stone (`#cfc8b2` fill / `#4a4a44` border / `#2b2b24` text) for ON and live,
+  recessed dark iron (`#4a4a44` / `#2b2b24` / `#cfc8b2` text, pressed, no
+  highlight) for OFF and for every disabled state, so "off" and "not
+  available" are one look. **The label is never dimmed** — the bevel carries
+  the state, and on a disabled option the appended reason ("· already
+  settled") is load-bearing text; it reads at 5.33:1. Editable values and
+  their ✎ are slate `#3f5f78` (the "Send back" material, the one accent
+  Haley's side never uses); the edit field's focus ring moved from gold to
+  the same slate. Cancel is never a filled button — underlined `#6b675c`
+  text, full width, ≥44px tall, under the confirm rather than beside it, so
+  the eye lands on the choice instead of the exit. `variant="parentOn"`
+  degrades to `parentOff` when disabled so new controls inherit the rule.
+  - Checkbox language, now a written rule: a **green bevelled slot** means
+    Haley did it, a **white ✔ on flat iron** means a grown-up recorded it, a
+    **plain inset square on flat iron** means locked and not yet decided.
+  - Parent copy voice: plain, factual, no exclamation, no encouragement —
+    explain the mechanic and stop. Haley's side gets the warmth.
+  - v8 settled the two places the first, blunter rule ("no green and no gold
+    in the parent zone") broke:
+    - The **parent-verified row's live toggle** in review — and the same
+      control in the morning-verify block, which records the identical fact
+      — went from the green bevel to a white ✔ on flat iron (`parentMark`).
+      Haley was asleep; the mark can't claim she did it. The green ✔ marks
+      beside every *other* row are untouched: they are a record of her taps,
+      and a parent scanning the list has to tell at a glance which lines are
+      her word and which are their own.
+    - **"Approve & award N"** went green → gold with the coin icon. It was
+      green because it is the confirm; it is gold because it moves 344
+      coins, and the three coin actions ("Approve & award", "Confirm &
+      award night coins", "Redeem coins") should read as one family. A
+      disabled "Redeem · N to go" stays recessed iron — the one case where
+      gold gives way, because it can't pay.
+    - `GreenButton` had no callers left and was deleted.
 - In the review screen the parent can toggle **parent-verified items only**;
   child-attested items are display-only (the parent's tool for an incomplete
   list is approve-despite-incomplete, send back, or close — not silently
@@ -219,6 +259,22 @@ design README and mockup annotations.
   "Ask a parent" or the Home pips — those key off required+child items —
   and the parent can toggle it in the review screen and the morning-verify
   block alike. Its +100 chip shows on the row wherever it renders.
+- Design then specced the pattern (mockup section 5a): **a required row may
+  carry a coin value; the gold chip is unchanged** — the chip means "this
+  pays", the border means "required or bonus", two facts on two channels.
+  When such a row is parent-verified rather than self-checked, the
+  checklist gives it (a) a **locked slot** — flat iron `#6f6f6f`, 3px
+  `#4a4a44` border, 14px inset square, no bevel highlight, not tappable,
+  because the ordinary stone slot promises a tap that isn't available — and
+  (b) an iron **MORNING CHECK pill** under the hint, replacing the sentence
+  "A grown-up checks this one in the morning": iron is the parent material,
+  so it reads as "someone else decides this" with no negative language.
+  Parent review (1k) is deliberately unchanged — the parent is the one
+  person who *can* set it, so that slot stays live.
+- The addendum specs the locked slot unset only. Once a parent HAS checked
+  it (morning verify, before approval), the app keeps the iron ground and
+  puts a white ✔ where the inset square goes — the fact is worth showing,
+  and iron keeps it legible as someone else's mark. Flagged to design.
 - "Phone to Mom & Dad's room" is the built-in handoff: she checks it in
   their room and hands the phone over for review on the spot.
 - **Excused nights**: new `excused` occurrence status. A parent (PIN'd, in
@@ -236,20 +292,33 @@ G5→C6 on the last required, silent unchecks), then streak/small moments/
 remaining cues/toggles/reduced-motion. Verified by instrumenting WebAudio —
 frequencies and gains logged in the built app match the cue table.
 
-Interpretations the spec left open (also reported back to design):
+Interpretations the spec left open — all since reviewed by design (section
+5 of the mockup file) and confirmed, with the amendments noted:
 - **Pip flip**: the spec's 200ms beat references the Home card's pip row,
   which isn't on screen during check-off — newly-green pips flip (80ms
   stagger) the first time the card is next seen, once, via a per-pip mask.
-- **Auto-quiet = half gain, not mute**: the whole routine happens inside
+  Confirmed; design explicitly ruled out adding pips to the routine screen.
+- **Auto-quiet = reduced gain, not mute**: the whole routine happens inside
   the nighttime window (opens 19:00), so muting would silence the app's
   core sounds every night. All cues ×0.5 from windowStart (override-
   resolved, never hardcoded) to midnight; the alarm keeps full gain.
+  Confirmed, plus design's addition: **×0.25 once the phone is handed over
+  for the night**, since nothing past that point is Haley acting. The
+  handoff is read from tonight's occurrence — any status other than
+  in_progress/sent_back — so a sent-back routine returns to ×0.5 while the
+  phone is back in her hands.
 - **Preset cross-fade on timer start**: skipped — it conflicts with the
   spec's own "no animation may delay a screen change / screen changes are
   instant" rules (starting swaps the whole screen). The bar snap remains.
-- **Not commissioned by any phase** (spec §2 rows left unbuilt, flagged):
-  "+N rolls from 0", the counter coin's per-landing scale reaction, and
-  the 1600ms "Great job" fade-up.
+  Confirmed and struck from the spec.
+- **The three §2 reward rows** were unbuilt (no phase commissioned them)
+  and design has since asked for all three: the "+N" roll (starts 120ms,
+  10 × 50ms steps so it reads as a number), the counter coin's per-landing
+  scale reaction (1.18 → 1, 120ms, replayed by remounting the pip on each
+  of the 8 landings), and the 1600ms "Great job"/streak fade-up. Under
+  `prefers-reduced-motion` the roll is skipped (final number immediately),
+  no landings are scheduled (the coins never fly), and the closing lines
+  still arrive on cue as a plain opacity fade.
 - Sound toggles live in parent settings (SOUND card): All sounds + a
   separate Timer alarm switch; both persisted, parent toggles are silent.
 - Live-tap-only rule: nothing animates on mount or plain revisits (except

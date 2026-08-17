@@ -57,6 +57,16 @@ check('waiting chip text', '#6b6b6b', '#efefec', 4.5);
 check('white on slate button', '#ffffff', '#6d89a3', 3.0);
 check('white on stone button', '#ffffff', '#9a9a9a', 2.0); // handoff value; large px text + shadow
 check('white on iron button', '#ffffff', '#6f6f6f', 3.0); // parent-zone controls, incl. the routine-screen review shortcut
+check('MORNING CHECK pill', '#ffffff', '#6f6f6f', 3.0); // iron pill on the parent-verified checklist row
+check('grown-up record ✔ on iron', '#ffffff', '#6f6f6f', 3.0); // parentMark slot: a parent recorded it
+// Parent-zone controls (v7): availability lives in the bevel, not in colour.
+check('parent ON control text', '#2b2b24', '#cfc8b2', 4.5);
+// The OFF/disabled label is never dimmed — the bevel carries the state, and
+// on a disabled option the appended reason is load-bearing text (v7 §6b).
+check('parent OFF control text', '#cfc8b2', '#4a4a44', 4.5);
+check('parent editable value (slate)', '#3f5f78', '#fffdf6', 4.5);
+check('parent Cancel text', '#6b675c', '#f3eee1', 4.5);
+check('gold chip on required row', '#8a6200', '#fffdf6', 4.5); // a required row may carry a coin value
 // The handoff's exact toast pair sits at 2.9986 (≈3.0). Kept pixel-faithful:
 // 17px pixel-display text, decorative celebration copy, identical in all variants.
 check('toast title on toast bg', '#b07d00', '#efe9d8', 2.95);

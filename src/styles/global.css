@@ -118,6 +118,54 @@ input {
     inset 0 -5px 0 rgba(0, 0, 0, 0.25);
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
 }
+/* ===== Parent-zone controls (design v7) =====
+   The parent area is iron and neutral: no green, no gold. Gold is a coin,
+   green is Haley. Availability is carried by the bevel instead of colour —
+   raised bright stone = live, recessed dark iron = not available. The same
+   pair does toggles (ON/OFF), edit confirmations, and every disabled state,
+   so "available / not available" looks identical across the zone. */
+/* Exact values from section 6a. The .bevel-sm pairings only exist so the
+   generic small-bevel rule further down can't override them. */
+.bevel-parent-on,
+.bevel-parent-on.bevel-sm {
+  background: #cfc8b2;
+  border-color: #4a4a44;
+  color: #2b2b24;
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -4px 0 rgba(0, 0, 0, 0.16);
+  text-shadow: none;
+}
+/* Pressed: shadow at the top, no highlight. The BEVEL says "off" — the label
+   stays bright (#cfc8b2, 5.3:1), never dimmed: on a disabled option the
+   appended reason is load-bearing text. */
+.bevel-parent-off,
+.bevel-parent-off.bevel-sm,
+.bevel.bevel-parent-off:disabled,
+.bevel.bevel-parent-off.bevel-sm:disabled {
+  background: #4a4a44;
+  border-color: #2b2b24;
+  color: #cfc8b2;
+  box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0.4);
+  text-shadow: none;
+}
+/* Cancel is never a filled button in the parent area: plain underlined text,
+   full-width tap target, so the eye lands on the choice and not the exit. */
+.parent-cancel {
+  font-family: 'Jersey 25', monospace;
+  width: 100%;
+  text-align: center;
+  font-size: 15px;
+  line-height: 16px;
+  color: #6b675c;
+  text-decoration: underline;
+  padding: 14px;
+  /* losing the fill must not lose the target */
+  min-height: 44px;
+  background: none;
+  border: none;
+}
+
 .bevel:disabled,
 .bevel-disabled {
   background: #7d7d7d;
@@ -294,6 +342,26 @@ input {
 .pop-in {
   animation: pop-in 0.45s ease-out;
 }
+/* On each landing the counter's coin pip reacts — 1.18 → 1 over 120ms. This
+   is what connects the flying coins to the balance: they arrive somewhere
+   that answers (spec §2). Replayed by remounting the pip per landing. */
+@keyframes coin-land {
+  0% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+.coin-land {
+  animation: coin-land 120ms ease-out;
+}
+/* 1600ms: "Great job, Haley!" and the streak line fade up 8px over 260ms —
+   the sequence ends rather than just stopping. `both` holds them invisible
+   through the delay. */
+@keyframes fade-up-8 {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.fade-up-late {
+  animation: fade-up-8 260ms ease-out 1600ms both;
+}
 
 /* ===== Check-off "block place" (spec §1) — 380ms total ===== */
 /* 0ms: the slot presses — chunky steps(3), not smooth. The press is the
@@ -451,10 +519,15 @@ input {
   .pip-flip,
   .star-pulse,
   .coin-idle,
+  .coin-land,
   .bar-snap,
   .digit-pulse,
   .pin-shake {
     animation: none;
+  }
+  /* The closing lines still arrive on cue — fade only, no 8px rise. */
+  .fade-up-late {
+    animation: overlay-fade 260ms ease-out 1600ms reverse both;
   }
   /* transform-driven celebration extras simply don't appear */
   .star-rise,
@@ -505,5 +578,6 @@ input {
   text-align: center;
 }
 .pixel-input:focus {
-  outline: 3px solid #f8c53a;
+  /* parent-zone editing surface: slate, never gold (design v7) */
+  outline: 3px solid #3f5f78;
 }

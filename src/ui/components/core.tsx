@@ -28,7 +28,22 @@ export function Strip({ style, height, size = 16 }: { style: StripStyle; height:
   );
 }
 
-type BevelVariant = 'primary' | 'gold' | 'stone' | 'slate' | 'iron' | 'disabled' | 'key' | 'keyDim';
+type BevelVariant =
+  | 'primary'
+  | 'gold'
+  | 'stone'
+  | 'slate'
+  | 'iron'
+  | 'disabled'
+  | 'key'
+  | 'keyDim'
+  /**
+   * Parent-zone pair (design v7): raised bright stone = live/ON, recessed
+   * dark iron = OFF. A disabled `parentOn` renders as `parentOff`, so
+   * "not available" and "off" are one look across the whole parent area.
+   */
+  | 'parentOn'
+  | 'parentOff';
 
 export function PixelButton({
   variant = 'primary',
@@ -49,7 +64,11 @@ export function PixelButton({
   const theme = useTheme();
   const cls = ['bevel'];
   const extra: CSSProperties = {};
-  if (disabled || variant === 'disabled') {
+  const parentZone = variant === 'parentOn' || variant === 'parentOff';
+  if ((disabled || variant === 'disabled') && parentZone) {
+    // The parent zone has its own "not available": recessed dark iron.
+    cls.push('bevel-parent-off');
+  } else if (disabled || variant === 'disabled') {
     cls.push('bevel-disabled');
   } else {
     switch (variant) {
@@ -80,6 +99,12 @@ export function PixelButton({
       case 'keyDim':
         cls.push('bevel-key-dim');
         break;
+      case 'parentOn':
+        cls.push('bevel-parent-on');
+        break;
+      case 'parentOff':
+        cls.push('bevel-parent-off');
+        break;
     }
   }
   if (small) cls.push('bevel-sm');
@@ -90,59 +115,82 @@ export function PixelButton({
   );
 }
 
-/** Fixed grass-green button — for surfaces that never theme (parent area). */
-export function GreenButton({
+/**
+ * Parent-zone Cancel (design v7): never a filled button — plain underlined
+ * text, full-width tap target. A filled Cancel is the brightest thing in a
+ * modal, so the eye lands on the way out before the choice.
+ */
+export function ParentCancel({
   onClick,
+  label = 'Cancel',
   style,
-  children,
 }: {
-  onClick?: () => void;
+  onClick: () => void;
+  label?: string;
   style?: CSSProperties;
-  children: ReactNode;
 }) {
   return (
-    <button className="bevel" onClick={onClick} style={{ background: '#57a636', ...style }}>
-      {children}
+    <button className="parent-cancel" onClick={onClick} style={style}>
+      {label}
     </button>
   );
 }
 
-/** Inventory-slot checkbox. Checked fill follows the theme accent. */
+/**
+ * An editable value in the parent area — the number/time plus its pencil.
+ * Slate, never green: slate is the parent's second colour, the material
+ * "Send back" is made of (design v7).
+ */
+export function EditValue({ children }: { children: ReactNode }) {
+  return (
+    <span className="px" style={{ color: '#3f5f78' }}>
+      {children}
+    </span>
+  );
+}
+
+/**
+ * Inventory-slot checkbox.
+ *
+ * Checked, it says WHO recorded the fact (design v8): the themed green bevel
+ * means Haley did it, and `parentMark` swaps it for a white ✔ on flat iron —
+ * a grown-up's record, never a claim about her. Green is never a
+ * parent-initiated action. Unchecked is the ordinary stone slot either way:
+ * where the control is live, it should still invite the tap.
+ */
 export function SlotCheck({
   checked,
   size,
-  themed = true,
+  parentMark = false,
   lightUnchecked = false,
   onClick,
 }: {
   checked: boolean;
   size: number;
-  /** Parent-area checkboxes keep classic green regardless of theme. */
-  themed?: boolean;
+  /** Checked state is a grown-up's record: white ✔ on flat iron, no bevel. */
+  parentMark?: boolean;
   /** Light unchecked fill (#fffdf6) — the verify-last-night treatment (1l). */
   lightUnchecked?: boolean;
   onClick?: () => void;
 }) {
   const theme = useTheme();
-  const fill = themed ? theme.primary : '#57a636';
-  const dark = themed ? theme.checkedDark : '#2c5c1a';
-  const light = themed ? theme.checkedLight : '#a8e07f';
-  const checkColor = themed ? theme.primaryText : '#fff';
   const box = checked ? (
     <span
       style={{
         width: size,
         height: size,
         flex: 'none',
-        background: fill,
-        border: '3px solid',
-        borderColor: `${dark} ${light} ${light} ${dark}`,
+        background: parentMark ? '#6f6f6f' : theme.primary,
+        border: parentMark ? '3px solid #4a4a44' : '3px solid',
+        borderColor: parentMark
+          ? '#4a4a44'
+          : `${theme.checkedDark} ${theme.checkedLight} ${theme.checkedLight} ${theme.checkedDark}`,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         fontFamily: "'Jersey 25', monospace",
         fontSize: size * 0.57,
-        color: checkColor,
+        color: parentMark ? '#fff' : theme.primaryText,
       }}
     >
       ✔
@@ -242,15 +290,28 @@ export function CoinCount({
   coinSize = 28,
   fontSize = 24,
   subSize = 15,
+  landings = 0,
 }: {
   balance: number;
   coinSize?: number;
   fontSize?: number;
   subSize?: number;
+  /**
+   * Award screen only: bumped once per arriving coin. Each increment remounts
+   * the coin pip so its 120ms scale reaction replays — the counter answers
+   * every landing (spec §2).
+   */
+  landings?: number;
 }) {
   return (
     <span style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-      <img src="assets/coin.png" alt="coins" style={{ width: coinSize, height: coinSize }} />
+      <img
+        key={landings}
+        src="assets/coin.png"
+        alt="coins"
+        className={landings > 0 ? 'coin-land' : undefined}
+        style={{ width: coinSize, height: coinSize }}
+      />
       <span className="px" style={{ fontSize }}>
         {fmtCoins(balance)}{' '}
         <span style={{ fontSize: subSize, color: '#8a8578' }}>/ {fmtCoins(REDEMPTION_THRESHOLD)}</span>

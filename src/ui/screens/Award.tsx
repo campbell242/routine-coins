@@ -27,6 +27,15 @@ const FLYERS = [
   { size: 14, sx: 24, sy: -8, rot: '-16deg' },
 ] as const;
 
+/** True when the device asks for reduced motion (checked once per mount). */
+function prefersReducedMotion(): boolean {
+  return (
+    typeof window !== 'undefined' &&
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+}
+
 export function Award() {
   const { award } = useAppState();
   const theme = useTheme();
@@ -60,6 +69,42 @@ export function Award() {
     else playAwardJingle();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // "+N rolls from 0" (spec §2): starts at 120ms and steps to the real
+  // amount over 500ms, so the award registers as a NUMBER rather than a
+  // picture. Reduced motion skips straight to the total.
+  const amount = award?.amount ?? 0;
+  const [rolled, setRolled] = useState<number | null>(null);
+  useEffect(() => {
+    if (amount <= 0) return;
+    if (prefersReducedMotion()) return; // `rolled` stays null → final number
+    const STEPS = 10; // 10 × 50ms = the 500ms roll, visibly stepped
+    setRolled(0);
+    const handles = [
+      window.setTimeout(() => {
+        for (let i = 1; i <= STEPS; i++) {
+          handles.push(
+            window.setTimeout(
+              () => setRolled(i === STEPS ? null : Math.round((amount * i) / STEPS)),
+              i * 50,
+            ),
+          );
+        }
+      }, 120),
+    ];
+    return () => handles.forEach((h) => window.clearTimeout(h));
+  }, [amount]);
+
+  // Each coin lands 550ms after its staggered spawn; every landing bumps the
+  // counter's coin pip (spec §2).
+  const [landings, setLandings] = useState(0);
+  useEffect(() => {
+    if (!flight || prefersReducedMotion()) return; // no flight → no landings
+    const handles = FLYERS.map((_, i) =>
+      window.setTimeout(() => setLandings((n) => n + 1), (0.35 + i * 0.06 + 0.55) * 1000),
+    );
+    return () => handles.forEach((h) => window.clearTimeout(h));
+  }, [flight]);
 
   useEffect(() => {
     if (!award) store.navigate({ name: 'home' });
@@ -140,13 +185,13 @@ export function Award() {
           <img ref={bigCoinRef} src="assets/coin.png" alt="" className="pop-in" style={{ width: 72, height: 72, display: 'block' }} />
         </span>
         <div className="px pop-in" style={{ fontSize: 64, color: '#b07d00', lineHeight: 1 }}>
-          +{award.amount}
+          +{rolled ?? award.amount}
         </div>
-        <div className="px" style={{ fontSize: 20, color: theme.accentText }}>
+        <div className="px fade-up-late" style={{ fontSize: 20, color: theme.accentText }}>
           Great job, {CHILD_NAME}!
         </div>
         {award.streak > 0 && (
-          <div style={{ fontSize: 13, color: '#6b675c', fontWeight: 600 }}>
+          <div className="fade-up-late" style={{ fontSize: 13, color: '#6b675c', fontWeight: 600 }}>
             Streak: {award.streak} {award.streak === 1 ? 'day' : 'days in a row'}!
           </div>
         )}
@@ -154,7 +199,7 @@ export function Award() {
 
       <div style={{ padding: '0 18px 8px', flex: 'none' }}>
         <div ref={counterRef} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
-          <CoinCount balance={award.balanceAfter} />
+          <CoinCount balance={award.balanceAfter} landings={landings} />
           <span className="px" style={{ marginLeft: 'auto', fontSize: 15, color: theme.accentText }}>
             +{award.amount} ▲
           </span>

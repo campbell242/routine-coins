@@ -47,7 +47,7 @@ import {
   playTimerStart,
   playPickBlip,
   setAudioPrefs,
-  setQuietHours,
+  setQuietScale,
 } from '../lib/audio';
 import { setWakeLockWanted } from '../lib/wakeLock';
 import {
@@ -228,20 +228,31 @@ class Store {
    * Push sound preferences and the quiet state into the audio layer.
    * Auto-quiet runs from the Nighttime Routine's configured window start
    * (override-resolved — never a hardcoded time) until midnight: the phone
-   * is in her room. The alarm is exempt and keeps its gain.
+   * is in her room. Reduced gain, never mute — ×0.5 inside the window, and
+   * ×0.25 once tonight's routine has been handed over (asked for review or
+   * settled), since past that point nothing is Haley acting. A sent-back
+   * routine puts the phone back in her hands, so it returns to ×0.5. The
+   * alarm is exempt and keeps its gain.
    */
   private syncAudio(): void {
     const s = this.state.settings;
     setAudioPrefs({ cues: s.sound !== false, alarm: s.alarmSound !== false });
     const night = this.resolvedPlan('nighttime');
-    if (night?.enabled) {
-      const d = new Date(this.state.nowMs);
-      const minutes = d.getHours() * 60 + d.getMinutes();
-      const [h, m] = night.windowStart.split(':').map(Number);
-      setQuietHours(minutes >= h * 60 + m);
-    } else {
-      setQuietHours(false);
+    if (!night?.enabled) {
+      setQuietScale(1);
+      return;
     }
+    const d = new Date(this.state.nowMs);
+    const minutes = d.getHours() * 60 + d.getMinutes();
+    const [h, m] = night.windowStart.split(':').map(Number);
+    if (minutes < h * 60 + m) {
+      setQuietScale(1);
+      return;
+    }
+    const tonight = this.state.occurrences[occurrenceId(night.id, dateKey(d))];
+    const handedOver =
+      tonight !== undefined && tonight.status !== 'in_progress' && tonight.status !== 'sent_back';
+    setQuietScale(handedOver ? 0.25 : 0.5);
   }
 
   private startTicking(): void {

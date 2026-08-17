@@ -68,6 +68,41 @@ function BlockCheck({
   );
 }
 
+/**
+ * The slot for a row only a parent can set (the +100 sleep item): flat iron
+ * with an inset square and NO bevel highlight, because the ordinary stone
+ * slot promises a tap that isn't available here (design addendum).
+ *
+ * The addendum specs the unset slot only; once a parent HAS checked it (the
+ * morning verify, before approval), the same iron carries a ✔ instead of the
+ * inset square — the fact is worth showing, and iron keeps it legible as
+ * someone else's mark rather than a tap she can undo.
+ */
+function LockedSlot({ size, checked }: { size: number; checked: boolean }) {
+  return (
+    <span
+      style={{
+        width: size,
+        height: size,
+        flex: 'none',
+        background: '#6f6f6f',
+        border: '3px solid #4a4a44',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      {checked ? (
+        <span className="px" style={{ fontSize: size * 0.57, color: '#fff' }}>
+          ✔
+        </span>
+      ) : (
+        <span style={{ width: 14, height: 14, background: '#4a4a44' }} />
+      )}
+    </span>
+  );
+}
+
 function ChecklistRow({ occ, item }: { occ: Occurrence; item: ItemConfig }) {
   const checked = isChecked(occ, item.id);
   const editable =
@@ -103,6 +138,8 @@ function ChecklistRow({ occ, item }: { occ: Occurrence; item: ItemConfig }) {
     >
       {editable ? (
         <BlockCheck checked={checked} size={46} anim={anim} />
+      ) : parentLater ? (
+        <LockedSlot size={46} checked={checked} />
       ) : (
         <SlotCheck checked={checked} size={46} />
       )}
@@ -129,8 +166,22 @@ function ChecklistRow({ occ, item }: { occ: Occurrence; item: ItemConfig }) {
           <div style={{ fontSize: 13, color: '#6b675c', fontWeight: 600 }}>{item.hint}</div>
         )}
         {parentLater && (
-          <div style={{ fontSize: 13, color: '#6b675c', fontWeight: 600 }}>
-            A grown-up checks this one in the morning
+          // Iron pill, not a second hint line: iron is the parent material,
+          // so it reads as "someone else decides this" with no negative
+          // language and without borrowing the hint voice.
+          <div
+            className="px"
+            style={{
+              display: 'inline-block',
+              marginTop: 5,
+              fontSize: 13,
+              color: '#fff',
+              padding: '2px 7px',
+              background: '#6f6f6f',
+              border: '2px solid #4a4a44',
+            }}
+          >
+            MORNING CHECK
           </div>
         )}
       </div>
