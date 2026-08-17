@@ -19,7 +19,7 @@ import {
 import { addDays, dateKey, fmtCoins, fmtDateShort, fmtHM, fmtTimeOfDay, fromDateKey } from '../../../lib/dates';
 import { store, useAppState } from '../../../store/hooks';
 import { ConfirmModal, Modal } from '../../components/chrome';
-import { EditValue, GreenButton, ParentCancel, PixelButton, SlotCheck } from '../../components/core';
+import { EditValue, ParentCancel, PixelButton, SlotCheck } from '../../components/core';
 
 // ---------- shared chrome ----------
 
@@ -181,7 +181,7 @@ function ReviewView({ occId }: { occId?: string }) {
                 }}
               >
                 {parentItem ? (
-                  <SlotCheck checked={done} size={24} themed={false} />
+                  <SlotCheck checked={done} size={24} parentMark />
                 ) : done ? (
                   <span className="px" style={{ color: '#3d7a22' }}>
                     ✔
@@ -238,7 +238,7 @@ function ReviewView({ occId }: { occId?: string }) {
                 }}
               >
                 {parentItem ? (
-                  <SlotCheck checked={done} size={24} themed={false} />
+                  <SlotCheck checked={done} size={24} parentMark />
                 ) : done ? (
                   <span className="px" style={{ color: '#3d7a22' }}>
                     ✔
@@ -309,9 +309,21 @@ function ReviewView({ occId }: { occId?: string }) {
           </div>
         </div>
         <div style={{ padding: '0 16px 18px', display: 'flex', flexDirection: 'column', gap: 10, flex: 'none' }}>
-          <GreenButton style={{ fontSize: 22, padding: 16 }} onClick={() => store.parentApprove(occ.id, awardValue)}>
+          <PixelButton
+            variant="gold"
+            style={{
+              fontSize: 22,
+              padding: 16,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 10,
+            }}
+            onClick={() => store.parentApprove(occ.id, awardValue)}
+          >
+            <img src="assets/coin.png" alt="" style={{ width: 24, height: 24 }} />
             Approve &amp; award {awardValue}
-          </GreenButton>
+          </PixelButton>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             <PixelButton
               variant="slate"
@@ -445,7 +457,7 @@ function VerifyLastNight() {
             textAlign: 'left',
           }}
         >
-          <SlotCheck checked={isChecked(occ, item.id)} size={30} themed={false} lightUnchecked />
+          <SlotCheck checked={isChecked(occ, item.id)} size={30} parentMark lightUnchecked />
           {item.label}
         </button>
       ))}

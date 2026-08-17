@@ -102,9 +102,13 @@ design README and mockup annotations.
   specified) **plus "Close for today"** — it irreversibly ends the day's
   occurrence, matching the acceptance list's "destructive actions require the
   extra confirmation". Approve and send back stay one-tap (easy everyday use).
-- **Parent-zone materials (design v7, mockup section 6 + design README)**:
-  the zone is iron and neutral — gold is a coin, green is Haley, so neither
-  colours its controls. Availability moved into the bevel: raised bright
+- **Parent-zone materials (design v7–v8, mockup sections 6–7 + design
+  README)**: **green means Haley acted; gold means coins are moving** —
+  neither is about who holds the phone. Green is never a parent-initiated
+  action (nothing a parent taps in order to *do* something is green; green
+  only reports what she did), gold is allowed wherever coins actually move
+  including the parent zone, and everything else is iron, stone or slate.
+  Availability moved into the bevel: raised bright
   stone (`#cfc8b2` fill / `#4a4a44` border / `#2b2b24` text) for ON and live,
   recessed dark iron (`#4a4a44` / `#2b2b24` / `#cfc8b2` text, pressed, no
   highlight) for OFF and for every disabled state, so "off" and "not
@@ -122,10 +126,22 @@ design README and mockup annotations.
     **plain inset square on flat iron** means locked and not yet decided.
   - Parent copy voice: plain, factual, no exclamation, no encouragement —
     explain the mechanic and stop. Haley's side gets the warmth.
-  - Still green/gold and deliberately untouched, outside the stated scope
-    (1l's five cards, the PIN row, the excuse modal): the "Approve & award"
-    button and the review list's green ✔/slot marks (1k), the gold "Confirm
-    & award night coins" in the verify block, and "Redeem coins".
+  - v8 settled the two places the first, blunter rule ("no green and no gold
+    in the parent zone") broke:
+    - The **parent-verified row's live toggle** in review — and the same
+      control in the morning-verify block, which records the identical fact
+      — went from the green bevel to a white ✔ on flat iron (`parentMark`).
+      Haley was asleep; the mark can't claim she did it. The green ✔ marks
+      beside every *other* row are untouched: they are a record of her taps,
+      and a parent scanning the list has to tell at a glance which lines are
+      her word and which are their own.
+    - **"Approve & award N"** went green → gold with the coin icon. It was
+      green because it is the confirm; it is gold because it moves 344
+      coins, and the three coin actions ("Approve & award", "Confirm &
+      award night coins", "Redeem coins") should read as one family. A
+      disabled "Redeem · N to go" stays recessed iron — the one case where
+      gold gives way, because it can't pay.
+    - `GreenButton` had no callers left and was deleted.
 - In the review screen the parent can toggle **parent-verified items only**;
   child-attested items are display-only (the parent's tool for an incomplete
   list is approve-despite-incomplete, send back, or close — not silently

@@ -58,6 +58,7 @@ check('white on slate button', '#ffffff', '#6d89a3', 3.0);
 check('white on stone button', '#ffffff', '#9a9a9a', 2.0); // handoff value; large px text + shadow
 check('white on iron button', '#ffffff', '#6f6f6f', 3.0); // parent-zone controls, incl. the routine-screen review shortcut
 check('MORNING CHECK pill', '#ffffff', '#6f6f6f', 3.0); // iron pill on the parent-verified checklist row
+check('grown-up record ✔ on iron', '#ffffff', '#6f6f6f', 3.0); // parentMark slot: a parent recorded it
 // Parent-zone controls (v7): availability lives in the bevel, not in colour.
 check('parent ON control text', '#2b2b24', '#cfc8b2', 4.5);
 // The OFF/disabled label is never dimmed — the bevel carries the state, and

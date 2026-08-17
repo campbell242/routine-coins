@@ -149,59 +149,48 @@ export function EditValue({ children }: { children: ReactNode }) {
   );
 }
 
-/** Fixed grass-green button — for surfaces that never theme (parent area). */
-export function GreenButton({
-  onClick,
-  style,
-  children,
-}: {
-  onClick?: () => void;
-  style?: CSSProperties;
-  children: ReactNode;
-}) {
-  return (
-    <button className="bevel" onClick={onClick} style={{ background: '#57a636', ...style }}>
-      {children}
-    </button>
-  );
-}
-
-/** Inventory-slot checkbox. Checked fill follows the theme accent. */
+/**
+ * Inventory-slot checkbox.
+ *
+ * Checked, it says WHO recorded the fact (design v8): the themed green bevel
+ * means Haley did it, and `parentMark` swaps it for a white ✔ on flat iron —
+ * a grown-up's record, never a claim about her. Green is never a
+ * parent-initiated action. Unchecked is the ordinary stone slot either way:
+ * where the control is live, it should still invite the tap.
+ */
 export function SlotCheck({
   checked,
   size,
-  themed = true,
+  parentMark = false,
   lightUnchecked = false,
   onClick,
 }: {
   checked: boolean;
   size: number;
-  /** Parent-area checkboxes keep classic green regardless of theme. */
-  themed?: boolean;
+  /** Checked state is a grown-up's record: white ✔ on flat iron, no bevel. */
+  parentMark?: boolean;
   /** Light unchecked fill (#fffdf6) — the verify-last-night treatment (1l). */
   lightUnchecked?: boolean;
   onClick?: () => void;
 }) {
   const theme = useTheme();
-  const fill = themed ? theme.primary : '#57a636';
-  const dark = themed ? theme.checkedDark : '#2c5c1a';
-  const light = themed ? theme.checkedLight : '#a8e07f';
-  const checkColor = themed ? theme.primaryText : '#fff';
   const box = checked ? (
     <span
       style={{
         width: size,
         height: size,
         flex: 'none',
-        background: fill,
-        border: '3px solid',
-        borderColor: `${dark} ${light} ${light} ${dark}`,
+        background: parentMark ? '#6f6f6f' : theme.primary,
+        border: parentMark ? '3px solid #4a4a44' : '3px solid',
+        borderColor: parentMark
+          ? '#4a4a44'
+          : `${theme.checkedDark} ${theme.checkedLight} ${theme.checkedLight} ${theme.checkedDark}`,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         fontFamily: "'Jersey 25', monospace",
         fontSize: size * 0.57,
-        color: checkColor,
+        color: parentMark ? '#fff' : theme.primaryText,
       }}
     >
       ✔
