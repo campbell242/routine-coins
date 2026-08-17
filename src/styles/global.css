@@ -124,32 +124,30 @@ input {
    raised bright stone = live, recessed dark iron = not available. The same
    pair does toggles (ON/OFF), edit confirmations, and every disabled state,
    so "available / not available" looks identical across the zone. */
-.bevel-parent-on {
+/* Exact values from section 6a. The .bevel-sm pairings only exist so the
+   generic small-bevel rule further down can't override them. */
+.bevel-parent-on,
+.bevel-parent-on.bevel-sm {
   background: #cfc8b2;
   border-color: #4a4a44;
   color: #2b2b24;
   box-shadow:
     inset 0 3px 0 rgba(255, 255, 255, 0.55),
-    inset 0 -5px 0 rgba(0, 0, 0, 0.18);
+    inset 0 -4px 0 rgba(0, 0, 0, 0.16);
   text-shadow: none;
 }
+/* Pressed: shadow at the top, no highlight. The BEVEL says "off" — the label
+   stays bright (#cfc8b2, 5.3:1), never dimmed: on a disabled option the
+   appended reason is load-bearing text. */
 .bevel-parent-off,
-.bevel.bevel-parent-off:disabled {
+.bevel-parent-off.bevel-sm,
+.bevel.bevel-parent-off:disabled,
+.bevel.bevel-parent-off.bevel-sm:disabled {
   background: #4a4a44;
   border-color: #2b2b24;
-  color: #8a8578;
-  /* pressed: shadow at the top, no highlight — it reads as sunk in */
-  box-shadow: inset 0 4px 0 rgba(0, 0, 0, 0.3);
+  color: #cfc8b2;
+  box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0.4);
   text-shadow: none;
-}
-.bevel-parent-on.bevel-sm {
-  box-shadow:
-    inset 0 3px 0 rgba(255, 255, 255, 0.55),
-    inset 0 -4px 0 rgba(0, 0, 0, 0.18);
-}
-.bevel-parent-off.bevel-sm,
-.bevel.bevel-parent-off.bevel-sm:disabled {
-  box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0.3);
 }
 /* Cancel is never a filled button in the parent area: plain underlined text,
    full-width tap target, so the eye lands on the choice and not the exit. */
@@ -157,9 +155,13 @@ input {
   font-family: 'Jersey 25', monospace;
   width: 100%;
   text-align: center;
+  font-size: 15px;
+  line-height: 16px;
   color: #6b675c;
   text-decoration: underline;
-  padding: 13px;
+  padding: 14px;
+  /* losing the fill must not lose the target */
+  min-height: 44px;
   background: none;
   border: none;
 }

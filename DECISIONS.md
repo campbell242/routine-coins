@@ -102,26 +102,30 @@ design README and mockup annotations.
   specified) **plus "Close for today"** — it irreversibly ends the day's
   occurrence, matching the acceptance list's "destructive actions require the
   extra confirmation". Approve and send back stay one-tap (easy everyday use).
-- **Parent-zone materials (design v7)**: the zone is iron and neutral — gold
-  is a coin, green is Haley, so neither colours its controls. Availability
-  moved into the bevel: raised bright stone (`#cfc8b2`/`#4a4a44`/`#2b2b24`)
-  for ON and live, recessed dark iron (`#4a4a44`/`#2b2b24`/`#8a8578`) for OFF
-  and for every disabled state, so "off" and "not available" are one look.
-  Editable values and their ✎ are slate `#3f5f78` (the "Send back" material),
-  never green; the edit field's focus ring moved from gold to the same slate.
-  Cancel is never a filled button — underlined `#6b675c` text, full width,
-  under the confirm rather than beside it, so the eye lands on the choice
-  instead of the exit. `variant="parentOn"` degrades to `parentOff` when
-  disabled so new controls inherit the rule.
-  - The specced OFF pair (`#8a8578` on `#4a4a44`) measures **2.42** contrast,
-    under the 3.0 large-text floor. Built exactly as specced; the audit
-    records it as a documented exception and it's flagged back to design
-    (`#9d988c` would clear 3.0 without changing the material).
-  - Still green/gold and deliberately untouched, pending a ruling: the
-    "Approve & award" button (1k), the gold "Confirm & award night coins" in
-    the verify block, "Redeem coins", and the green ✔/slot marks in the
-    review list — the last of these matches design's own rule that a green
-    check means "Haley did it".
+- **Parent-zone materials (design v7, mockup section 6 + design README)**:
+  the zone is iron and neutral — gold is a coin, green is Haley, so neither
+  colours its controls. Availability moved into the bevel: raised bright
+  stone (`#cfc8b2` fill / `#4a4a44` border / `#2b2b24` text) for ON and live,
+  recessed dark iron (`#4a4a44` / `#2b2b24` / `#cfc8b2` text, pressed, no
+  highlight) for OFF and for every disabled state, so "off" and "not
+  available" are one look. **The label is never dimmed** — the bevel carries
+  the state, and on a disabled option the appended reason ("· already
+  settled") is load-bearing text; it reads at 5.33:1. Editable values and
+  their ✎ are slate `#3f5f78` (the "Send back" material, the one accent
+  Haley's side never uses); the edit field's focus ring moved from gold to
+  the same slate. Cancel is never a filled button — underlined `#6b675c`
+  text, full width, ≥44px tall, under the confirm rather than beside it, so
+  the eye lands on the choice instead of the exit. `variant="parentOn"`
+  degrades to `parentOff` when disabled so new controls inherit the rule.
+  - Checkbox language, now a written rule: a **green bevelled slot** means
+    Haley did it, a **white ✔ on flat iron** means a grown-up recorded it, a
+    **plain inset square on flat iron** means locked and not yet decided.
+  - Parent copy voice: plain, factual, no exclamation, no encouragement —
+    explain the mechanic and stop. Haley's side gets the warmth.
+  - Still green/gold and deliberately untouched, outside the stated scope
+    (1l's five cards, the PIN row, the excuse modal): the "Approve & award"
+    button and the review list's green ✔/slot marks (1k), the gold "Confirm
+    & award night coins" in the verify block, and "Redeem coins".
 - In the review screen the parent can toggle **parent-verified items only**;
   child-attested items are display-only (the parent's tool for an incomplete
   list is approve-despite-incomplete, send back, or close — not silently

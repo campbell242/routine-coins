@@ -60,11 +60,9 @@ check('white on iron button', '#ffffff', '#6f6f6f', 3.0); // parent-zone control
 check('MORNING CHECK pill', '#ffffff', '#6f6f6f', 3.0); // iron pill on the parent-verified checklist row
 // Parent-zone controls (v7): availability lives in the bevel, not in colour.
 check('parent ON control text', '#2b2b24', '#cfc8b2', 4.5);
-// Design-specified pair (#8a8578 on #4a4a44) lands at 2.42 — below the 3.0
-// large-text floor. Built exactly as specced and flagged back to design;
-// #9d988c would clear 3.0 without changing the material. Recorded as an
-// exception so the audit stays honest rather than silently green.
-check('parent OFF control text', '#8a8578', '#4a4a44', 2.4);
+// The OFF/disabled label is never dimmed — the bevel carries the state, and
+// on a disabled option the appended reason is load-bearing text (v7 §6b).
+check('parent OFF control text', '#cfc8b2', '#4a4a44', 4.5);
 check('parent editable value (slate)', '#3f5f78', '#fffdf6', 4.5);
 check('parent Cancel text', '#6b675c', '#f3eee1', 4.5);
 check('gold chip on required row', '#8a6200', '#fffdf6', 4.5); // a required row may carry a coin value

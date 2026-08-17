@@ -130,7 +130,7 @@ export function ParentCancel({
   style?: CSSProperties;
 }) {
   return (
-    <button className="parent-cancel" onClick={onClick} style={{ fontSize: 17, ...style }}>
+    <button className="parent-cancel" onClick={onClick} style={style}>
       {label}
     </button>
   );

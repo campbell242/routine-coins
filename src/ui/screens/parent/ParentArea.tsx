@@ -790,7 +790,7 @@ function SettingsView() {
               − Subtract
             </PixelButton>
           </div>
-          <ParentCancel onClick={() => setModal({ kind: 'none' })} style={{ marginTop: 4 }} />
+          <ParentCancel onClick={() => setModal({ kind: 'none' })} />
         </Modal>
       )}
 
@@ -903,7 +903,7 @@ function SettingsView() {
                   }),
                 )}
               </div>
-              <ParentCancel onClick={() => setModal({ kind: 'none' })} style={{ fontSize: 15, marginTop: 4 }} />
+              <ParentCancel onClick={() => setModal({ kind: 'none' })} />
             </Modal>
           );
         })()}

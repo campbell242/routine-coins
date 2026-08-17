@@ -52,9 +52,10 @@ everywhere:
 | Element | Treatment |
 |---|---|
 | ON / live / enabled | `.bevel-parent-on` — `#cfc8b2` fill, 3px `#4a4a44` border, `#2b2b24` text, **raised** bevel |
-| OFF / disabled / unavailable | `.bevel-parent-off` — `#4a4a44` fill, 3px `#2b2b24` border, `#8a8578` text, **pressed** bevel (no highlight) |
+| OFF / disabled / unavailable | `.bevel-parent-off` — `#4a4a44` fill, 3px `#2b2b24` border, `#cfc8b2` text, **pressed** bevel (no highlight). Never dim the label: the bevel carries the state, and a disabled option's appended reason is load-bearing text |
 | Editable value + its ✎ | `#3f5f78` slate (`<EditValue>`), never green — the same material as "Send back" |
-| Cancel | never a filled button: `<ParentCancel>` — underlined `#6b675c` text, full-width tap target |
+| Cancel | never a filled button: `<ParentCancel>` — underlined `#6b675c` text, full width, ≥44px tall, placed under the confirm |
+| Checkbox meaning | green bevelled slot = Haley did it · white ✔ on flat iron = a grown-up recorded it · plain inset square on flat iron = locked, not yet decided |
 
 A `PixelButton` with `variant="parentOn"` renders as `parentOff` when
 `disabled`, so new parent controls get the rule for free. Parent copy is
