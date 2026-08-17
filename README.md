@@ -89,10 +89,30 @@ scripts/gen-sw.mjs       # emits the cache-first service worker after build
 scripts/gen-icons.mjs    # PWA icons from the pixel-art coin
 scripts/contrast-audit.mjs  # WCAG checks for every theme variant
 scripts/screenshots.mjs  # drives every screen/state for visual comparison
+scripts/sync-design.mjs  # mirrors a fresh Claude Design export into design/
 ```
 
 Adding a routine (e.g. a Saturday plan) is a configuration change in
 `src/config/plans.ts` — the engine and UI pick it up automatically.
+
+## Syncing a new design export
+
+Claude Design exports the whole folder every time, so uploading it through
+the GitHub web UI merges files instead of replacing them — anything deleted
+in Design lingers here. Point the sync script at the zip instead and it
+mirrors the export: copies what's new or changed, deletes what the export
+dropped, and leaves the rest alone, so the commit shows only the real change.
+
+```sh
+node scripts/sync-design.mjs ~/Downloads/export.zip --dry-run   # preview
+node scripts/sync-design.mjs ~/Downloads/export.zip             # apply
+git add -A design && git commit -m "design: sync export"
+```
+
+It accepts an unzipped folder too, finds `design/` however the export wraps
+it, ignores `__MACOSX`/`.DS_Store`, and writes nothing outside `design/`.
+If an export would delete more than half of `design/` it stops — that
+usually means a partial download; re-run with `--force` once you've checked.
 
 ## Authoring checklists
 
