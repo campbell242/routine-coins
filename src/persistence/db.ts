@@ -122,6 +122,35 @@ export async function saveApproval(occ: Occurrence, balance: number): Promise<vo
 }
 
 /**
+ * Restore: replace every stored value with a backup's contents in ONE
+ * transaction. All-or-nothing on purpose — a kill mid-restore must not leave
+ * her with one night's coins and another night's history. The PIN hash is
+ * untouched (it is never in a backup), and old occurrences are cleared first
+ * so a restore is a replacement rather than a merge.
+ */
+export async function replaceAllData(data: {
+  balance: number;
+  occurrences: Occurrence[];
+  overrides: Record<string, PlanOverride>;
+  settings: Settings;
+  pendingAwards: PendingAward[];
+}): Promise<void> {
+  const d = await db();
+  const tx = d.transaction(['kv', 'occurrences'], 'readwrite');
+  const occStore = tx.objectStore('occurrences');
+  void occStore.clear();
+  for (const occ of data.occurrences) void occStore.put(occ);
+  const kv = tx.objectStore('kv');
+  void kv.put(data.balance, 'balance');
+  void kv.put(data.overrides, 'overrides');
+  void kv.put(data.settings, 'settings');
+  void kv.put(data.pendingAwards, 'pendingAwards');
+  // A restored phone has no business resuming the old phone's timer.
+  void kv.delete('timer');
+  await tx.done;
+}
+
+/**
  * Ask the browser to make our storage persistent (not evictable under
  * pressure). Called on startup; failures are non-fatal.
  */

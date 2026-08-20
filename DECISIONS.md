@@ -122,6 +122,31 @@ design README and mockup annotations.
     celebrates); only additions leave the parent area.
   - 1m/1o are drawn as routine-completion screens, so the bonus variants are
     a deviation — flagged for design.
+- **Backup and restore** (Settings → BACKUP). There is no server and no
+  sync, so a lost, wiped or dead phone is a lost balance and a lost streak
+  history. One JSON file holds the balance, every occurrence (which is what
+  streaks are *derived* from, so history is the streak), the plan overrides,
+  her avatar/theme/sound settings, and any uncollected celebration.
+  - **Saving prefers the share sheet** over a download: the point of a backup
+    is to live somewhere other than the phone being backed up, and sharing
+    puts it in Drive/mail/chat in one tap. Falls back to an `<a download>`
+    where files can't be shared. No new dependencies, no network.
+  - **The PIN hash and the running timer are deliberately excluded.** A
+    4-digit hash in a file anyone could find is brute-forceable offline in
+    milliseconds, and the file is meant to be copied around; a restored
+    phone keeps whatever PIN it has. A half-finished timer isn't worth
+    restoring, and `replaceAllData` clears it.
+  - **Restore replaces, never merges**, and is written in ONE transaction
+    after full validation — a kill mid-restore can't leave one night's coins
+    beside another night's history. It takes the same extra confirmation as
+    redemption and subtraction, and the confirm names what's in the file
+    ("From Aug 17: 344 coins and 1 night of history").
+  - **A picked file is untrusted input.** `parseBackup` rejects non-JSON,
+    files with no format marker, a *newer* format, another profile's data,
+    and a missing/negative balance — each with a reason plain enough to
+    show. One malformed occurrence is dropped rather than failing the whole
+    file: a backup missing one broken night still restores the coins and the
+    rest of the history. Nothing is written unless parsing succeeds.
 - **Extra confirmation taps**: redemption and manual subtraction (as
   specified) **plus "Close for today"** — it irreversibly ends the day's
   occurrence, matching the acceptance list's "destructive actions require the

@@ -47,6 +47,22 @@ so coins, routines, streaks and settings survive app kills and reboots.
 - The parent session locks on LOCK, after 3 minutes of inactivity, or when
   leaving the parent area.
 
+### Backing up her coins and history
+
+There is no server: the phone holds the only copy. **Settings → BACKUP →
+Save a copy** writes one JSON file — balance, every routine night (what the
+streak is counted from), the settings on that screen and her chosen look —
+and offers it to the Android share sheet, so it can land in Drive, mail or
+chat rather than staying on the phone being backed up. It does **not**
+contain the parent PIN.
+
+**Choose a file** restores one: it validates the file first, names what's
+inside it, and takes a confirmation, because a restore *replaces* everything
+on the phone. Files that aren't backups, that come from another profile, or
+that were written by a newer version are refused without changing anything.
+
+Do it after a good week, and before changing phones.
+
 ### Parent-area materials (design v7)
 
 **Green means Haley acted. Gold means coins are moving.** Neither is about
