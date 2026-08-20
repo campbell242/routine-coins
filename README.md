@@ -39,6 +39,11 @@ so coins, routines, streaks and settings survive app kills and reboots.
   on that routine's review, and LOCK hands the phone back to Haley's routine
   screen. A shortcut, not a bypass: the PIN is still required.
 - **The out-of-the-box PIN is `1234`** — change it in Parent → Settings.
+- **Giving bonus coins** (Settings → Balance → ＋/− adjust → ＋ Add) runs
+  the same release as approving a routine: the coins are banked at your tap,
+  then the phone shows "Bonus coins! — hand the phone back", and Haley's own
+  tap plays the celebration. One tap, no confirmation. Subtracting is silent
+  and keeps you in Settings.
 - The parent session locks on LOCK, after 3 minutes of inactivity, or when
   leaving the parent area.
 

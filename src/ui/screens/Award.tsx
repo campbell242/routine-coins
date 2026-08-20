@@ -140,10 +140,10 @@ export function Award() {
         <img src="assets/coin.png" alt="" style={{ width: 34, height: 34 }} />
         <div>
           <div className="px" style={{ fontSize: 17, color: '#b07d00' }}>
-            Routine complete!
+            {award.kind === 'bonus' ? 'Bonus coins!' : 'Routine complete!'}
           </div>
           <div style={{ fontSize: 13, color: '#4a463a', fontWeight: 600 }}>
-            {award.planName} · approved
+            {award.kind === 'bonus' ? 'From Mom & Dad' : `${award.planName} · approved`}
           </div>
         </div>
       </div>
