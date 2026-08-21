@@ -56,12 +56,14 @@ import {
   kvGet,
   kvSet,
   loadOccurrences,
+  replaceAllData,
   requestPersistentStorage,
   saveApproval,
   saveOccurrence,
   type PendingAward,
   type Settings,
 } from '../persistence/db';
+import { backupFileName, buildBackup, parseBackup, type ParseResult } from '../persistence/backup';
 
 export type Route =
   | { name: 'home' }
@@ -602,6 +604,60 @@ class Store {
     } catch {
       return false;
     }
+  }
+
+  /**
+   * Everything worth keeping, as one JSON file: coins, the whole routine
+   * history (which is what streaks are derived from), parent overrides,
+   * her avatar and theme, and any uncollected celebration. No PIN hash and
+   * no running timer — see backup.ts.
+   */
+  buildBackupFile(): { name: string; json: string } {
+    const exportedAt = new Date(this.state.nowMs).toISOString();
+    const file = buildBackup(
+      {
+        balance: this.state.balance,
+        occurrences: Object.values(this.state.occurrences),
+        overrides: this.state.overrides,
+        settings: this.state.settings,
+        pendingAwards: this.state.pendingAwards,
+      },
+      exportedAt,
+    );
+    return { name: backupFileName(exportedAt), json: JSON.stringify(file, null, 2) };
+  }
+
+  /** Validate a picked file without touching anything (drives the confirm copy). */
+  inspectBackup(text: string): ParseResult {
+    return parseBackup(text);
+  }
+
+  /**
+   * Replace this phone's data with a backup's. Destructive and confirmed by
+   * the caller; the write itself is one transaction, and the in-memory state
+   * is refreshed from the same contents so the UI can't disagree with disk.
+   */
+  async restoreBackup(text: string): Promise<{ ok: boolean; reason?: string }> {
+    const parsed = parseBackup(text);
+    if (!parsed.ok) return { ok: false, reason: parsed.reason };
+    const { balance, occurrences, overrides, settings, pendingAwards } = parsed.file;
+    try {
+      await replaceAllData({ balance, occurrences, overrides, settings, pendingAwards });
+    } catch {
+      return { ok: false, reason: 'The restore could not be saved. Nothing was changed.' };
+    }
+    this.set({
+      balance,
+      occurrences: sanitizeOccurrences(occurrences),
+      overrides,
+      settings,
+      pendingAwards,
+      timer: TIMER_IDLE,
+      award: undefined,
+    });
+    this.syncAudio();
+    this.syncWakeLock();
+    return { ok: true };
   }
 
   setOverride(planId: string, patch: PlanOverride): void {

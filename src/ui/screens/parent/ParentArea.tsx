@@ -17,6 +17,7 @@ import {
   type Occurrence,
 } from '../../../engine/machine';
 import { addDays, dateKey, fmtCoins, fmtDateShort, fmtHM, fmtTimeOfDay, fromDateKey } from '../../../lib/dates';
+import { saveTextFile } from '../../../lib/saveFile';
 import { store, useAppState } from '../../../store/hooks';
 import { ConfirmModal, Modal } from '../../components/chrome';
 import { EditValue, ParentCancel, PixelButton, SlotCheck } from '../../components/core';
@@ -490,9 +491,55 @@ function SettingsView() {
     | { kind: 'confirmRedeem'; amount: number }
     | { kind: 'pin' }
     | { kind: 'excuse' }
+    | { kind: 'restoreConfirm'; text: string; summary: string }
+    | { kind: 'restoreProblem'; reason: string }
   >({ kind: 'none' });
   const [field1, setField1] = useState('');
   const [field2, setField2] = useState('');
+  const fileRef = useRef<HTMLInputElement | null>(null);
+
+  /** Hand the file to the share sheet if there is one, else download it. */
+  async function saveBackup(): Promise<void> {
+    const { name, json } = store.buildBackupFile();
+    const outcome = await saveTextFile(name, json);
+    if (outcome === 'shared' || outcome === 'downloaded') {
+      store.toast('Backup saved', name);
+    } else if (outcome === 'failed') {
+      setModal({ kind: 'restoreProblem', reason: 'This phone would not let the app save a file.' });
+    }
+    // 'cancelled' — the parent dismissed the share sheet; say nothing.
+  }
+
+  /** Read and validate the picked file; a restore always takes a confirm. */
+  async function pickBackup(file: File | undefined): Promise<void> {
+    if (fileRef.current) fileRef.current.value = ''; // so the same file can be picked twice
+    if (!file) return;
+    let text: string;
+    try {
+      text = await file.text();
+    } catch {
+      setModal({ kind: 'restoreProblem', reason: 'That file could not be read.' });
+      return;
+    }
+    const parsed = store.inspectBackup(text);
+    if (!parsed.ok) {
+      setModal({ kind: 'restoreProblem', reason: parsed.reason });
+      return;
+    }
+    const when = parsed.file.exportedAt ? fmtDateShort(new Date(parsed.file.exportedAt)) : 'an unknown date';
+    const nights = parsed.counts.occurrences;
+    setModal({
+      kind: 'restoreConfirm',
+      text,
+      summary: `From ${when}: ${fmtCoins(parsed.file.balance)} coins and ${nights} ${nights === 1 ? 'night' : 'nights'} of history.`,
+    });
+  }
+
+  async function applyRestore(text: string): Promise<void> {
+    const result = await store.restoreBackup(text);
+    setModal(result.ok ? { kind: 'none' } : { kind: 'restoreProblem', reason: result.reason ?? 'The restore failed.' });
+    if (result.ok) store.toast('Backup restored', 'Coins, history and settings are back.');
+  }
 
   const balance = state.balance;
   const toGo = Math.max(0, REDEMPTION_THRESHOLD - balance);
@@ -688,6 +735,53 @@ function SettingsView() {
                 <EditValue>···· ✎</EditValue>
               </button>
             </div>
+          </div>
+
+          {/* There is no server: this file is the only copy of her history
+              that can outlive the phone. */}
+          <div style={{ background: '#fffdf6', border: '3px solid #2b2b24', padding: 12 }}>
+            <div className="px" style={{ fontSize: 16, color: '#8a8578', marginBottom: 8 }}>
+              BACKUP
+            </div>
+            <div style={rowStyle}>
+              Save a backup
+              <span style={{ marginLeft: 'auto' }}>
+                <PixelButton
+                  variant="parentOn"
+                  small
+                  style={{ fontSize: 14, padding: '8px 12px', width: 'auto' }}
+                  onClick={() => void saveBackup()}
+                >
+                  Save a copy
+                </PixelButton>
+              </span>
+            </div>
+            <div style={{ ...rowStyle, borderBottom: 'none' }}>
+              Restore from a backup
+              <span style={{ marginLeft: 'auto' }}>
+                <PixelButton
+                  variant="parentOn"
+                  small
+                  style={{ fontSize: 14, padding: '8px 12px', width: 'auto' }}
+                  onClick={() => fileRef.current?.click()}
+                >
+                  Choose a file
+                </PixelButton>
+              </span>
+            </div>
+            <div style={{ fontSize: 11, color: '#8a8578', fontWeight: 600, marginTop: 6 }}>
+              One file holds the coin balance, every routine night (which is what the
+              streak is counted from), the settings on this screen and {CHILD_NAME}'s
+              chosen look. It does not hold the parent PIN. Restoring replaces
+              everything on this phone with the file.
+            </div>
+            <input
+              ref={fileRef}
+              type="file"
+              accept="application/json,.json"
+              style={{ display: 'none' }}
+              onChange={(e) => void pickBackup(e.target.files?.[0])}
+            />
           </div>
         </div>
       </div>
@@ -919,6 +1013,26 @@ function SettingsView() {
             </Modal>
           );
         })()}
+
+      {modal.kind === 'restoreConfirm' && (
+        <ConfirmModal
+          title="Restore this backup?"
+          body={`${modal.summary} Everything on this phone is replaced. This cannot be undone.`}
+          confirmLabel="Replace and restore"
+          onConfirm={() => void applyRestore(modal.text)}
+          onCancel={() => setModal({ kind: 'none' })}
+        />
+      )}
+
+      {modal.kind === 'restoreProblem' && (
+        <Modal title="That file was not restored" onClose={() => setModal({ kind: 'none' })}>
+          <div style={{ fontSize: 14, fontWeight: 600, color: '#4a463a' }}>{modal.reason}</div>
+          <div style={{ fontSize: 12, fontWeight: 600, color: '#6b675c', marginTop: 8 }}>
+            Nothing on this phone was changed.
+          </div>
+          <ParentCancel label="Close" onClick={() => setModal({ kind: 'none' })} />
+        </Modal>
+      )}
 
       {modal.kind === 'pin' && (
         <Modal title="New 4-digit PIN" onClose={() => setModal({ kind: 'none' })}>
