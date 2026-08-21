@@ -36,7 +36,8 @@ export function Handoff() {
       >
         <img src="assets/coin.png" alt="" className="pop-in" style={{ width: 56, height: 56 }} />
         <div className="px" style={{ fontSize: 30, lineHeight: 1.1 }}>
-          {next.planName} approved!
+          {/* A bonus has no routine to name — the coins ARE the news. */}
+          {next.kind === 'bonus' ? 'Bonus coins!' : `${next.planName} approved!`}
         </div>
         <div style={{ fontSize: 15, color: '#6b675c', fontWeight: 600, maxWidth: 260 }}>
           Hand the phone back to {CHILD_NAME} — the coins are hers to collect.

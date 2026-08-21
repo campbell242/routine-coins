@@ -21,6 +21,7 @@ import {
   TransitionError,
   type Occurrence,
 } from '../engine/machine';
+import { bonusAward } from '../engine/awards';
 import { adjust, award, redeem } from '../engine/ledger';
 import { resolveAll, resolvePlan } from '../engine/overrides';
 import { planStateNow, type OccurrenceMap } from '../engine/scheduler';
@@ -495,6 +496,7 @@ class Store {
       ...this.state.pendingAwards.filter((p) => p.occId !== approved.id),
       {
         occId: approved.id,
+        kind: 'routine' as const,
         planName: occ.snapshot.name,
         amount: approved.award ?? 0,
         balanceBefore,
@@ -567,10 +569,27 @@ class Store {
     this.putOccurrence(occ);
   }
 
+  /**
+   * Manual balance change from parent settings. A SUBTRACTION is silent and
+   * stays put — nothing negative ever celebrates (tone rule). An ADDITION is
+   * a reward, so it takes the same route an approval does: the coins land
+   * here, at the parent's tap, and the celebration is queued for Haley and
+   * released by her own tap on the handoff screen.
+   */
   parentAdjustBalance(delta: number): void {
-    const next = adjust(this.state.balance, delta);
+    const balanceBefore = this.state.balance;
+    const next = adjust(balanceBefore, delta);
     this.set({ balance: next });
     void kvSet('balance', next);
+    if (delta <= 0) return;
+
+    const pendingAwards = [...this.state.pendingAwards, bonusAward(delta, balanceBefore, this.state.nowMs)];
+    this.set({ pendingAwards });
+    void kvSet('pendingAwards', pendingAwards);
+    // Child-facing from here, so this ends the parent session — same as
+    // approving, and it is what puts the phone back in her hands.
+    this.takeShortcut();
+    this.navigate({ name: 'handoff' });
   }
 
   /** Returns false if the redemption is invalid (e.g. exceeds balance). */

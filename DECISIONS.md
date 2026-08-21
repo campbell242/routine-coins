@@ -98,6 +98,30 @@ design README and mockup annotations.
   she is at school) and are a queue, not one slot, so approving two routines
   in one morning can't swallow one of her moments. Home carries the same
   gold button until she collects.
+- **Manual bonus coins take the same celebration route as an approval.**
+  A parent handing out coins for something wonderful (Settings → Balance →
+  ＋/− adjust → ＋ Add) queues a `PendingAward` and lands on the handoff
+  screen, so Haley releases the coin flight herself — the reward moment
+  belongs to her whoever started it. The coins are still banked at the
+  parent's tap (same principle as approving: a forgotten collection can
+  never lose coins), and the entry persists, so a bonus survives the app
+  being killed before she taps.
+  - `PendingAward.kind` ('routine' | 'bonus', absent = 'routine' so an
+    update can't strand a queued celebration) picks the copy: the handoff
+    reads "Bonus coins!" and the award card "Bonus coins! / From Mom & Dad"
+    instead of the routine's "… approved" lines. Everything else about 1m is
+    identical — roll, coin flight, counter reaction, XP glow, jingle.
+  - **A bonus carries `streak: 0`**, which both hides the award screen's
+    streak line and skips the milestone toast and cue. A bonus doesn't
+    extend her streak, and printing one under a spontaneous reward would
+    imply it did. Crossing 1,720 on a bonus still plays the redemption
+    fanfare — coins are coins.
+  - **Adding is one tap; subtracting keeps its confirmation.** Adding isn't
+    destructive, and the handoff screen appearing is itself confirmation.
+    A subtraction stays silent and stays in Settings (nothing negative ever
+    celebrates); only additions leave the parent area.
+  - 1m/1o are drawn as routine-completion screens, so the bonus variants are
+    a deviation — flagged for design.
 - **Extra confirmation taps**: redemption and manual subtraction (as
   specified) **plus "Close for today"** — it irreversibly ends the day's
   occurrence, matching the acceptance list's "destructive actions require the

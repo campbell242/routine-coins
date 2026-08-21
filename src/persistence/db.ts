@@ -26,6 +26,11 @@ export interface Settings {
  */
 export interface PendingAward {
   occId: string;
+  /**
+   * What earned it. Absent on entries queued by older builds — read those as
+   * 'routine', so an update can never strand a celebration mid-queue.
+   */
+  kind?: 'routine' | 'bonus';
   planName: string;
   amount: number;
   balanceBefore: number;

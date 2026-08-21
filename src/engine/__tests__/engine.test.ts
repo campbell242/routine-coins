@@ -20,6 +20,7 @@ import {
 } from '../machine';
 import { canStartNow, planStateNow, type OccurrenceMap } from '../scheduler';
 import { planStreak } from '../streaks';
+import { bonusAward } from '../awards';
 import { adjust, award, LedgerError, redeem } from '../ledger';
 import {
   fiveMoreMinutes,
@@ -399,5 +400,32 @@ describe('timer', () => {
     const t = startTimer(5, T0);
     const p = pauseTimer(t, T0 + 5 * 60_000 + 300); // tap lands 300ms past the end
     expect(p).toEqual({ phase: 'expired', totalMin: 5, expiredAt: T0 + 5 * 60_000 });
+  });
+});
+
+describe('manual bonus coins (parent hands out a reward)', () => {
+  it('queues a celebration Haley releases, and never touches her streak', () => {
+    const a = bonusAward(50, 1240, T0);
+    expect(a.kind).toBe('bonus');
+    expect(a.amount).toBe(50);
+    expect(a.balanceBefore).toBe(1240);
+    expect(a.balanceAfter).toBe(1290);
+    // streak 0 hides the award screen's streak line AND skips the milestone
+    // cue — a bonus is not a routine and must never imply it extended one.
+    expect(a.streak).toBe(0);
+  });
+
+  it('gives every bonus its own identity so two in one sitting both land', () => {
+    const first = bonusAward(20, 0, T0);
+    const second = bonusAward(20, 20, T0 + 1);
+    expect(first.occId).not.toBe(second.occId);
+    expect(first.occId.startsWith('bonus:')).toBe(true);
+  });
+
+  it('rounds like the ledger and can carry her across the redemption goal', () => {
+    expect(bonusAward(12.4, 0, T0).amount).toBe(12);
+    const crossing = bonusAward(100, 1700, T0);
+    expect(crossing.balanceBefore).toBeLessThan(1720);
+    expect(crossing.balanceAfter).toBeGreaterThanOrEqual(1720); // → redemption fanfare
   });
 });
