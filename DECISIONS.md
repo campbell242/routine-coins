@@ -293,6 +293,17 @@ design README and mockup annotations.
   clean clothes → brush/floss → reading with a parent → phone to parents'
   room), +100 for the parent-verified "in bed, lights out, stay in bed",
   +20 feed Stormy, +20 pack lunch. 344 × 5 = 1,720 = one redemption.
+- **Math concept cards, +50 (2026-08-28)**: a child-attested bonus item
+  (`n-mathcards`, icon `paper`) in the nighttime bonus section. It sits on
+  top of the locked 344 floor rather than inside it — a night she skips it
+  is still worth exactly 344, a night she does it 394 — so no existing coin
+  math changes and nothing auto-fails when there is no studying to do. The
+  consequence to know: `REDEMPTION_THRESHOLD` stays 1,720, so the tidy "five
+  perfect nights = exactly one redemption" no longer lands on the nose. Four
+  review nights are 1,576 — still short — so the goal still takes five
+  nights, but a five-night review week totals 1,970 and carries 250 past it.
+  Raising the threshold was deliberately NOT bundled in — that is a family
+  economy decision, not a checklist one.
 - The morning plan is `enabled: false` (kept in config; its item IDs stay
   retired). The replaced nighttime items got NEW stable IDs (n-snack,
   n-change, n-teethfloss, n-parentread, n-phone, n-sleep, n-stormy,

@@ -23,9 +23,12 @@ export const morningRoutine: PlanConfig = {
   ],
 };
 
-// The real family routine (locked 2026-08-16): opens 7:00 PM, worth exactly
-// 344/night — base 204 + sleep 100 + Stormy 20 + lunch 20. Five perfect
-// nights = 1,720 = one redemption. Times live in hints only; the app never
+// The real family routine (locked 2026-08-16): opens 7:00 PM. The locked
+// floor is 344/night — base 204 + sleep 100 + Stormy 20 + lunch 20 — and
+// 344 × 5 = 1,720 = one redemption. The +50 math-cards review (added
+// 2026-08-28) rides on top of that floor: a night without it is still worth
+// exactly 344, a night with it 394, so review nights reach the unchanged
+// 1,720 threshold sooner. Times live in hints only; the app never
 // auto-evaluates or auto-fails a time. Old item IDs (n-teeth, n-pjs, n-tidy,
 // n-clothes, n-read, n-lightsout, n-stayedinbed) are retired — never reuse.
 export const nighttimeRoutine: PlanConfig = {
@@ -51,6 +54,7 @@ export const nighttimeRoutine: PlanConfig = {
     { id: 'n-sleep', label: 'In bed, lights out, stay in bed', hint: '9:30 — go to bed early if you want more reading', kind: 'required', bonus: 100, attestation: 'parent-morning', icon: 'lantern' },
     { id: 'n-stormy', label: 'Feed Stormy', hint: 'Dinner for the rat!', kind: 'bonus', bonus: 20, attestation: 'child', icon: 'rat' },
     { id: 'n-lunch', label: 'Pack lunch + water bottle', hint: 'Ready for tomorrow', kind: 'bonus', bonus: 20, attestation: 'child', icon: 'apple' },
+    { id: 'n-mathcards', label: 'Review math concept cards', hint: 'Flip through the stack — say each answer out loud', kind: 'bonus', bonus: 50, attestation: 'child', icon: 'paper' },
   ],
 };
 
