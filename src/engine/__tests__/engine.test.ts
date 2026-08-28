@@ -325,6 +325,15 @@ describe('locked nighttime routine math (344/night)', () => {
     expect(suggestedAward(occ)).toBe(344);
     expect(344 * 5).toBe(1720); // five perfect nights = exactly one redemption
 
+    // Math-cards review is opt-in coins ON TOP of that locked floor: a night
+    // without it is still worth exactly 344, so the 344 economy is intact.
+    const cards = plan.items.find((i) => i.id === 'n-mathcards');
+    expect(cards?.kind).toBe('bonus');
+    expect(cards?.bonus).toBe(50);
+    expect(cards?.attestation).toBe('child'); // she reviews them herself
+    occ = toggleItem(occ, 'n-mathcards', 'parent', T0 + 2);
+    expect(suggestedAward(occ)).toBe(394);
+
     const { morningRoutine } = await import('../../config/plans');
     expect(morningRoutine.enabled).toBe(false);
   });
