@@ -286,6 +286,28 @@ design README and mockup annotations.
   broom (bonus); nighttime — toothbrush, shirt, broom, basket, book (bonus),
   lantern (overnight), bed (overnight). No icon repeats within a single list.
 
+## Pet avatars (design v10)
+
+- Three avatars drawn from photos of Haley's pets — Bear (bernedoodle),
+  Shadow (cat) and Stormy (rat) — take the picker slots that `av-cat`,
+  `av-alex` and `av-bee` held. The picker is still eight slots and grid
+  position carries no meaning, so the swap is in place and the order matches
+  the handoff's 1n.
+- Shadow is a full-body sitting cat while the other two are heads. Design
+  chose that deliberately (her silhouette is what makes her recognisable;
+  a head-only crop lost the ruff), and the square frames centre the art, so
+  the art is used as exported — never re-cropped to match the heads.
+- All three are 32x32 flat pixel art with no anti-aliasing, rendered through
+  the same global `img { image-rendering: pixelated }` rule as the rest of
+  the set; nothing about them is resampled at build time.
+- The three retired PNGs are still shipped: the Home "Nothing to do right
+  now" empty state uses `av-bee.png` as decoration, where it is scenery
+  rather than an avatar, and the handoff left it alone.
+- A phone that saved one of the retired ids is mapped onto the pet that took
+  its slot (`resolveAvatarId` in `src/config/app.ts`, applied when the store
+  reads settings off disk or out of a backup). Without it a saved `cat`
+  would match no slot and the picker would show nothing selected.
+
 ## The real nighttime routine + excused nights (family-locked)
 
 - The family locked their actual routine (nighttime only): opens 7:00 PM,
