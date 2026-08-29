@@ -2,6 +2,7 @@
 // engine to persistence and navigation. React subscribes via
 // useSyncExternalStore (see hooks.ts).
 
+import { resolveAvatarId } from '../config/app';
 import { allPlans, getPlanConfig } from '../config/plans';
 import { DEFAULT_AVATAR, DEFAULT_PIN } from '../config/profile';
 import { DEFAULT_THEME } from '../config/themes';
@@ -145,6 +146,16 @@ function sanitizeOccurrences(list: Occurrence[]): OccurrenceMap {
   return map;
 }
 
+/**
+ * Settings as they come off disk (or out of a backup) may name an avatar the
+ * catalog has since retired; point those at the avatar that took the slot.
+ */
+function normalizeSettings(settings: Settings | undefined): Settings {
+  if (!settings) return { avatar: DEFAULT_AVATAR, theme: DEFAULT_THEME };
+  const avatar = resolveAvatarId(settings.avatar);
+  return avatar === settings.avatar ? settings : { ...settings, avatar };
+}
+
 class Store {
   private state: AppState = {
     ready: false,
@@ -213,7 +224,7 @@ class Store {
       nowMs: now,
       balance: balance ?? 0,
       overrides: overrides ?? {},
-      settings: settings ?? { avatar: DEFAULT_AVATAR, theme: DEFAULT_THEME },
+      settings: normalizeSettings(settings),
       timer: timerState,
       pendingAwards: Array.isArray(pendingAwards) ? pendingAwards : [],
       occurrences: sanitizeOccurrences(occList),
@@ -640,7 +651,8 @@ class Store {
   async restoreBackup(text: string): Promise<{ ok: boolean; reason?: string }> {
     const parsed = parseBackup(text);
     if (!parsed.ok) return { ok: false, reason: parsed.reason };
-    const { balance, occurrences, overrides, settings, pendingAwards } = parsed.file;
+    const { balance, occurrences, overrides, pendingAwards } = parsed.file;
+    const settings = normalizeSettings(parsed.file.settings);
     try {
       await replaceAllData({ balance, occurrences, overrides, settings, pendingAwards });
     } catch {
