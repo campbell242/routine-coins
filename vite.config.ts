@@ -1,9 +1,9 @@
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
-import { APP_DESCRIPTION, APP_NAME, APP_SHORT_NAME } from './src/config/profile';
+import { APP_DESCRIPTION, APP_NAME, APP_SHORT_NAME } from './src/config/app';
 
 // The install-time identity (tab title, PWA manifest) derives from
-// src/config/app.ts so the child's name lives in exactly one place.
+// src/config/app.ts — app-wide constants, deliberately not the child profile.
 const manifest = JSON.stringify(
   {
     name: APP_NAME,
@@ -16,9 +16,11 @@ const manifest = JSON.stringify(
     background_color: '#f3eee1',
     theme_color: '#f3eee1',
     icons: [
+      { src: 'icons/favicon-32.png', sizes: '32x32', type: 'image/png', purpose: 'any' },
       { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
       { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
-      { src: 'icons/maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+      { src: 'icons/icon-maskable-192.png', sizes: '192x192', type: 'image/png', purpose: 'maskable' },
+      { src: 'icons/icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
     ],
   },
   null,

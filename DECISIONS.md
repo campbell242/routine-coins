@@ -308,6 +308,39 @@ design README and mockup annotations.
   reads settings off disk or out of a backup). Without it a saved `cat`
   would match no slot and the picker would show nothing selected.
 
+## App identity (APP_IDENTITY.md)
+
+- The app installs as **"Gold Chest"** — manifest `name`, `short_name` and the
+  `<title>` are all the same literal string. The identity constants
+  (`APP_NAME`, `APP_SHORT_NAME`, `APP_DESCRIPTION`) moved from `profile.ts`
+  to `app.ts` so the public identity never derives from `CHILD_NAME`; the
+  child's name stays out of the manifest, the tab title and the repository.
+  `APP_DESCRIPTION` is "Do your day, earn gold." — install metadata is not
+  in-app copy, so no Minecoin reference (in-app copy may still say Minecoin).
+  **`PROFILE_ID` was not touched**: it names the IndexedDB database, and a
+  new value silently opens an empty one — a factory reset in disguise.
+- The icon is the gold coin redrawn on a 32×32 master
+  (`design/appicon/master-32.png`) over the app's ink `#2b2b24` — the old
+  parchment ground made a pale coin on a pale square at 48px. Every shipped
+  size is a nearest-neighbour **integer** upscale of that master
+  (`scripts/gen-icons.mjs`, retargeted off the 16×16 in-app sprite, which is
+  unchanged); the apple-touch 180 is the master ×5 centred on a 180 ink
+  ground because 180 is not a multiple of 32. The maskable pair upscales a
+  separate safe-zone master the export doesn't ship, so those two PNGs are
+  committed assets from `design/appicon/`, not regenerated.
+- **`background_color` stays `#f3eee1`** (splash ground; the app boots to
+  Home, whose body is parchment under every world theme — deliberately not
+  the icon's ink, since the splash shows the icon tile on parchment exactly
+  as Home does).
+- **`theme_color` stays `#f3eee1`, and must stay neutral**: the header strip
+  is user-switchable across five world themes while a manifest colour is
+  fixed at install, so any themed value would be wrong for four of the five.
+  Parchment is the one surface every variant shares. The manifest value and
+  the `index.html` meta agree today and are kept in sync **by hand**; if
+  they ever diverge, **the index meta wins at runtime** (Chrome applies the
+  live meta to the status bar; the manifest value is only the install-time
+  default), so the manifest is not the single source.
+
 ## The real nighttime routine + excused nights (family-locked)
 
 - The family locked their actual routine (nighttime only): opens 7:00 PM,

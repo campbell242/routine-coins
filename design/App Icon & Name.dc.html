@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jersey+25&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#efe9d8;font-family:'Nunito Sans',sans-serif}
+img{image-rendering:pixelated}
+a{color:#3f5f78}
+a:hover{color:#2b4257}
+.ab-turn{padding:40px 44px 32px}
+.ab-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 18px}
+.ab-tid{font-family:'Jersey 25',monospace;font-size:26px;color:#fff;background:#2b2b24;padding:1px 11px;text-decoration:none}
+.ab-tname{font-family:'Jersey 25',monospace;font-size:26px;color:#2b2b24}
+.ab-opts{display:flex;flex-wrap:wrap;gap:26px;align-items:flex-start}
+.ab-olabel{display:flex;align-items:center;gap:9px;font-family:'Jersey 25',monospace;font-size:20px;color:#2b2b24;margin:0 0 9px}
+.ab-oid{font-family:'Jersey 25',monospace;font-size:17px;color:#2b2b24;background:#f8c53a;border:2px solid #20241a;padding:0 8px;text-decoration:none}
+.ab-card{background:#f3eee1;border:3px solid #2b2b24;padding:20px}
+.ab-h{font-family:'Jersey 25',monospace;font-size:16px;color:#8a8578;margin:0 0 10px}
+.ab-note{font-size:12px;color:#6b675c;font-weight:600;line-height:1.55}
+.ab-body{font-size:13px;color:#4a463a;line-height:1.7}
+.hs-lab{width:74px;text-align:center;font-size:11px;font-weight:700;color:#2b2b24;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+</style>
+</helmet>
+
+<section class="ab-turn" id="t1">
+<div class="ab-thd"><a class="ab-tid" href="#t1">1</a><span class="ab-tname">Routine app — icon, name, manifest rulings</span></div>
+<div style="max-width:840px;background:#fffdf4;border:3px solid #2b2b24;padding:16px 20px;margin:0 0 26px" class="ab-body">
+The coin stays. It is the app's own material, already drawn at the right discipline, and it is the cleaner half of the gold/emerald pair. What changes is the <b>ground</b>: the shipping icons put a pale gold coin on pale parchment, and at 48px that is a light smudge on a light square. Ink ground fixes the read and hands the math app the whole light half of the pair. Everything else in the pipeline — 16&times;16 source, nearest-neighbour integer upscale, opaque plate — already earns its place and is kept.
+</div>
+<div class="ab-opts">
+
+<div id="1a" style="width:560px">
+  <div class="ab-olabel"><a class="ab-oid" href="#1a">1a</a>The icon</div>
+  <div class="ab-card" style="display:flex;flex-direction:column;gap:18px">
+    <div style="display:flex;gap:20px;align-items:flex-start">
+      <img src="assets/appicon/icon-512.png" alt="App icon, full size" style="width:200px;height:200px;flex:none;border:3px solid #cfc8b2">
+      <div style="flex:1;min-width:0">
+        <div class="ab-h">MASTER · 32&times;32 CELLS</div>
+        <div class="ab-note">A gold coin, 22 cells across, centred on an ink ground with a one-cell lifted halo. Rim <code>#6e4a00</code>, bevel <code>#ffe98a</code> / <code>#b57e10</code>, face <code>#f8c53a</code>, embossed diamond <code>#e5ad1e</code> — the in-app coin's exact palette, redrawn at twice its grid so the icon carries detail the 16px sprite cannot.<br><br>Ground <code>#2b2b24</code>: the app's own ink, the colour every border and every piece of body text is already made of. Nothing invented for the icon.<br><br>Every export is an integer upscale of this one grid. 512 is &times;16, 192 is &times;6, favicon is &times;1.</div>
+      </div>
+    </div>
+
+    <div style="border-top:2px solid #cfc8b2;padding-top:16px">
+      <div class="ab-h">AT 48px, BESIDE PLAUSIBLE NEIGHBOURS AND THE SIBLING</div>
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:16px 14px;background:linear-gradient(#5b6b7a,#8a9aa6)">
+        <div style="display:flex;flex-direction:column;align-items:center"><div style="width:48px;height:48px;border-radius:11px;background:#3b6fd4;display:flex;align-items:center;justify-content:center"><div style="width:22px;height:18px;background:#fff;border-radius:3px"></div></div><div class="hs-lab" style="color:#fff">Messages</div></div>
+        <div style="display:flex;flex-direction:column;align-items:center"><div style="width:48px;height:48px;border-radius:11px;background:#2e2e33;display:flex;align-items:center;justify-content:center"><div style="width:20px;height:20px;border-radius:50%;border:4px solid #d8d8dd"></div></div><div class="hs-lab" style="color:#fff">Camera</div></div>
+        <div style="display:flex;flex-direction:column;align-items:center"><img src="assets/appicon/icon-512.png" alt="" style="width:48px;height:48px;border-radius:11px"><div class="hs-lab" style="color:#fff">Gold Chest</div></div>
+        <div style="display:flex;flex-direction:column;align-items:center"><img src="assets/appicon/sibling-emerald-192.png" alt="" style="width:48px;height:48px;border-radius:11px"><div class="hs-lab" style="color:#fff">Emerald Chest</div></div>
+        <div style="display:flex;flex-direction:column;align-items:center"><div style="width:48px;height:48px;border-radius:11px;background:#1db954;display:flex;align-items:center;justify-content:center"><div style="width:22px;height:22px;border-radius:50%;background:#0a2e18"></div></div><div class="hs-lab" style="color:#fff">Music</div></div>
+        <div style="display:flex;flex-direction:column;align-items:center"><div style="width:48px;height:48px;border-radius:11px;background:#f0f0f2;display:flex;align-items:center;justify-content:center"><div style="width:6px;height:24px;background:#c23b5e"></div></div><div class="hs-lab" style="color:#fff">Clock</div></div>
+      </div>
+      <div class="ab-note" style="margin-top:9px">The emerald tile is a <b>stand-in</b> — the math app's own pass owns that artwork. It is here only to check the pair. Same family (pixel art, one mark, flat ground, no gradient); never confusable (gold on ink versus green on parchment — different material <i>and</i> inverted ground, so a glance at the ground alone tells them apart).</div>
+    </div>
+
+    <div style="border-top:2px solid #cfc8b2;padding-top:16px">
+      <div class="ab-h">UNDER A CIRCLE MASK, AND THE SAFE ZONE</div>
+      <div style="display:flex;gap:22px;align-items:center;flex-wrap:wrap">
+        <div style="text-align:center"><img src="assets/appicon/icon-maskable-512.png" alt="" style="width:96px;height:96px;border-radius:50%"><div class="ab-note" style="margin-top:6px">circle</div></div>
+        <div style="text-align:center"><img src="assets/appicon/icon-maskable-512.png" alt="" style="width:96px;height:96px;border-radius:26px"><div class="ab-note" style="margin-top:6px">squircle</div></div>
+        <div style="text-align:center"><img src="assets/appicon/icon-maskable-512.png" alt="" style="width:96px;height:96px;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"><div class="ab-note" style="margin-top:6px">hex</div></div>
+        <div style="position:relative;width:96px;height:96px;flex:none"><img src="assets/appicon/icon-maskable-512.png" alt="" style="width:96px;height:96px"><div style="position:absolute;left:10%;top:10%;width:80%;height:80%;border:2px dashed #f8c53a;border-radius:50%"></div></div>
+        <div class="ab-note" style="flex:1;min-width:200px">Maskable master shrinks the coin to 18 cells so it clears the 80% circle with a cell to spare; the halo may be cropped, which is what a halo is for. The ground bleeds to all four edges — no transparency anywhere, so iOS has nothing to fill with black.</div>
+      </div>
+    </div>
+
+    <div style="border-top:2px solid #cfc8b2;padding-top:16px">
+      <div class="ab-h">FILES IN THE EXPORT</div>
+      <div class="ab-body" style="font-size:12px">
+        <code>icon-192.png</code> &middot; 32&times;6, purpose any<br>
+        <code>icon-512.png</code> &middot; 32&times;16, purpose any<br>
+        <code>icon-maskable-192.png</code> &middot; 32&times;6, purpose maskable &mdash; <b>new, the repo has no 192 maskable</b><br>
+        <code>icon-maskable-512.png</code> &middot; 32&times;16 &mdash; replaces <code>maskable-512.png</code>, note the rename<br>
+        <code>apple-touch-icon.png</code> &middot; 180 is not a multiple of 32, so the master goes down at &times;5 = 160 and sits centred on a 180 ink ground with a 10px border. Composed, never resampled. <b>New</b> &mdash; the index currently points <code>apple-touch-icon</code> at the 192.<br>
+        <code>favicon-32.png</code> &middot; the master at &times;1. <b>New</b> &mdash; the index currently uses the 192 as its favicon.<br>
+        <code>master-32.png</code> &middot; the source of truth, for regeneration.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="1b" style="width:560px">
+  <div class="ab-olabel"><a class="ab-oid" href="#1b">1b</a>The name — shortlist at home-screen scale</div>
+  <div class="ab-card" style="display:flex;flex-direction:column;gap:16px">
+    <div class="ab-note">Rendered at the size and width a launcher gives a label, so truncation is visible rather than counted. The label clips at roughly twelve characters.</div>
+
+    <div style="padding:16px 14px;background:linear-gradient(#5b6b7a,#8a9aa6);display:flex;gap:10px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;align-items:center"><img src="assets/appicon/icon-512.png" alt="" style="width:56px;height:56px;border-radius:13px"><div class="hs-lab" style="color:#fff">Gold Chest</div></div>
+      <div style="display:flex;flex-direction:column;align-items:center"><img src="assets/appicon/icon-512.png" alt="" style="width:56px;height:56px;border-radius:13px"><div class="hs-lab" style="color:#fff">Coins</div></div>
+      <div style="display:flex;flex-direction:column;align-items:center"><img src="assets/appicon/icon-512.png" alt="" style="width:56px;height:56px;border-radius:13px"><div class="hs-lab" style="color:#fff">Gold Run</div></div>
+      <div style="display:flex;flex-direction:column;align-items:center"><img src="assets/appicon/icon-512.png" alt="" style="width:56px;height:56px;border-radius:13px"><div class="hs-lab" style="color:#fff">Goldpile</div></div>
+      <div style="display:flex;flex-direction:column;align-items:center"><img src="assets/appicon/icon-512.png" alt="" style="width:56px;height:56px;border-radius:13px"><div class="hs-lab" style="color:#fff">Gold Streak</div></div>
+      <div style="display:flex;flex-direction:column;align-items:center;opacity:.75"><img src="assets/appicon/icon-192.png" alt="" style="width:56px;height:56px;border-radius:13px;filter:grayscale(.4)"><div class="hs-lab" style="color:#ffd9d9">Haley's Rout…</div></div>
+    </div>
+    <div class="ab-note" style="margin-top:-6px">The last tile is what ships today: <code>short_name</code> is <code>"Haley"</code>, but <code>name</code> is <code>"Haley's Routine &amp; Coins"</code> and any launcher that prefers <code>name</code> clips it mid-word. It also puts her name in the repository.</div>
+
+    <div style="border-top:2px solid #cfc8b2;padding-top:14px;display:flex;flex-direction:column;gap:12px">
+
+      <div style="background:#fffdf6;border:3px solid #2b2b24;padding:13px 15px">
+        <div style="display:flex;align-items:baseline;gap:9px;flex-wrap:wrap"><span style="font-family:'Jersey 25',monospace;font-size:22px">Gold Chest</span><span style="font-family:'Jersey 25',monospace;font-size:13px;color:#2b2b24;background:#f8c53a;border:2px solid #20241a;padding:0 7px">RECOMMENDED</span><span class="ab-note">10 chars</span></div>
+        <div class="ab-body" style="font-size:12px;margin-top:5px">A chest is already the app's word for where earned things go, and the pair gets a shared surname: <b>Gold Chest</b> and <b>Emerald Chest</b> read as one family on sight, which no other candidate manages. She would say "the gold one" and be right.<br><span style="color:#6b675c;font-weight:700">Cost:</span> names the container, not the doing — the app is more about earning the coin than storing it.</div>
+      </div>
+
+      <div style="background:#fffdf6;border:3px solid #cfc8b2;padding:13px 15px">
+        <div style="display:flex;align-items:baseline;gap:9px;flex-wrap:wrap"><span style="font-family:'Jersey 25',monospace;font-size:22px">Coins</span><span class="ab-note">5 chars</span></div>
+        <div class="ab-body" style="font-size:12px;margin-top:5px">Almost certainly what she already calls it. Shortest label on the shortlist, impossible to truncate, and it pairs with <b>Emeralds</b>.<br><span style="color:#6b675c;font-weight:700">Cost:</span> generic enough to be a banking app, and the pair shares no surname — two currencies, not two siblings.</div>
+      </div>
+
+      <div style="background:#fffdf6;border:3px solid #cfc8b2;padding:13px 15px">
+        <div style="display:flex;align-items:baseline;gap:9px;flex-wrap:wrap"><span style="font-family:'Jersey 25',monospace;font-size:22px">Gold Run</span><span class="ab-note">8 chars</span></div>
+        <div class="ab-body" style="font-size:12px;margin-top:5px">Names the streak without using the word — a run of days. Pairs as <b>Emerald Run</b>. Reads as motion, which suits an app you open every morning and night.<br><span style="color:#6b675c;font-weight:700">Cost:</span> "run" implies something you can break, and a broken streak is the one thing this app deliberately never mentions.</div>
+      </div>
+
+      <div style="background:#fffdf6;border:3px solid #cfc8b2;padding:13px 15px">
+        <div style="display:flex;align-items:baseline;gap:9px;flex-wrap:wrap"><span style="font-family:'Jersey 25',monospace;font-size:22px">Goldpile</span><span class="ab-note">8 chars</span></div>
+        <div class="ab-body" style="font-size:12px;margin-top:5px">One word, no space to truncate awkwardly, and it describes the thing the balance actually is. Fun to say.<br><span style="color:#6b675c;font-weight:700">Cost:</span> a pile is hoarding, and the app's point is spending it on something; the sibling would have to be "Gempile", which is worse.</div>
+      </div>
+
+      <div style="background:#fffdf6;border:3px solid #cfc8b2;padding:13px 15px">
+        <div style="display:flex;align-items:baseline;gap:9px;flex-wrap:wrap"><span style="font-family:'Jersey 25',monospace;font-size:22px">Gold Streak</span><span class="ab-note">11 chars</span></div>
+        <div class="ab-body" style="font-size:12px;margin-top:5px">Names both things the app tracks. Fits the label with one character to spare.<br><span style="color:#6b675c;font-weight:700">Cost:</span> "streak" is a word she only knows from inside the app, so the home screen teaches nothing; and it foregrounds the one number that can go down.</div>
+      </div>
+
+    </div>
+
+    <div style="border-top:2px solid #cfc8b2;padding-top:14px">
+      <div class="ab-h">THE THREE STRINGS, IF GOLD CHEST WINS</div>
+      <div class="ab-body" style="font-size:12px"><code>name</code> &nbsp;<b>Gold Chest</b><br><code>short_name</code> &nbsp;<b>Gold Chest</b> &middot; 10 of 12<br><code>&lt;title&gt;</code> &nbsp;<b>Gold Chest</b></div>
+      <div class="ab-note" style="margin-top:8px">All three the same string. A longer <code>name</code> with a tagline is a web habit; this is an installed app whose name appears under an icon and in a task switcher, and both want the short one. No child's name in any of them, so the build stops depending on <code>CHILD_NAME</code> for its identity.</div>
+    </div>
+  </div>
+</div>
+
+<div id="1c" style="width:560px">
+  <div class="ab-olabel"><a class="ab-oid" href="#1c">1c</a>Manifest rulings, and what the audit found</div>
+  <div class="ab-card" style="display:flex;flex-direction:column;gap:16px">
+
+    <div>
+      <div class="ab-h">1 &middot; BACKGROUND_COLOR &mdash; KEEP <code>#f3eee1</code></div>
+      <div class="ab-body" style="font-size:13px">This is the splash ground, and its only job is to not flash. The app boots to Home, and Home's body is parchment <code>#f3eee1</code> under every world theme. The placeholder happens to be correct; it stays.<br><br>Note this is deliberately <i>not</i> the icon's ink ground. The splash shows the icon tile floating on parchment, which is exactly what the home screen shows too.</div>
+      <div style="display:flex;gap:14px;align-items:center;margin-top:12px">
+        <div style="width:120px;height:200px;background:#f3eee1;border:3px solid #2b2b24;display:flex;align-items:center;justify-content:center"><img src="assets/appicon/icon-512.png" alt="" style="width:64px;height:64px;border-radius:14px"></div>
+        <div class="ab-note" style="flex:1">Splash, as installed.</div>
+      </div>
+    </div>
+
+    <div style="border-top:2px solid #cfc8b2;padding-top:14px">
+      <div class="ab-h">2 &middot; THEME_COLOR &mdash; KEEP <code>#f3eee1</code>, AND THEY AGREE</div>
+      <div class="ab-body" style="font-size:13px">The manifest says <code>#f3eee1</code> and the index meta says <code>#f3eee1</code>. No contradiction to resolve.<br><br>Worth writing down <i>why</i> it must stay neutral: the header strip is user-switchable across five world themes (grass, nether, end, ocean, cherry), and a manifest colour is fixed at install. Any themed value would be wrong for four of the five. Parchment is the one surface every variant shares.<br><br>If the two ever diverge, <b>the index meta wins</b> at runtime — Chrome applies the live meta to the status bar, while the manifest value is the install-time default. So they must be kept in sync by hand; the manifest is not the single source.</div>
+    </div>
+
+    <div style="border-top:2px solid #cfc8b2;padding-top:14px">
+      <div class="ab-h">3 &middot; WHAT THE AUDIT FOUND</div>
+      <div class="ab-body" style="font-size:13px">
+        <b>Kept, because it already earns its place:</b> the coin as the mark; the nearest-neighbour integer upscale in <code>gen-icons.mjs</code>; the opaque plate; <code>background_color</code>; <code>theme_color</code>; <code>display: standalone</code>, <code>orientation: portrait</code>, relative <code>start_url</code> and <code>scope</code>.<br><br>
+        <b>Replaced:</b> the parchment ground, for contrast at 48px. <b>Retired:</b> the 16&times;16 coin as icon source — the icon now has its own 32&times;32 master, and the in-app 16px sprite is untouched.<br><br>
+        <b>Three findings for the build, none of them artwork:</b><br>
+        <span style="color:#6b675c;font-weight:700">a.</span> The manifest carries the child's name. <code>APP_NAME</code>, <code>APP_SHORT_NAME</code> and <code>APP_DESCRIPTION</code> are all derived from <code>CHILD_NAME</code> in <code>profile.ts</code>, so the installed identity is "Haley's Routine &amp; Coins" / "Haley". The app's public identity should stop deriving from the child entirely and become app-wide constants. <code>PROFILE_ID</code> must not be touched — it names the database.<br>
+        <span style="color:#6b675c;font-weight:700">b.</span> <code>APP_DESCRIPTION</code> reads "Routines, timers and Minecoin rewards". In-app copy may reference real Minecoins; install metadata is not in-app copy. Suggested: <i>"Do your day, earn gold."</i><br>
+        <span style="color:#6b675c;font-weight:700">c.</span> Three icon files do not exist: no 192 maskable, no true 180 apple-touch-icon (the index points it at the 192), and no favicon (same). All three are in the export.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+<p class="ab-note" style="margin:26px 0 0;max-width:840px">The artwork is final and regenerable from <code>master-32.png</code>. The name is the household's call — say which of the five and I will write it into the export's README as the one value, or draw more if none of them is what she would actually say.</p>
+</section>
+
+</x-dc>
+</body>
+</html>

@@ -5,6 +5,19 @@
 // `plans.ts`. Keep this file free of per-child values so a second profile
 // never has to touch it.
 
+/**
+ * The app's public install-time identity: PWA manifest `name`/`short_name`,
+ * the browser-tab title (vite.config.ts templates index.html and generates
+ * the manifest from these). Deliberately literal and app-wide — the installed
+ * identity must never derive from, or contain, the child's name. Per-child
+ * display strings use CHILD_NAME in profile.ts instead.
+ */
+export const APP_NAME = 'Gold Chest';
+export const APP_SHORT_NAME = 'Gold Chest';
+
+/** Install metadata, not in-app copy — so no Minecoin reference here. */
+export const APP_DESCRIPTION = 'Do your day, earn gold.';
+
 /** Parent session ends after this much inactivity (Amendment 2). */
 export const PARENT_SESSION_IDLE_MS = 3 * 60 * 1000;
 
