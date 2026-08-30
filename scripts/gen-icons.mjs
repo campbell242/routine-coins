@@ -1,9 +1,17 @@
-// Generates PWA icons from the 16x16 pixel-art coin: nearest-neighbor upscale,
-// plus a maskable variant on a parchment plate (safe zone padding).
+// Regenerates the app-icon PNGs from design/appicon/master-32.png — the
+// 32x32 source of truth (see design/APP_IDENTITY.md). Nearest-neighbor
+// integer upscales only; never anti-alias, never scale by a non-integer
+// factor, never derive from the 16x16 in-app coin sprite (that sprite is
+// unchanged and untouched).
+//
+// The maskable pair (icon-maskable-192/512) upscales a separate maskable
+// master (coin shrunk to clear the 80% safe zone) that the design export
+// does not ship, so those two are committed assets copied from
+// design/appicon/, not regenerated here.
 import fs from 'node:fs';
 import { PNG } from 'pngjs';
 
-const src = PNG.sync.read(fs.readFileSync('public/assets/coin.png'));
+const master = PNG.sync.read(fs.readFileSync('design/appicon/master-32.png'));
 
 function upscale(png, factor) {
   const out = new PNG({ width: png.width * factor, height: png.height * factor });
@@ -40,8 +48,15 @@ function onPlate(png, size, bg) {
   return out;
 }
 
-const parchment = [0xf3, 0xee, 0xe1];
-fs.writeFileSync('public/icons/icon-192.png', PNG.sync.write(onPlate(upscale(src, 10), 192, parchment)));
-fs.writeFileSync('public/icons/icon-512.png', PNG.sync.write(onPlate(upscale(src, 28), 512, parchment)));
-fs.writeFileSync('public/icons/maskable-512.png', PNG.sync.write(onPlate(upscale(src, 18), 512, parchment)));
-console.log('icons written');
+// The icon's ink ground (#2b2b24) — only used to letterbox the 180px
+// apple-touch composition, since 180 is not a multiple of 32.
+const ink = [0x2b, 0x2b, 0x24];
+
+fs.writeFileSync('public/icons/icon-192.png', PNG.sync.write(upscale(master, 6)));
+fs.writeFileSync('public/icons/icon-512.png', PNG.sync.write(upscale(master, 16)));
+fs.writeFileSync('public/icons/favicon-32.png', PNG.sync.write(upscale(master, 1)));
+fs.writeFileSync(
+  'public/icons/apple-touch-icon.png',
+  PNG.sync.write(onPlate(upscale(master, 5), 180, ink)),
+);
+console.log('icons written (maskable pair is a committed asset — not regenerated)');

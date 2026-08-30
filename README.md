@@ -107,7 +107,7 @@ src/persistence/         # IndexedDB (idb) storage
 src/store/               # app store wiring engine ⇄ persistence ⇄ UI
 src/ui/                  # design-system components + screens (child + parent)
 scripts/gen-sw.mjs       # emits the cache-first service worker after build
-scripts/gen-icons.mjs    # PWA icons from the pixel-art coin
+scripts/gen-icons.mjs    # PWA icons from design/appicon/master-32.png
 scripts/contrast-audit.mjs  # WCAG checks for every theme variant
 scripts/screenshots.mjs  # drives every screen/state for visual comparison
 scripts/sync-design.mjs  # mirrors a fresh Claude Design export into design/
