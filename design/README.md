@@ -1,8 +1,9 @@
 # Handoff: Haley's Routine & Minecoin App — Visual Design
 
-> **v5 adds motion and sound.** See **MOTION_AND_SOUND.md** for the full spec and
-> **PROMPT_FOR_CODE.md** for the implementation prompt. Design source: sections 3
-> and 4 of `Haley Routine App.dc.html`.
+> **Specs in this bundle:** **MOTION_AND_SOUND.md** (animation + sound scheme,
+> design source: sections 3 and 4 of `Haley Routine App.dc.html`), **NEW_ICONS.md**
+> (task icons and the non-square sizing rule), and **APP_IDENTITY.md** (app icon,
+> name, and the manifest rulings — design source: `App Icon & Name.dc.html`).
 
 ## Overview
 Visual design system and all key screens for a personal routine/reward app for Haley (age 10), running full-screen portrait on a dedicated Android phone. Minecraft-themed interface language: pixel bevel buttons, inventory slots, XP-bar progress, gold coins, block-texture trim. Application behavior/functionality is specified separately by the owner — this package covers **look and screen-level UX only**.
