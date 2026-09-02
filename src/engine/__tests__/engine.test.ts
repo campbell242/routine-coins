@@ -5,6 +5,7 @@ import {
   ackSentBack,
   allRequiredDone,
   approve,
+  cancelReview,
   closeForToday,
   excuseNight,
   isReadyForReview,
@@ -123,9 +124,45 @@ describe('occurrence state machine', () => {
     let occ = startOccurrence(morning, '2026-08-11', T0);
     occ = toggleItem(occ, 'a', 'child', T0); // one of two required
     expect(allRequiredDone(occ)).toBe(false);
-    expect(() => requestReview(occ, T0)).toThrow(TransitionError); // child gate holds
     const done = approve(occ, 40, T0); // parent capability
     expect(done.status).toBe('approved');
+  });
+
+  it('child may ask for review before the list is finished', () => {
+    let occ = startOccurrence(morning, '2026-08-11', T0);
+    occ = toggleItem(occ, 'a', 'child', T0); // one of two required
+    expect(isReadyForReview(occ)).toBe(false); // no gold CTA, no READY chip…
+    occ = requestReview(occ, T0 + 1000); // …but asking is not blocked
+    expect(occ.status).toBe('review_requested');
+    expect(occ.reviewRequestedAt).toBe(T0 + 1000);
+    expect(occ.finishedAt).toBeUndefined(); // nothing claims it was finished
+    expect(allRequiredDone(occ)).toBe(false);
+
+    // The parent's three outcomes all remain open on an unfinished ask.
+    expect(approve(occ, 40, T0 + 2000).status).toBe('approved');
+    expect(closeForToday(occ, T0 + 2000).status).toBe('closed');
+    expect(sendBack(occ, undefined, T0 + 2000).status).toBe('sent_back');
+  });
+
+  it('child can take an early ask back, finish, and ask again', () => {
+    let occ = startOccurrence(morning, '2026-08-11', T0);
+    occ = toggleItem(occ, 'a', 'child', T0);
+    occ = requestReview(occ, T0 + 1000);
+    // Frozen while waiting — that invariant is unchanged.
+    expect(() => toggleItem(occ, 'b', 'child', T0 + 2000)).toThrow(TransitionError);
+
+    occ = cancelReview(occ);
+    expect(occ.status).toBe('in_progress');
+    expect(occ.reviewRequestedAt).toBeUndefined();
+    expect(occ.checks['a'].checked).toBe(true); // her work is kept
+
+    occ = toggleItem(occ, 'b', 'child', T0 + 3000);
+    expect(occ.finishedAt).toBe(T0 + 3000);
+    expect(isReadyForReview(occ)).toBe(true);
+    occ = requestReview(occ, T0 + 4000);
+    expect(occ.status).toBe('review_requested');
+    expect(() => cancelReview(occ)).not.toThrow();
+    expect(() => cancelReview(approve(occ, 40, T0 + 5000))).toThrow(TransitionError);
   });
 
   it('close for today resolves with no award', () => {

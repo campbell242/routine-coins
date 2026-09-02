@@ -165,6 +165,19 @@ await shot(page, '1b-home-due');
 await page.getByText('Keep going ›').click();
 await shot(page, '1d-routine-in-progress');
 
+// ---------- asking early (unfinished list) and taking the ask back ----------
+// Asking is not gated on a finished checklist: the stone CTA is live at 2 of 5.
+await page.getByText('Ask a parent to check', { exact: true }).click();
+await shot(page, 'routine-asked-early');
+// the parent's review of an unfinished ask carries the slate "Asked early" note
+await page.getByText('I’m the parent — review now').click();
+for (const k of ['1', '2', '3', '4']) await page.getByText(k, { exact: true }).click();
+await page.waitForTimeout(300);
+await shot(page, 'review-asked-early');
+await page.getByText('LOCK ▪').click();
+await page.waitForTimeout(200);
+await page.getByText('Keep going instead').click();
+
 // ---------- 1e routine ready (check remaining two) ----------
 await page.getByText('Make your bed').click();
 await page.getByText('Pack backpack').click();

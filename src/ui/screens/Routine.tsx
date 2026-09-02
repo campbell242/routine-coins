@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { iconSrc } from '../../config/icons';
 import type { ItemConfig } from '../../config/types';
 import {
+  allRequiredDone,
   isChecked,
   isReadyForReview,
   requiredChildItems,
@@ -234,6 +235,21 @@ function StatusBanner({ occ, justAsked }: { occ: Occurrence; justAsked: boolean 
         <div style={{ fontSize: 13, fontWeight: 600, color: '#4a463a' }}>
           Hand the phone to a grown-up when they’re ready.
         </div>
+        {/* Only on an early ask: she asked with items still unchecked, so give
+            her the way back to them. A finished routine's waiting screen holds
+            still, exactly as mockup 1f specs it. Slate, like the sent-back
+            banner's button — the calm material, and the routine stays in the
+            parent's queue either way. */}
+        {!allRequiredDone(occ) && (
+          <PixelButton
+            variant="slate"
+            small
+            style={{ fontSize: 16, padding: 11, marginTop: 10 }}
+            onClick={() => store.childCancelReview(occ.id)}
+          >
+            Keep going instead
+          </PixelButton>
+        )}
       </div>
     );
   }
@@ -326,6 +342,7 @@ export function RoutineScreen({ planId }: { planId: string }) {
   const bonus = occ.snapshot.items.filter((i) => i.kind === 'bonus');
   const reqTotal = requiredChildItems(occ).length;
   const reqDone = requiredDoneCount(occ);
+  const allDone = allRequiredDone(occ);
   const ready = isReadyForReview(occ);
   const waiting = occ.status === 'review_requested';
 
@@ -354,7 +371,10 @@ export function RoutineScreen({ planId }: { planId: string }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 16px 4px', flex: 'none' }}>
         {chip}
         <span style={{ fontSize: 13, color: '#6b675c', fontWeight: 700 }}>
-          {ready || waiting ? `All ${reqTotal} required done!` : `${reqDone} of ${reqTotal} required done`}
+          {/* Keyed to the checks, not the status: a routine handed over early
+              is waiting WITHOUT being finished, and claiming otherwise here
+              would be a lie the parent's screen contradicts. */}
+          {allDone ? `All ${reqTotal} required done!` : `${reqDone} of ${reqTotal} required done`}
         </span>
       </div>
       <div className="screen-scroll" ref={scrollRef}>
@@ -392,11 +412,25 @@ export function RoutineScreen({ planId }: { planId: string }) {
               </PixelButton>
             ) : (
               <>
-                <PixelButton disabled style={{ fontSize: 20, padding: 15 }}>
+                {/* Asking is never locked (see engine `requestReview`): an
+                    unfinished routine can still be handed over. Stone, not
+                    gold — the celebratory ask belongs to a finished list —
+                    and the line under it offers the choice without telling
+                    her she's behind. */}
+                <PixelButton
+                  variant="stone"
+                  style={{ fontSize: 20, padding: 15 }}
+                  onClick={() => {
+                    setJustAsked(true);
+                    store.childRequestReview(occ.id);
+                  }}
+                >
                   Ask a parent to check
                 </PixelButton>
                 <div style={{ textAlign: 'center', fontSize: 12, color: '#8a8578', fontWeight: 700, marginTop: 6 }}>
-                  Finish {remaining} more to unlock
+                  {remaining === 1
+                    ? 'You can ask now, or finish the last one first'
+                    : `You can ask now, or finish the last ${remaining} first`}
                 </div>
               </>
             )}

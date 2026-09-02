@@ -9,10 +9,13 @@ import { PARENT_SESSION_IDLE_MS } from '../../../config/app';
 import { CHILD_NAME, REDEMPTION_THRESHOLD } from '../../../config/profile';
 import type { PlanResolved, Weekday } from '../../../config/types';
 import {
+  allRequiredDone,
   isChecked,
   isResolved,
   occurrenceId,
   parentVerifyItems,
+  requiredChildItems,
+  requiredDoneCount,
   suggestedAward,
   type Occurrence,
 } from '../../../engine/machine';
@@ -161,6 +164,22 @@ function ReviewView({ occId }: { occId?: string }) {
           {timeline.join(' · ')}
         </div>
         <div style={{ flex: 1, padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+          {/* She can ask for a check before the list is finished, so say so
+              here: the suggested award below is base + earned coins and does
+              NOT dock for an unchecked required item, and that is the
+              parent's call to make (edit the award, or send it back). Slate,
+              the app's calm "not finished" material — never red. */}
+          {occ.status === 'review_requested' && !allRequiredDone(occ) && (
+            <div style={{ background: '#e8eef4', border: '2px solid #6d89a3', padding: '10px 12px' }}>
+              <div className="px" style={{ fontSize: 17, color: '#42607c' }}>
+                Asked early · {requiredDoneCount(occ)} of {requiredChildItems(occ).length} required
+                done
+              </div>
+              <div style={{ fontSize: 13, color: '#4a463a', fontWeight: 600 }}>
+                The award below doesn’t dock for unchecked items — adjust it, or send it back.
+              </div>
+            </div>
+          )}
           {required.map((item) => {
             const done = isChecked(occ, item.id);
             // Parent-morning items (the sleep item) are the parent's to

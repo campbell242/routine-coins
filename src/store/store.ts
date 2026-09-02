@@ -11,6 +11,7 @@ import {
   ackSentBack,
   allRequiredDone,
   approve,
+  cancelReview,
   closeForToday,
   excuseNight,
   isResolved,
@@ -429,6 +430,11 @@ class Store {
     if (this.state.occurrences[occId] !== before) {
       playAskParent(); // handing over, not celebrating — the only descending cue
     }
+  }
+
+  /** "Keep going instead" — she takes an early ask back to finish an item. */
+  childCancelReview(occId: string): void {
+    this.mutateOccurrence(occId, (occ) => cancelReview(occ));
   }
 
   childAckSentBack(occId: string): void {

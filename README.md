@@ -38,6 +38,12 @@ so coins, routines, streaks and settings survive app kills and reboots.
   **"I'm the parent — review now"** — the same PIN pad, but it lands straight
   on that routine's review, and LOCK hands the phone back to Haley's routine
   screen. A shortcut, not a bypass: the PIN is still required.
+- **A review can arrive unfinished.** Haley can ask for a check at any point,
+  not only once every box is ticked — she may have hit something she can't do
+  today. The review screen marks the unchecked items and shows an "Asked
+  early" note: the suggested award doesn't dock for them, so adjust it, send
+  it back, or approve as-is. (Her screen offers "Keep going instead" if she
+  asked before she meant to.)
 - **The out-of-the-box PIN is `1234`** — change it in Parent → Settings.
 - **Giving bonus coins** (Settings → Balance → ＋/− adjust → ＋ Add) runs
   the same release as approving a routine: the coins are banked at your tap,

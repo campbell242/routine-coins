@@ -45,8 +45,10 @@ design README and mockup annotations.
 - **Stored statuses**: `in_progress → review_requested → approved/closed`,
   with `sent_back` between; "ready for review" is *derived* (in progress +
   all required child-attested items checked), not stored.
-- **"Ready" gate counts only child-attested required items.** Parent-verified
-  overnight items never gate the child's "Ask a parent" CTA.
+- **"Ready" counts only child-attested required items** — parent-verified
+  overnight items never enter it — and it is *emphasis, not permission*
+  (2026-09-02): `requestReview` is deliberately ungated, so an unfinished
+  routine can still be handed to a parent. See "Asking early" under Child UX.
 - **Sent-back banner's "Fix it and ask again" button acknowledges the note**
   (returns the occurrence to in-progress); re-requesting review uses the
   normal bottom CTA. One clear meaning per button.
@@ -222,6 +224,34 @@ design README and mockup annotations.
   shows the **waiting** and **sent-back** banners contextually (mockups
   1d/1e show chip-only for in-progress/ready, so no banner in those states;
   approved goes to the handoff screen, then the award screen on her tap).
+- **Asking early** (2026-09-02, bug fix): the "Ask a parent to check" CTA was
+  disabled until every required child item was checked ("Finish 2 more to
+  unlock"), which left a child with no way to hand over a routine she
+  genuinely could not finish — an item that didn't apply today, a parent who
+  wanted to look now. Completeness is the parent's call, not a lock on hers,
+  and the review screen already showed which items were unchecked. So:
+  - `requestReview` no longer checks `allRequiredDone`. The gate that remains
+    is status only (`in_progress` / `sent_back`).
+  - **Gold still means finished.** An unfinished list gets the *stone* CTA and
+    the line "You can ask now, or finish the last 2 first" — a choice, not a
+    scolding, and no red anywhere. The gold coin CTA and the READY chip still
+    belong to a finished list, so the reward gradient is intact.
+  - The routine header's "All 4 required done!" now keys off the checks rather
+    than the status, so an early ask reads "2 of 4 required done".
+  - The parent's review screen gains a slate **"Asked early · 2 of 4 required
+    done"** note saying the suggested award does not dock for unchecked items.
+    `suggestedAward` is unchanged (base + checked coin-valued items): docking
+    automatically would guess at why an item is unchecked, which is exactly
+    the judgment the parent is there to make. Approve / edit the award / send
+    back all stay open, as they already did from any unresolved status.
+  - New `cancelReview` transition (`review_requested → in_progress`, checks
+    kept) behind a slate **"Keep going instead"** button on the waiting
+    banner, shown *only* when a required item is unchecked — otherwise an
+    early ask is a dead end, since the checklist freezes while a parent is
+    expected. A finished routine's waiting screen holds still per mockup 1f.
+    The occurrence stays in the parent's queue throughout (the queue holds
+    every unresolved occurrence), so cancelling never hides it from a parent
+    already looking at it.
 - Checklist row hints stay visible when checked (mockup 1d shows checked rows
   with hints; 1e's hint-less checked rows read as sample-data variation).
   Checked rows drop to opacity .62 per the handoff.
